@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app.routing';
 import { SectionsModule } from './sections/sections.module';
 import { ComponentsModule } from './components/components.module';
-import { ExamplesModule } from './examples/examples.module';
+// import { ExamplesModule } from './examples/examples.module';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // import {LoginComponent} from './examples/login/login.component';
@@ -22,8 +22,8 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 
 import { PresentationModule } from './presentation/presentation.module';
 
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+// import { LoginComponent } from './login/login.component';
+// import { RegisterComponent } from './register/register.component';
 import { environment } from '../environments/environment';
 import { CreateEventComponent } from './create-event/create-event.component';
 import { ImageUploadModule } from './shared/image-upload/image-upload.module';
@@ -31,8 +31,8 @@ import { ImageUploadModule } from './shared/image-upload/image-upload.module';
     declarations: [
         AppComponent,
         NavbarComponent,
-        LoginComponent,
-        RegisterComponent,
+        // LoginComponent,
+        // RegisterComponent,
         CreateEventComponent,
         // LoginComponent,
         // RegisterComponent
@@ -49,7 +49,7 @@ import { ImageUploadModule } from './shared/image-upload/image-upload.module';
         PresentationModule,
         SectionsModule,
         ComponentsModule,
-        ExamplesModule,
+        // ExamplesModule,
         ReactiveFormsModule,
         HttpClientModule,
         ImageUploadModule
