@@ -13,7 +13,7 @@
   },
   "private": true,
   "dependencies": {
-    "@agm/core": "1.0.0-beta.5",
+    "@agm/core": "^1.0.0-beta.5",
     "@angular/animations": "7.2.8",
     "@angular/common": "7.2.8",
     "@angular/compiler": "7.2.8",
@@ -26,6 +26,7 @@
     "@angular/platform-server": "7.2.8",
     "@angular/router": "7.2.8",
     "@ng-bootstrap/ng-bootstrap": "4.0.0",
+    "angular-react-dates": "^0.1.5",
     "angular2-multiselect-dropdown": "4.2.1",
     "bootstrap": "4.1.3",
     "copy-webpack-plugin": "5.0.0",
@@ -46,6 +47,7 @@
     "rellax": "1.7.1",
     "rxjs": "6.4.0",
     "rxjs-compat": "6.4.0",
+<<<<<<< HEAD
     "zone.js": "0.8.29",
     "@angular/cli": "7.3.5",
     "@angular/compiler-cli": "7.2.8",
@@ -53,10 +55,16 @@
     "protractor": "5.4.2",
     "ts-node": "8.0.3",
     "tslint": "5.13.1"
+=======
+    "zone.js": "0.8.29"
+>>>>>>> ba63860683e3794790d5ef94aef8cee183f1c8a0
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.13.5",
+    "@angular/cli": "7.3.5",
+    "@angular/compiler-cli": "7.2.8",
     "@angular/language-service": "7.2.8",
+    "@types/googlemaps": "^3.37.7",
     "@types/jasmine": "3.3.9",
     "@types/node": "11.10.5",
     "codelyzer": "4.5.0",
