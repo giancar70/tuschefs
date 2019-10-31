@@ -32,6 +32,7 @@ import { ImageUploadModule } from './shared/image-upload/image-upload.module';
 
 import { AgmCoreModule } from '@agm/core';
 // import { AngularReactDatesModule } from 'angular-react-dates';
+import {ModalModule} from "ng2-modal";
 
 @NgModule({
     declarations: [
