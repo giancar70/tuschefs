@@ -1,0 +1,67 @@
+.card.card-signup {
+	background-color: #fff;
+	box-shadow: none;
+	max-width: initial;
+	width: 100%;
+	.card-description {
+		color: #000;
+	}
+}
+
+.btn-facebook.btn-facebook-continue {
+	width: 240px;
+	margin: auto;
+	font-size: 15px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 10px;
+	i.fa.fa-facebook {
+		position: relative;
+		top: 0;
+		left: 0;
+		transform: none;
+		width: 25px;
+	}
+}
+
+.btn-google.btn-google-continue {
+	width: 240px;
+	margin: auto;
+	font-size: 15px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	i.fa.fa-google {
+		position: relative;
+		top: 0;
+		left: 0;
+		transform: none;
+		width: 25px;
+	}
+}
+
+.btn.btn-no-fill {
+	background-color: transparent;
+	color: #fb763e;
+}
+
+form {
+	background-color: #fff;
+}
+.input-group,
+.form-group {
+	border: 1px solid #ccc;
+	border-radius: 25px;
+}
+
+.form-group.card-footer {
+	border: none;
+}
+
+.card.card-signup .card-body input.form-control,
+.card.card-signup .card-body .input-group-text,
+.card.card-signup .card-body .input-group-text::placeholder {
+	color: #666;
+	opacity: 1;
+}

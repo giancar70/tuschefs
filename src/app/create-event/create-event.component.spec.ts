@@ -7,19 +7,19 @@ describe('CreateEventComponent', () => {
   let fixture: ComponentFixture<CreateEventComponent>;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ CreateEventComponent ]
-    })
-    .compileComponents();
+	TestBed.configureTestingModule({
+		declarations: [ CreateEventComponent ]
+	})
+	.compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CreateEventComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+	fixture = TestBed.createComponent(CreateEventComponent);
+	component = fixture.componentInstance;
+	fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+	expect(component).toBeTruthy();
   });
 });

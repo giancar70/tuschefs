@@ -15,27 +15,27 @@ import { RouterModule } from '@angular/router';
 import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        NgbModule,
-        AgmCoreModule.forRoot({
-            apiKey: 'YOUR_KEY_HERE'
-        }),
-        RouterModule
-    ],
-    declarations: [
-        SectionsComponent,
-        HeadersComponent,
-        FeaturesComponent,
-        BlogsComponent,
-        TeamsComponent,
-        ProjectsComponent,
-        PricingComponent,
-        TestimonialsComponent,
-        ContactsComponent
-    ],
-    exports: [
-        SectionsComponent
-    ]
+	imports: [
+		CommonModule,
+		NgbModule,
+		AgmCoreModule.forRoot({
+			apiKey: 'YOUR_KEY_HERE'
+		}),
+		RouterModule
+	],
+	declarations: [
+		SectionsComponent,
+		HeadersComponent,
+		FeaturesComponent,
+		BlogsComponent,
+		TeamsComponent,
+		ProjectsComponent,
+		PricingComponent,
+		TestimonialsComponent,
+		ContactsComponent
+	],
+	exports: [
+		SectionsComponent
+	]
 })
 export class SectionsModule { }

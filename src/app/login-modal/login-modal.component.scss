@@ -1,0 +1,82 @@
+form.form {
+	background-color: #fff;
+}
+
+.card.card-login {
+	margin-bottom: 0;
+
+	.card-header div.logo-container {
+		margin: 25px auto;	
+		width: 50%;
+	}
+}
+
+.btn-facebook.btn-facebook-continue {
+	width: 240px;
+	margin: auto;
+	font-size: 15px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 10px;
+	i.fa.fa-facebook {
+		position: relative;
+		top: 0;
+		left: 0;
+		transform: none;
+		width: 25px;
+	}
+}
+
+.btn-google.btn-google-continue {
+	width: 240px;
+	margin: auto;
+	font-size: 15px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	i.fa.fa-google {
+		position: relative;
+		top: 0;
+		left: 0;
+		transform: none;
+		width: 25px;
+	}
+}
+
+.form {
+	padding: 40px;
+}
+
+.form .footer-link {
+	color: #fff;
+}
+
+.card .card-footer {
+	margin-bottom: 35px;
+}
+
+.btn.btn-no-fill {
+	background-color: transparent;
+	color: #fb763e;
+}
+
+form {
+	background-color: #fff;
+}
+.input-group,
+.form-group {
+	border: 1px solid #ccc;
+	border-radius: 25px;
+}
+
+.form-group.card-footer {
+	border: none;
+}
+
+.card.card-login .card-body input.form-control,
+.card.card-login .card-body .input-group-text,
+.card.card-login .card-body .input-group-text::placeholder {
+	color: #666;
+	opacity: 1;
+}

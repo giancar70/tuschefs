@@ -1,2 +1,42 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/scss/bootstrap.scss";
+
+.btn {
+	&.btn-neutral {
+		color: rgb(33, 37, 41);
+		font-size: 14px;
+		&:hover {
+			color: #de606b;
+		}
+		&:focus {
+			background-color: none;
+			color: rgb(33, 37, 41);
+		}
+	}
+	&.btn-primary {
+		&:hover {
+			background-color: #de606b;
+			color: #fff;
+		}
+		&:focus {
+			background-color: #de606b;
+		}
+	}
+
+}
+
+.footer.footer-big .row > div {
+	text-align: center;
+}
+
+#belong-anywhere-container .air-slide--active {
+	background-color: #fff;
+}
+
+#belong-anywhere-container .air-slide--active article {
+	color: #000;
+}
+
+#belong-anywhere-container article img {
+	max-width: 64px;
+}
