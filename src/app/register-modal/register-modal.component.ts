@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'
 
 import { AlertService } from '../services/alert.service';
 import { AuthService } from '../services/auth.service';
@@ -10,13 +10,151 @@ import { NgbDatepickerConfig, NgbCalendar, NgbDate,
 		 NgbDateStruct, NgbDateAdapter, NgbDateNativeAdapter
 	   } from '@ng-bootstrap/ng-bootstrap';
 
+
 @Component({
-	selector: 'app-register-modal',
-	templateUrl: './register-modal.component.html',
+  selector: 'app-register-modal-content',
+  template: `
+	<div class="card card-signup">
+		<div class="card-body">
+			<h4 style="color:black;" class="card-title text-center">Regístrate</h4>
+			<div class="social text-center">
+				<button type="button" class="btn btn-icon btn-round btn-facebook btn-facebook-continue" (click)="authService.FacebookAuth()">
+					<span>Continuar con Facebook</span>
+					<i class="fa fa-facebook"> </i>
+				</button>
+				<button type="button" class="btn btn-icon btn-round btn-google btn-google-continue">
+					<span>Continuar con Google</span>
+					<i class="fa fa-google"></i>
+				</button>
+				<h5 class="card-description"> o con tu correo</h5>
+			</div>
+			<form [formGroup]="registerForm" (ngSubmit)="onSubmit(registerForm)">
+				<div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus===true}">
+					<div class="input-group-prepend">
+						<span class="input-group-text"> <i
+							  class="now-ui-icons users_circle-08"></i></span>
+					</div>
+					<input type="text" class="form-control" placeholder="Nombre y apellido"
+															formControlName="first_name"
+															[ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
+					<div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+						<div *ngIf="f.firstName.errors.required">First Name is required</div>
+					</div>
+				</div>
+				<div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus1===true}">
+					<div class="input-group-prepend">
+						<span class="input-group-text">
+							<i class="now-ui-icons text_caps-small"></i>
+						</span>
+					</div>
+					<input type="date" class="form-control datetimepicker" placeholder="06/07/2000"
+																		   formControlName="date_birthday" name="dp" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" data-color="white">
+
+				</div>
+
+				<div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus2===true}">
+					<div class="input-group-prepend">
+						<span class="input-group-text">
+							<i class="now-ui-icons ui-1_email-85"></i>
+						</span>
+					</div>
+					<input type="text" class="form-control" placeholder="Correo" (focus)="focus2=true"
+															formControlName="email" (blur)="focus2=false">
+				</div>
+				<div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus1===true}">
+					<div class="input-group-prepend">
+						<span class="input-group-text">
+							<i class="now-ui-icons text_caps-small"></i>
+						</span>
+					</div>
+					<input type="password" placeholder="Password" class="form-control" (focus)="focus1=true"
+															  formControlName="password" (blur)="focus1=false">
+				</div>
+
+				<!-- If you want to add a checkbox to this form, uncomment this code -->
+				<!--
+				<div class="form-check">
+					<label class="form-check-label">
+						<input class="form-check-input" type="checkbox">
+						<span class="form-check-sign"></span>
+						I agree to the terms and <a href="#something">conditions</a>.
+					</label>
+				</div>
+				-->
+				<div class="form-group card-footer text-center">
+					<button [disabled]="loading" type="submit"
+												 class="btn btn-primary btn-round btn-lg">Crear cuenta</button>
+				</div>
+			</form>
+			<div style="display: flex; justify-content: center; align-items: center;">
+				<span style="font-size: 14px; color: #000; padding-right: 15px;">¿Ya tienes una cuenta?</span>
+				<button (click)="goToLoginModal()" class="btn btn-no-fill btn-round btn-sm">Iniciar Sesión</button>
+			</div>
+		</div>
+	</div>
+	`,
 	styleUrls: ['./register-modal.component.scss']
 })
+export class RegisterModalContentComponent implements OnInit {
+	registerForm: FormGroup;
+	closeResult: string;
+	loading = false;
+	submitted = false;
 
-export class RegisterModalComponent implements OnInit {
+	constructor(
+		public activeModal: NgbActiveModal,
+		private formBuilder: FormBuilder,
+		private router: Router,
+		private authService: AuthService,
+		private alertService: AlertService,
+		private modalService: NgbModal,
+		config: NgbDatepickerConfig, calendar: NgbCalendar) {}
+
+	ngOnInit() {
+		this.registerForm = this.formBuilder.group({
+			first_name: ['', Validators.required],
+			date_birthday: ['', Validators.required],
+			email: ['', Validators.required],
+			password: ['', [Validators.required, Validators.minLength(6)]]
+		});
+	}
+
+	// convenience getter for easy access to form fields
+	get f() { return this.registerForm.controls; }
+
+	onSubmit(form: NgForm) {
+		this.authService.register(form.value)
+		.subscribe((data: any) => {
+			if (data.success === true) {
+				this.modalService.dismissAll('Login Successful')
+				this.router.navigate([''])
+				this.authService.setLoggedIn(true)
+			} else {
+				console.log(data.message)
+			}
+		})
+	}
+
+	loginFacebook() {
+
+	}
+
+	loginGoogle() {
+
+	}
+
+	public goToLoginModal() {
+		this.modalService.dismissAll('GoToLoginModal');
+	}
+}
+
+
+@Component({
+	selector: 'app-register-modal',
+	templateUrl: './register-modal.component.html'
+})
+
+export class RegisterModalComponent {
 
 	closeResult: string;
 	registerForm: FormGroup;
@@ -41,49 +179,16 @@ export class RegisterModalComponent implements OnInit {
 		}
 	}
 
-	ngOnInit() {
-		this.registerForm = this.formBuilder.group({
-			first_name: ['', Validators.required],
-			date_birthday: ['', Validators.required],
-			email: ['', Validators.required],
-			password: ['', [Validators.required, Validators.minLength(6)]]
+	open() {
+		this.modalService.open(RegisterModalContentComponent, { size: 'lg', centered: true,  windowClass: 'modal-login modal-primary' })
+		.result.then((result) => {
+			this.closeResult = `Closed with: ${result}`;
+		}, (reason) => {
+			this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+			if (reason === 'GoToLoginModal') {
+				// TODO: open modal
+			}
 		});
-	}
-
-	// convenience getter for easy access to form fields
-	get f() { return this.registerForm.controls; }
-
-	onSubmit(form: NgForm) {
-		this.authService.register(form.value)
-			.subscribe((data: any) => {
-				if (data.success === true) {
-					this.modalService.dismissAll('Login Successful')
-					this.router.navigate([''])
-					this.authService.setLoggedIn(true)
-				} else {
-					console.log(data.message)
-				}
-			})
-	}
-
-	loginFacebook() {
-
-	}
-
-	loginGoogle() {
-
-	}
-
-	open(content) {
-		this.modalService.open(content, { size: 'lg', centered: true,  windowClass: 'modal-login modal-primary' })
-			.result.then((result) => {
-				this.closeResult = `Closed with: ${result}`;
-			}, (reason) => {
-				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-				if (reason === 'GoToLoginModal') {
-					// TODO: open modal
-				}
-			});
 	}
 
 	private getDismissReason(reason: any): string {
@@ -94,10 +199,6 @@ export class RegisterModalComponent implements OnInit {
 		} else {
 			return  `with: ${reason}`;
 		}
-	}
-
-	public goToLoginModal() {
-		this.modalService.dismissAll('GoToLoginModal');
 	}
 }
 

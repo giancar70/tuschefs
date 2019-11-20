@@ -1,5 +1,14 @@
 import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { MapsAPILoader, MouseEvent } from '@agm/core';
+import { AuthService } from '../services/auth.service'
+
+class UserData {
+	first_name: string
+	last_name: string
+	email: string
+	gender: string
+	phone: string
+};
 
 @Component({
 	selector: 'app-create-event',
@@ -11,13 +20,31 @@ export class CreateEventComponent implements OnInit {
 	longitude: number;
 	zoom: number;
 	address: string;
+	public showMap: boolean;
 	private geoCoder;
+	public userData: UserData;
 
 	@ViewChild('search', {static: false})
 	public searchElementRef: ElementRef;
 
-	constructor(private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) {
+	constructor(private mapsAPILoader: MapsAPILoader, private ngZone: NgZone, private authService: AuthService) {
+		this.showMap = true;
+		this.userData = new UserData();
 
+		const user = this.authService.currentUserValue;
+		if (user !== null && user !== undefined) {
+			this.userData.email = user.email;
+			this.userData.first_name = user.first_name;
+			this.userData.last_name = user.last_name;
+			this.userData.phone = user.phone;
+			this.userData.gender = user.gender;
+		} else {
+			this.userData.email = ''
+			this.userData.first_name = '';
+			this.userData.last_name = '';
+			this.userData.phone = '';
+			this.userData.gender = '';
+		}
 	}
 
 	ngOnInit() {
@@ -45,6 +72,10 @@ export class CreateEventComponent implements OnInit {
 				});
 			});
 		});
+	}
+
+	locationChange(value) {
+		this.showMap = (value === 'En mi casa')
 	}
 
 	private setCurrentLocation() {

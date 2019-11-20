@@ -25,11 +25,14 @@ import { NgbdModalBasicComponent } from './modal/modal.component';
 import { ImageUploadModule } from './shared/image-upload/image-upload.module';
 
 import { AgmCoreModule } from '@agm/core';
-import { LoginModalComponent } from './login-modal/login-modal.component';
-import { RegisterModalComponent } from './register-modal/register-modal.component';
+import { LoginModalComponentModule } from './login-modal/login-modal.module';
+import { RegisterModalComponentModule } from './register-modal/register-modal.module';
+import { LoginModalComponent } from './login-modal/login-modal.component'
+import { RegisterModalComponent } from './register-modal/register-modal.component'
 
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+import { ExperienceTileComponent } from './experience-tile/experience-tile.component';
 
 const config = new AuthServiceConfig([
   {
@@ -54,8 +57,7 @@ export function provideConfig() {
 		EventDescriptionComponent,
 		NgbdModalBasicComponent,
 		PresentationComponent,
-		LoginModalComponent,
-		RegisterModalComponent,
+		ExperienceTileComponent,
 	],
 	imports: [
 		BrowserAnimationsModule,
@@ -68,7 +70,6 @@ export function provideConfig() {
 		AppRoutingModule,
 		SectionsModule,
 		ComponentsModule,
-
 		ReactiveFormsModule,
 		HttpClientModule,
 		ImageUploadModule,
@@ -76,7 +77,9 @@ export function provideConfig() {
 			apiKey: 'AIzaSyAD_TNm6k3RQOkPz7_XbJci8PFNnqmV6Mg',
 			libraries: ['places']
 			}),
-		SocialLoginModule
+		SocialLoginModule,
+		LoginModalComponentModule,
+		RegisterModalComponentModule,
 	],
 	providers: [
 		{

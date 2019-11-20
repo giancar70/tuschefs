@@ -1,10 +1,12 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 import { NgbdModalBasicComponent } from '../../modal/modal.component'
 
 import { AuthService } from '../../services/auth.service'
+
+import { LoginModalComponent } from '../../login-modal/login-modal.component'
 
 @Component({
 	selector: 'app-navbar',
@@ -13,6 +15,9 @@ import { AuthService } from '../../services/auth.service'
 })
 
 export class NavbarComponent implements OnInit {
+	@ViewChild(LoginModalComponent, {static: false})
+	public loginModal: LoginModalComponent;
+
 	private toggleButton: any;
 	private sidebarVisible: boolean;
 	private modalOpen: boolean;

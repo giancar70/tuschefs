@@ -11,7 +11,7 @@
 									<h4 class="card-title">Foto de perfil</h4>
 								</div>
 								<div class="card-body">
-									<div class="row">
+									<div class="row" style="justify-content: center;">
 										<div id="file-uploader">
 											<div class="container">
 												<div class="row">
@@ -32,23 +32,21 @@
 									<div class="row">
 										<div class="col-md-6">
 											<label>Nombre</label>
-											<div class="input-group" [ngClass]="{'input-group-focus':focus===true}">
+											<div class="input-group" [ngClass]="{'input-group-focus': focus === true}">
 												<div class="input-group-prepend">
 													<span class="input-group-text"><i class="now-ui-icons users_circle-08"></i></span>
 												</div>
-												<input type="text" class="form-control" placeholder="Nombre..." (focus)="focus=true"
-																						(blur)="focus=false">
+												<input type="text" class="form-control" placeholder="Nombre..." (focus)="focus=true" (blur)="focus=false" [(ngModel)]="userData.first_name" name="first-name">
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Apellido</label>
-												<div class="input-group" [ngClass]="{'input-group-focus':focus1===true}">
+												<div class="input-group" [ngClass]="{'input-group-focus': focus1 === true}">
 													<div class="input-group-prepend">
 														<span class="input-group-text"><i class="now-ui-icons text_caps-small"></i></span>
 													</div>
-													<input type="text" placeholder="Apellido..." class="form-control" (focus)="focus1=true"
-																								 (blur)="focus1=false">
+													<input type="text" placeholder="Apellido..." class="form-control" (focus)="focus1=true" (blur)="focus1=false" [(ngModel)]="userData.last_name" name="last-name">
 												</div>
 											</div>
 										</div>
@@ -59,17 +57,42 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Correo electrónico</label>
-												<div class="input-group" [ngClass]="{'input-group-focus':focus2===true}">
+												<div class="input-group" [ngClass]="{'input-group-focus': focus2 === true}">
 													<div class="input-group-prepend">
 														<span class="input-group-text"><i class="now-ui-icons ui-1_email-85"></i></span>
 													</div>
-													<input type="email" placeholder="Correo electrónico..." class="form-control"
-																											(focus)="focus2=true" (blur)="focus2=false">
+													<input type="email" placeholder="Correo electrónico..." class="form-control" (focus)="focus2=true" (blur)="focus2=false" [(ngModel)]="userData.email" name="email">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Género</label>
+												<div class="input-group" [ngClass]="{'input-group-focus': focus3 === true}">
+													<div class="input-group-prepend">
+														<span class="input-group-text"><i class="now-ui-icons users_single-02"></i></span>
+													</div>
+													<select class="form-control" (focus)="focus3 = true" (blur)="focus3 = false" [(ngModel)]="userData.gender" name="gender">
+														<option value="Masculino">Masculino</option>
+														<option value="Femenino">Femenino</option>
+														<option value="Otro">Otro</option>
+													</select>
 												</div>
 											</div>
 										</div>
 									</div>
 									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Teléfono</label>
+												<div class="input-group" [ngClass]="{'input-group-focus': focus4 === true}">
+													<div class="input-group-prepend">
+														<span class="input-group-text"><i class="now-ui-icons tech_mobile"></i></span>
+													</div>
+													<input type="text" placeholder="Teléfono" class="form-control" (focus)="focus4=true" (blur)="focus4=false" [(ngModel)]="userData.phone" name="phone">
+												</div>
+											</div>
+										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Descripción</label>
@@ -207,156 +230,9 @@
 
 
 							</div>
-							<!-- <div class="card card-contact card-raised">
-		   <div class="card-header text-center">
-		   <h4 class="card-title">Dirección</h4>
-		   </div>
-		   <div class="card-body">
-		   <h4><small>Rellena tu dirección completa para que tus experiencias aparezcan en los resultados de
-		   búsqueda. Solo tus invitados conocerán tu dirección exacta y no aparecerá en la web.</small></h4>
-
-		   <div class="col-md-12">
-		   <label>Dirección de domicilio completa</label>
-		   <div class="input-group" [ngClass]="{'input-group-focus':focus===true}">
-		   <div class="input-group-prepend">
-		   <span class="input-group-text"><i class="now-ui-icons users_circle-08"></i></span>
-		   </div>
-		   <input type="text" class="form-control" placeholder="Dirección..." (focus)="focus=true"
-		   (blur)="focus=false">
-		   </div>
-		   </div>
-
-		   <!-- <div class="row">
-		 <div class="col-md-6">
-
-		 <div class="form-group">
-		 <label>Número</label>
-		 <div class="input-group" [ngClass]="{'input-group-focus':focus1===true}">
-		 <div class="input-group-prepend">
-		 <span class="input-group-text"><i class="now-ui-icons text_caps-small"></i></span>
-		 </div>
-		 <input type="text" placeholder="Número..." class="form-control" (focus)="focus1=true"
-		 (blur)="focus1=false">
-		 </div>
-		 </div>
-
-		 </div>
-		 <div class="col-md-6">
-
-		 <div class="form-group">
-		 <label>Calle</label>
-		 <div class="input-group" [ngClass]="{'input-group-focus':focus1===true}">
-		 <div class="input-group-prepend">
-		 <span class="input-group-text"><i class="now-ui-icons text_caps-small"></i></span>
-		 </div>
-		 <input type="text" placeholder="Calle..." class="form-control" (focus)="focus1=true"
-												   (blur)="focus1=false">
-												   </div>
-												   </div>
-
-												   </div>
-												   </div> -->
-
-
-
-												   <!-- </div>
-
-
-				   <div class="col-md-8">
-				   <div class="form-group">
-				   <label>Información adicional</label>
-				   <small>Puerta, piso, cómo llegar, etc</small>
-				   <textarea name="message" class="form-control" id="message" rows="6"></textarea>
-				   </div>
-				   </div>
-				   </div>  -->
-				   <!-- <div class="card card-contact card-raised">
-		   <div class="card-header text-center">
-		   <h4 class="card-title">Acerca de ti</h4>
-		   </div>
-		   <div class="card-body">
-		   <h4><small>¡A tus futuros invitados, les encantará saber más de ti! ¿Te encanta cocinar con productos
-		   frescos? ¿Siempre pones un poco de musica jazzy cuando tienes invitados? ¿Haces yoga todos los
-		   días?
-		   ¡Cuentales un poco más de ti!</small></h4>
-
-		   <div class="col-md-6">
-		   <label>Profesión o actividad</label>
-		   <div class="input-group" [ngClass]="{'input-group-focus':focus===true}">
-		   <div class="input-group-prepend">
-		   <span class="input-group-text"><i class="now-ui-icons users_circle-08"></i></span>
-		   </div>
-		   <input type="text" class="form-control" placeholder="Chef, alpinista, superhéroe..."
-		   (focus)="focus=true" (blur)="focus=false">
-		   </div>
-		   </div>
-		   <div class="form-group">
-		   <div class="col-md-6">
-		   <label>Idiomas hablados</label>
-		   <div class="input-group" [ngClass]="{'input-group-focus':focus1===true}">
-		   <div class="input-group-prepend">
-		   <span class="input-group-text"><i class="now-ui-icons text_caps-small"></i></span>
-		   </div>
-		   <input type="text" placeholder="Apellido..." class="form-control" (focus)="focus1=true"
-														(blur)="focus1=false">
-														</div>
-														</div>
-														</div>
-
-														<div class="form-group">
-														<label>Descríbete</label>
-														<textarea
-															placeholder="Para que tus invitados sepan más sobre ti, cuéntales lo que te gusta: tu plato favorito, el viaje de tus sueños"
-															name="message" class="form-control" id="message" rows="6"></textarea>
-															</div>
-															</div>
-
-
-															</div>
-															<div class="card card-contact card-raised">
-															<div class="card-header text-center">
-															<h4 class="card-title">Preferencias culinarias</h4>
-															</div>
-															<div class="card-body">
-															<h4><small>Para dar una idea tus invitados de la experiencia que vas a compartir juntos, describe tus
-															destinos favoritos, lo que te gusta cocinar, saborear y preparar.</small></h4>
-
-															<div class="col-md-6">
-															<label>Mi plato favorito es...</label>
-															<div class="input-group" [ngClass]="{'input-group-focus':focus===true}">
-															<div class="input-group-prepend">
-															<span class="input-group-text"><i class="now-ui-icons users_circle-08"></i></span>
-															</div>
-															<input type="text" class="form-control"
-																			   placeholder="Ravioles, gnocchis, pizza, torta de chocolate..." (focus)="focus=true"
-																			   (blur)="focus=false">
-																			   </div>
-																			   </div>
-																			   <div class="form-group">
-																			   <div class="col-md-6">
-																			   <label>Cocina favorita</label>
-																			   <div class="input-group" [ngClass]="{'input-group-focus':focus1===true}">
-																			   <div class="input-group-prepend">
-																			   <span class="input-group-text"><i class="now-ui-icons text_caps-small"></i></span>
-																			   </div>
-																			   <input type="text" placeholder="Apellido..." class="form-control" (focus)="focus1=true"
-																															(blur)="focus1=false">
-																															</div>
-																															</div>
-																															</div>
-
-																															<div class="form-group">
-																															<label>Régimen alimenticio</label>
-																															<textarea placeholder="Escribe aquí si tienes alergia a algún alimento o lo que no comas"
-																																	  name="message" class="form-control" id="message" rows="6"></textarea>
-																																	  </div>
-																																	  </div>
-
-
-																																	  </div> -->
-																																		<div class="col-md-12" style="display: flex; justify-content: center;">
-																																		  <button type="submit" class="btn btn-primary btn-round pull-right">Guardar y continuar</button>
-																																	  </div>
+							<div class="col-md-12" style="display: flex; justify-content: center;">
+								<button type="submit" class="btn btn-primary btn-round pull-right">Guardar y continuar</button>
+							</div>
 						</form>
 
 					</div>
@@ -371,12 +247,10 @@
 									<h4 class="card-title">Añade fotos a tu experiencia</h4>
 								</div>
 								<div class="card-body">
-									<h4><small>Estas imágenes aparecerán en la parte superior de tu experiencia y será lo primero que
-											verán tus huéspedes. Asegúrate de que destaquen y muestren cómo mola tu experiencia.</small></h4>
-
+									<h4>
+										<small>Estas imágenes aparecerán en la parte superior de tu evento culinario y será lo primero que verán tus comensales. ¡Asegúrate de que destaquen y muestren lo increíble que será tu experiencia!</small>
+									</h4>
 								</div>
-
-
 							</div>
 							<div class="card card-contact card-raised">
 								<div class="card-header text-center">
@@ -396,115 +270,10 @@
 										</div>
 									</div>
 								</div>
-
 							</div>
-							<!-- <div class="card card-contact card-raised">
-		   <div class="card-header text-center">
-		   <h4 class="card-title">Fotos de comida</h4>
-		   </div>
-		   <div class="card-body">
-		   <h4><small>¡Nos encanta ver tu increíble comida! Te recomendamos subir imágenes en alta definición un
-		   mínimo de tres platos que tus huéspedes probarán en tu evento. Sé creativo y juega con la
-		   perspectiva, el zoom y la puesta en escena.</small></h4>
-		   <div class="row">
-		   <div id="file-uploader">
-		   <div class="container">
-		   <div class="row">
-		   <div class="col-md-4">
-		   <app-image-upload></app-image-upload>
-		   </div>
-		   <div class="col-md-4">
-		   <app-image-upload></app-image-upload>
-		   </div>
-		   <div class="col-md-4">
-		   <app-image-upload></app-image-upload>
-		   </div>
-		   </div>
-		   </div>
-		   </div>
-		   </div>
-
-		   </div>
-		   <div class="form-group">
-		   <div class="col-md-6">
-		   <label>Idiomas hablados</label>
-		   <div class="input-group" [ngClass]="{'input-group-focus':focus1===true}">
-		   <div class="input-group-prepend">
-		   <span class="input-group-text"><i class="now-ui-icons text_caps-small"></i></span>
-		   </div>
-		   <input type="text" placeholder="Apellido..." class="form-control" (focus)="focus1=true"
-														(blur)="focus1=false">
-														</div>
-														</div>
-														</div>
-
-														<div class="form-group">
-														<label>Descríbete</label>
-														<textarea
-															placeholder="Para que tus invitados sepan más sobre ti, cuéntales lo que te gusta: tu plato favorito, el viaje de tus sueños"
-															name="message" class="form-control" id="message" rows="6"></textarea>
-															</div>
-															</div> -->
-															<!-- <div class="card card-contact card-raised">
-				   <div class="card-header text-center">
-				   <h4 class="card-title">Imágenes del espacio</h4>
-				   </div>
-				   <div class="card-body">
-				   <h4><small>¡Muéstranos dónde recibes a tus huéspedes! Haz un tour virtual por tu espacio - intenta
-				   incluir imágenes de otros huéspedes y de la mesa.</small></h4>
-				   <div class="row">
-				   <div id="file-uploader">
-				   <div class="container">
-				   <div class="row">
-				   <div class="col-md-4">
-				   <app-image-upload></app-image-upload>
-				   </div>
-				   <div class="col-md-4">
-				   <app-image-upload></app-image-upload>
-				   </div>
-				   <div class="col-md-4">
-				   <app-image-upload></app-image-upload>
-				   </div>
-				   </div>
-				   </div>
-				   </div>
-				   </div>
-
-				   </div>
-
-				   </div> -->
-				   <!-- <div class="card card-contact card-raised">
-		   <div class="card-header text-center">
-		   <h4 class="card-title">Fotos de anfitriones y ambiente</h4>
-		   </div>
-		   <div class="card-body">
-		   <h4><small>Por último pero no menos importante, ¡queremos verte! Sube una foto tuya, así como imágenes
-		   de las experiencias que ya has organizado, para que los huéspedes sepan qué esperar de tu
-		   experiencia.</small></h4>
-		   <div class="row">
-		   <div id="file-uploader">
-		   <div class="container">
-		   <div class="row">
-		   <div class="col-md-4">
-		   <app-image-upload></app-image-upload>
-		   </div>
-		   <div class="col-md-4">
-		   <app-image-upload></app-image-upload>
-		   </div>
-		   <div class="col-md-4">
-		   <app-image-upload></app-image-upload>
-		   </div>
-		   </div>
-		   </div>
-		   </div>
-		   </div>
-
-		   </div>
-
-		   </div> -->
-						   <div class="col-md-12" style="display: flex; justify-content: center;">
-							   <button type="submit" class="btn btn-primary btn-round pull-right">Continuar</button>
-						   </div>
+							<div class="col-md-12" style="display: flex; justify-content: center;">
+								<button type="submit" class="btn btn-primary btn-round pull-right">Continuar</button>
+							</div>
 						</form>
 					</div>
 				</ng-template>
@@ -515,7 +284,7 @@
 						<form role="form" id="description-form" method="post">
 							<div class="card card-contact card-raised">
 								<div class="card-header text-center">
-									<h4 class="card-title">A qué hora realizarás el evento?</h4>
+									<h4 class="card-title">¿A qué hora realizarás el evento?</h4>
 								</div>
 								<div class="card-body">
 									<div class="row">
@@ -537,69 +306,54 @@
 												</div>
 											</div>
 										</div>
-
-
 									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<label>Donde realizarás este evento?</label>
+											<div class="input-group" [ngClass]="{'input-group-focus':focus===true}">
+												<div class="select select-large">
+													<select id="location" name="location" (change)="locationChange($event.target.value)">
+														<option value="En mi casa">En mi casa</option>
+														<option value="A domicilio">A domicilio</option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="card card-contact card-raised" *ngIf="showMap">
+								<div class="card-header text-center">
+									<h4 class="card-title">Dirección</h4>
+								</div>
+								<div class="card-body">
+									<h4>
+										<small>Indica tu dirección completa. Así tu experiencia aparecerá en los resultados de búsqueda. Solo tus comensales conocerán tu dirección exacta.</small>
+									</h4>
+
+									<div class="col-md-12">
+										<label>Dirección de domicilio completa</label>
+										<div class="input-group" [ngClass]="{'input-group-focus':focus===true}">
+											<div class="input-group-prepend">
+												<span class="input-group-text"><i class="now-ui-icons users_circle-08"></i></span>
+											</div>
+											<input type="text" class="form-control" placeholder="Dirección..." (focus)="focus=true" (blur)="focus=false" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search>
+										</div>
+									</div>
+
+									<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+										<agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
+																																								 (dragEnd)="markerDragEnd($event)"></agm-marker>
+									</agm-map>
 
 								</div>
 
-
 							</div>
-							<!-- <div class="card card-contact card-raised">
-		   <div class="card-header text-center">
-		   <h4 class="card-title">¿Dónde vas a realizar este evento?</h4>
-		   </div>
-		   <div class="card-body">
-		   <h4><small>Rellena tu dirección completa para que tus experiencias aparezcan en los resultados de
-		   búsqueda. Solo tus invitados conocerán tu dirección exacta y no aparecerá en la web.</small></h4>
-
-		   <div class="col-md-12">
-		   <label>Dirección completa</label>
-		   <div class="input-group" [ngClass]="{'input-group-focus':focus===true}">
-		   <div class="input-group-prepend">
-		   <span class="input-group-text"><i class="now-ui-icons users_circle-08"></i></span>
-		   </div>
-		   <input type="text" class="form-control" placeholder="Dirección..." (focus)="focus=true"
-		   (blur)="focus=false">
-		   </div>
-		   </div>
 
 
-		   </div>
-
-		   </div> -->
-		   <div class="card card-contact card-raised">
-			   <div class="card-header text-center">
-				   <h4 class="card-title">Dirección</h4>
-			   </div>
-			   <div class="card-body">
-				   <h4><small>Rellena tu dirección completa para que tus experiencias aparezcan en los resultados de
-						   búsqueda. Solo tus invitados conocerán tu dirección exacta y no aparecerá en la web.</small></h4>
-
-				   <div class="col-md-12">
-					   <label>Dirección de domicilio completa</label>
-					   <div class="input-group" [ngClass]="{'input-group-focus':focus===true}">
-						   <div class="input-group-prepend">
-							   <span class="input-group-text"><i class="now-ui-icons users_circle-08"></i></span>
-						   </div>
-						   <input type="text" class="form-control" placeholder="Dirección..." (focus)="focus=true"
-																   (blur)="focus=false" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search>
-					   </div>
-				   </div>
-
-				   <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
-					   <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
-																																				(dragEnd)="markerDragEnd($event)"></agm-marker>
-				   </agm-map>
-
-			   </div>
-
-		   </div>
-
-
-		   <div class="col-md-12" style="display: flex; justify-content: center;">
-			   <button type="submit" class="btn btn-primary btn-round pull-right">Enviar para revisión</button>
-		   </div>
+							<div class="col-md-12" style="display: flex; justify-content: center;">
+								<button type="submit" class="btn btn-primary btn-round pull-right">Enviar para revisión</button>
+							</div>
 						</form>
 
 					</div>

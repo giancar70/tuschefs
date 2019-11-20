@@ -1,22 +1,63 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Input } from '@angular/core'
 import { AuthService } from '../services/auth.service'
 import { Router } from '@angular/router'
 import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'
 
 @Component({
-	selector: 'app-login-modal',
-	templateUrl: './login-modal.component.html',
+  selector: 'app-login-modal-content',
+  template: `
+	<div class="card card-login card-plain">
+		<form class="form" (submit)="loginUser($event)">
+			<div class="card-header text-center">
+				<div class="logo-container">
+					<img src="assets/img/logo-color.png" alt="tus chefs logo">
+				</div>
+			</div>
+			<div class="social text-center">
+				<button type="button" class="btn btn-icon btn-round btn-facebook btn-facebook-continue" (click)="loginFacebook($event)">
+					<span>Continuar con Facebook</span>
+					<i class="fa fa-facebook"> </i>
+				</button>
+				<button type="button" class="btn btn-icon btn-round btn-google btn-google-continue" (click)="loginGoogle($event)">
+					<span>Continuar con Google</span>
+					<i class="fa fa-google"></i>
+				</button>
+			</div>
+			<div class="card-body">
+				<div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus === true}">
+					<div class="input-group-prepend">
+						<span class="input-group-text">
+							<i class="now-ui-icons users_circle-08"></i>
+						</span>
+					</div>
+					<input type="text" id="username" class="form-control" placeholder="Correo"
+																		  (focus)="focus=true" (blur)="focus=false">
+				</div>
+				<div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus1 === true}">
+					<div class="input-group-prepend">
+						<span class="input-group-text">
+							<i class="now-ui-icons text_caps-small"></i>
+						</span>
+					</div>
+					<input type="password" id="password" placeholder="Contraseña" class="form-control"
+																				  (focus)="focus1=true" (blur)="focus1=false" />
+				</div>
+			</div>
+			<div class="card-footer text-center">
+				<input type="submit" value="Login" class="btn btn-primary btn-round btn-lg btn-block">
+			</div>
+			<div style="display: flex; justify-content: center; align-items: center;">
+				<span style="font-size: 14px; color: #000; padding-right: 15px;">¿Todavía no tienes una cuenta?</span>
+				<button (click)="goToRegisterModal()" class="btn btn-no-fill btn-round btn-sm">Regístrate ahora</button>
+			</div>
+		</form>
+	</div>
+	`,
 	styleUrls: ['./login-modal.component.scss']
 })
-
-export class LoginModalComponent implements OnInit {
-	closeResult: string;
-	currentModal: any;
-
-	constructor(private authService: AuthService, private router: Router,
-				private modalService: NgbModal) {
-
-	}
+export class LoginModalContentComponent implements OnInit {
+	constructor(public activeModal: NgbActiveModal, private authService: AuthService,
+				private router: Router, private modalService: NgbModal) { }
 
 	ngOnInit() {
 
@@ -71,8 +112,26 @@ export class LoginModalComponent implements OnInit {
 			})
 	}
 
-	open(content) {
-		this.currentModal = this.modalService.open(content, { size: 'lg', centered: true, windowClass: 'modal-login modal-primary' })
+	private goToRegisterModal() {
+		this.modalService.dismissAll('GoToRegisterModal')
+	}
+
+}
+
+@Component({
+	selector: 'app-login-modal',
+	templateUrl: './login-modal.component.html',
+})
+
+export class LoginModalComponent {
+	closeResult: string;
+
+	constructor(private authService: AuthService, private router: Router,
+				private modalService: NgbModal) { }
+
+	public open() {
+		this.modalService.open(LoginModalContentComponent,
+							   { size: 'lg', centered: true, windowClass: 'modal-login modal-primary' })
 			.result.then((result) => {
 				this.closeResult = `Closed with: ${result}`;
 			}, (reason) => {
@@ -92,9 +151,4 @@ export class LoginModalComponent implements OnInit {
 			return  `with: ${reason}`;
 		}
 	}
-
-	private goToRegisterModal() {
-		this.modalService.dismissAll('GoToRegisterModal')
-	}
-
 }
