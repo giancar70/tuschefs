@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit {
 
 	constructor(public location: Location, private element: ElementRef, private authService: AuthService) {
 		this.sidebarVisible = false;
-		this.userData = this.authService.currentUserValue;
+		this.userData = this.authService.getUserData;
 	}
 
 	ngOnInit() {

@@ -23,30 +23,16 @@ agm-map{
 	border-radius: 4px;
 	padding: 8px 0;
 
+	.menu-description-editor:first-child {
+		.bullet-separator:first-child {
+			display: none;
+		}
+	}
+
 	.menu-description-editor {
 		margin: 0 8px;
 		background-color: #dfe2e7;
 		text-align: center;
-
-		.bullet-separator {
-			text-align: center;
-			padding-top: 20px;
-			.bullet {
-				display: inline-block;
-				margin: 0 4px;
-				border-radius: 50%;
-				background-color: #dfe2e7;
-				vertical-align: middle;
-				&.small {
-					width: 4px;
-					height: 4px;
-				}
-				&.big {
-					width: 6px;
-					height: 6px;
-				}
-			}
-		}
 
 		.menu-description-editor-title {
 			background-color: #fff;
@@ -57,6 +43,25 @@ agm-map{
 				}
 				text-align: center;
 				font-size: 26px;
+			}
+			.bullet-separator {
+				text-align: center;
+				padding-top: 20px;
+				.bullet {
+					display: inline-block;
+					margin: 0 4px;
+					border-radius: 50%;
+					background-color: #dfe2e7;
+					vertical-align: middle;
+					&.small {
+						width: 4px;
+						height: 4px;
+					}
+					&.big {
+						width: 6px;
+						height: 6px;
+					}
+				}
 			}
 		}
 

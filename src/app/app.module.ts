@@ -17,7 +17,6 @@ import { AppComponent } from './app.component';
 import { PresentationComponent } from './presentation/presentation.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 
-
 import { environment } from '../environments/environment';
 import { CreateEventComponent } from './create-event/create-event.component';
 import { EventDescriptionComponent } from './event-description/event-description.component';
@@ -33,6 +32,8 @@ import { RegisterModalComponent } from './register-modal/register-modal.componen
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { ExperienceTileComponent } from './experience-tile/experience-tile.component';
+
+import { JwtInterceptor } from './helpers/jwt.interceptor'
 
 const config = new AuthServiceConfig([
   {
@@ -82,6 +83,11 @@ export function provideConfig() {
 		RegisterModalComponentModule,
 	],
 	providers: [
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: JwtInterceptor,
+			multi: true,
+		},
 		{
 			provide: AuthServiceConfig,
 			useFactory: provideConfig

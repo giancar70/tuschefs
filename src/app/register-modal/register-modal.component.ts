@@ -120,22 +120,18 @@ export class RegisterModalContentComponent implements OnInit {
 
 	onSubmit(form: NgForm) {
 		this.authService.register(form.value)
-		.subscribe((data: any) => {
-			if (data.success === true) {
-				this.modalService.dismissAll('Login Successful')
-				this.router.navigate([''])
-				this.authService.setLoggedIn(true)
-			} else {
-				console.log(data.message)
-			}
-		})
+			.subscribe(response => {
+				if (response.success) {
+					this.modalService.dismissAll('Login Successful')
+					this.router.navigate([''])
+					this.authService.setLoggedIn(true)
+				} else {
+					console.log(response.message)
+				}
+			})
 	}
 
 	loginFacebook() {
-
-	}
-
-	loginGoogle() {
 
 	}
 
@@ -171,7 +167,7 @@ export class RegisterModalComponent {
 		config.maxDate = calendar.getToday();
 
 		// redirect if already logged in
-		if (this.authService.currentUserValue) {
+		if (this.authService.getUserData) {
 			this.router.navigate(['/']);
 		}
 	}

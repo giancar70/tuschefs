@@ -24,12 +24,18 @@ class GoogleLoginData {
 	last_name: string;
 }
 
+// Data returned after login / register
 class User {
-	date_birthday: string;
-	email: string;
-	password: string;
-	first_name: string;
-	token: string;
+	address: string
+	email: string
+	fb_id: string
+	first_name: string
+	full_name: string
+	is_verify: string
+	last_name: string
+	phone: string
+	photo: string
+	token: string
 }
 
 interface MyData {
@@ -48,10 +54,15 @@ export class AuthService {
 	constructor(private http: HttpClient, private socialAuthService: SocialLogin.AuthService) {
 		this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
 		this.currentUser = this.currentUserSubject.asObservable();
-		this.socialAuthService.authState.subscribe((user) => {
-		  this.socialUser = user;
-		  this.isAuthenticated = (user != null);
+
+		this.socialAuthService.authState.subscribe(user => {
+			this.socialUser = user;
+			this.setLoggedIn(user !== null || this.currentUser !== null);
 		});
+
+		this.currentUser.subscribe(user => {
+			this.setLoggedIn(user !== null);
+		})
 	}
 
 	setLoggedIn(value: boolean) {
@@ -62,7 +73,7 @@ export class AuthService {
 		return this.isAuthenticated;
 	}
 
-	public get currentUserValue(): any {
+	public get getUserData(): any {
 		if (this.currentUserSubject.value != null) {
 			return this.currentUserSubject.value;
 		} else {
@@ -71,29 +82,31 @@ export class AuthService {
 	}
 
 	login(email, password) {
-		return this.http.post<any>('https://chefs-test.herokuapp.com/v1/account/signin', { email, password })
-			.pipe(map(user => {
-				if (user && user.token) {
-					localStorage.setItem('currentUser', JSON.stringify(user));
-					this.currentUserSubject.next(user);
+		return this.http.post<any>('/account/signin/', { email, password })
+			.pipe(map(response => {
+				const { success, data } = response
+				if (success && data.token) {
+					localStorage.setItem('currentUser', JSON.stringify(data));
+					this.currentUserSubject.next(data);
 					this.setLoggedIn(true);
 				}
 
-				return user;
-			}))
+				return response;
+			}));
 	}
 
 	register(user: User) {
-		return this.http.post<any>(`https://chefs-test.herokuapp.com/v1/account/signup/`, user)
-			.pipe(map(usr => {
-				if (usr && usr.token) {
-					localStorage.setItem('currentUser', JSON.stringify(usr));
-					this.currentUserSubject.next(usr);
+		return this.http.post<any>(`/account/signup/`, user)
+			.pipe(map(response => {
+				const { success, data } = response
+				if (success && data.token) {
+					localStorage.setItem('currentUser', JSON.stringify(data));
+					this.currentUserSubject.next(data);
 					this.setLoggedIn(true);
 				}
 
-				return usr;
-			}))
+				return response;
+			}));
 	}
 
 	logout() {
@@ -103,30 +116,24 @@ export class AuthService {
 
 	loginFacebook(data: any) {
 		this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+		const id = this.socialUser.id
 		return this.authLogin('facebook', data);
 	}
 
-	loginGoogle(data: any) {
-		this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
-		return this.authLogin('google', data);
-	}
-
-	authLogin(provider: string, data: any) {
+	authLogin(provider: string, userData: any) {
 		switch (provider) {
 			case 'facebook':
-				return this.http.post<any>('https://chefs-test.herokuapp.com/v1/account/signin', data)
-					.pipe(map(user => {
-						if (user && user.token) {
-							localStorage.setItem('currentUser', JSON.stringify(user));
-							this.currentUserSubject.next(user);
+				return this.http.post<any>('/account/signin/', userData)
+					.pipe(map(response => {
+						const { success, data } = response
+						if (success && data.token) {
+							localStorage.setItem('currentUser', JSON.stringify(data));
+							this.currentUserSubject.next(data);
 							this.setLoggedIn(true);
 						}
 
-						return user;
+						return response;
 					}))
-			case 'google':
-				// TODO: implement
-				break;
 		}
 	}
 

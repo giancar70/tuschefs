@@ -73,7 +73,7 @@ export class LoginModalContentComponent implements OnInit {
 					this.modalService.dismissAll('Login Successful')
 					this.router.navigate([''])
 				} else {
-					window.alert(response.message)
+					console.log(response.message)
 				}
 			})
 
@@ -86,26 +86,10 @@ export class LoginModalContentComponent implements OnInit {
 		this.authService.loginFacebook(data)
 			.subscribe(response => {
 				if (response.success) {
-					console.log(response)
 					this.modalService.dismissAll('Login Successful')
 					this.router.navigate([''])
 				} else {
-					window.alert(response.message)
-				}
-			})
-	}
-
-	loginGoogle(event) {
-		event.preventDefault()
-		const data = {};
-		this.authService.loginGoogle(data)
-			.subscribe(response => {
-				if (response.success) {
-					console.log(response)
-					this.modalService.dismissAll('Login Successful')
-					this.router.navigate([''])
-				} else {
-					window.alert(response.message)
+					console.log(response.message)
 				}
 			})
 	}

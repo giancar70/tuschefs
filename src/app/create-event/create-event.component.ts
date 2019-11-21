@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { MapsAPILoader, MouseEvent } from '@agm/core';
 import { AuthService } from '../services/auth.service'
-import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, NgForm, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http'
 
 class UserData {
@@ -24,8 +24,11 @@ export class CreateEventComponent implements OnInit {
 	address: string;
 	public showMap: boolean;
 	private geoCoder;
-	// public userData: UserData;
 	public foodTypes: any;
+	public menuTypes: any;
+
+	menu: FormArray;
+	dishes: FormArray;
 
 	profileForm: FormGroup;
 	eventDescriptionForm: FormGroup;
@@ -40,28 +43,11 @@ export class CreateEventComponent implements OnInit {
 				private formBuilder: FormBuilder) {
 
 		this.showMap = true;
-		/*
-		this.userData = new UserData();
-
-		const user = this.authService.currentUserValue;
-		if (user !== null && user !== undefined) {
-			this.userData.email = user.email;
-			this.userData.first_name = user.first_name;
-			this.userData.last_name = user.last_name;
-			this.userData.phone = user.phone;
-			this.userData.gender = user.gender;
-		} else {
-			this.userData.email = ''
-			this.userData.first_name = '';
-			this.userData.last_name = '';
-			this.userData.phone = '';
-			this.userData.gender = '';
-		}
-		*/
 	}
 
 	ngOnInit() {
 		this.getFoodTypes();
+		this.getMenuTypes();
 		this.loadMapApi();
 
 		this.profileForm = this.formBuilder.group({
@@ -81,13 +67,13 @@ export class CreateEventComponent implements OnInit {
 			max_guests: ['', Validators.required],
 			event_title: ['', Validators.required],
 			about_host: ['', Validators.required],
-			menu: [[], Validators.required],
+			menu: this.formBuilder.array([this.createMenuCourse()]),
 			price_per_person: ['', Validators.required]
 		});
 
 		// TODO: Check
 		this.picturesForm = this.formBuilder.group({
-			pictures: [[], Validators.required]
+			pictures: this.formBuilder.array([])
 		});
 
 		// TODO: Set model according to 'frequency' or specific dates
@@ -100,19 +86,56 @@ export class CreateEventComponent implements OnInit {
 
 	}
 
+	private createMenuCourse(): FormGroup {
+		return this.formBuilder.group({
+			title: '',
+			dishes: this.formBuilder.array([this.createMenuDish()])
+		});
+	}
+
+	private createMenuDish(): FormGroup {
+		return this.formBuilder.group({
+			name: '',
+			type: ''
+		});
+	}
+
+	addMenuCourse() {
+		this.menu = this.eventDescriptionForm.get('menu') as FormArray;
+		this.menu.push(this.createMenuCourse());
+	}
+
+	addMenuDish(index: number) {
+		const menu = this.eventDescriptionForm.get('menu') as FormArray;
+		this.dishes = menu.controls[index].get('dishes') as FormArray;
+		this.dishes.push(this.createMenuDish());
+	}
+
+	// TODO: Move to service
 	getFoodTypes() {
-		this.http.get<any>('https://chefs-test.herokuapp.com/v1/type_food')
+		this.http.get<any>('/type_food')
 			.subscribe(result => {
-				if (result.success === true) {
+				if (result.success) {
 					this.foodTypes = result.data;
 				}
 			});
 	}
 
-	addDishToMenu() {
-		// TODO: Implement
+	getMenuTypes() {
+		this.http.get<any>('/type_menu')
+			.subscribe(result => {
+				if (result.success) {
+					this.menuTypes = result.data;
+				}
+			});
 	}
 
+	// Submits
+	onSubmitEventDescriptionForm() {
+		const data = this.eventDescriptionForm.value;
+	}
+
+	// Geolocation/Maps
 	locationChange(value) {
 		this.showMap = (value === 'En mi casa')
 	}

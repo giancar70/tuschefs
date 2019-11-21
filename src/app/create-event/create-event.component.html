@@ -73,9 +73,9 @@
 														<span class="input-group-text"><i class="now-ui-icons users_single-02"></i></span>
 													</div>
 													<select class="form-control" (focus)="focus3 = true" (blur)="focus3 = false" name="gender" formControlName="gender">
-														<option value="Masculino">Masculino</option>
-														<option value="Femenino">Femenino</option>
-														<option value="Otro">Otro</option>
+														<option value="M">Masculino</option>
+														<option value="F">Femenino</option>
+														<option value="O">Otro</option>
 													</select>
 												</div>
 											</div>
@@ -114,7 +114,7 @@
 			<ngb-tab title="Descripción del evento" style="font-size: 10px;">
 				<ng-template style="width:80%" ngbTabContent class="tab-space">
 					<div class="ml-auto mr-auto">
-						<form [formGroup]="eventDescriptionForm" role="form" id="description-form" method="post">
+						<form [formGroup]="eventDescriptionForm" role="form" id="description-form" (ngSubmit)="onSubmitEventDescriptionForm()" >
 							<div class="card card-contact card-raised">
 								<div class="card-header text-center">
 									<h4 class="card-title">Detalles del menú</h4>
@@ -149,7 +149,7 @@
 											<div class="form-group">
 												<label>Tipo de cocina</label>
 												<select id="typeKitchen" name="typeKitchen" class="form-control" formControlName="cuisine_type">
-													<option *ngFor="let type of foodTypes" value={{type.name}}>
+													<option *ngFor="let type of foodTypes" value={{type.id}}>
 														{{type.name}}
 													</option>
 												</select>
@@ -219,27 +219,33 @@
 										<div class="col-md-12">
 											<label>Menu</label>
 											<div class="outer-menu-description-editor">
-												<div class="menu-description-editor">
-													<div class="menu-description-editor-title">
-														<textarea class="form-control" name="editor-title" rows="8" cols="40" placeholder="Título de la comida 1"></textarea>
-													</div>	
-													<div class="menu-description-editor-dish">
-														<textarea class="form-control" name="dish-1" rows="8" cols="40" placeholder="Plato 1"></textarea>
-													</div>
-												</div>
-												<div class="menu-description-editor">
-													<div class="menu-description-editor-title">
-														<div class="bullet-separator">
-															<div class="bullet small"></div>
-															<div class="bullet big"></div>
-															<div class="bullet small"></div>
+
+												<div class="menu-description-editor" formArrayName="menu" *ngFor="let course of eventDescriptionForm.get('menu').controls; let i = index;">
+													<ng-container [formGroupName]="i">
+														<div class="menu-description-editor-title">
+															<div class="bullet-separator">
+																<div class="bullet small"></div>
+																<div class="bullet big"></div>
+																<div class="bullet small"></div>
+															</div>
+															<textarea formControlName="title" class="form-control" name="editor-title-{{i}}" rows="8" cols="40" placeholder="Título de la comida {{i + 1}}"></textarea>
 														</div>
-														<textarea class="form-control" name="editor-title" rows="8" cols="40" placeholder="Título de la comida 2"></textarea>
-													</div>	
-													<div class="menu-description-editor-dish">
-														<textarea class="form-control" name="dish-1" rows="8" cols="40" placeholder="Plato 1"></textarea>
-													</div>
+														<div class="menu-description-editor-dish">
+															<ng-container formArrayName="dishes" *ngFor="let dish of course.get('dishes').controls; let j = index;">
+																<div [formGroupName]="j">
+																	<select formControlName="type" class="form-control" name="dish-type-{{i}}-{{j}}">
+																		<option *ngFor="let type of menuTypes" value={{type.id}}>
+																			{{type.name}}
+																		</option>
+																	</select>
+																		<textarea formControlName="name" class="form-control" name="dish-{{i}}-{{j}}" rows="8" cols="40" placeholder="Plato {{j + 1}}"></textarea>
+																</div>
+															</ng-container>
+															<button class="btn btn-primary btn-round" (click)="addMenuDish(i)">Agregar Plato</button>
+														</div>
+													</ng-container>
 												</div>
+												<button class="btn btn-primary btn-round" (click)="addMenuCourse()" style="display: flex; margin: 20px auto 12px auto;">Agregar Menú</button>
 											</div>
 										</div>
 									</div>
