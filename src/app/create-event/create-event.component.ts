@@ -110,7 +110,7 @@ export class CreateEventComponent implements OnInit {
 	}
 
 	addDishToMenu() {
-
+		// TODO: Implement
 	}
 
 	locationChange(value) {
@@ -127,15 +127,12 @@ export class CreateEventComponent implements OnInit {
 			});
 			autocomplete.addListener('place_changed', () => {
 				this.ngZone.run(() => {
-					// get the place result
 					const place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
-					// verify result
 					if (place.geometry === undefined || place.geometry === null) {
 						return;
 					}
 
-					// set latitude, longitude and zoom
 					this.latitude = place.geometry.location.lat();
 					this.longitude = place.geometry.location.lng();
 					this.zoom = 12;
