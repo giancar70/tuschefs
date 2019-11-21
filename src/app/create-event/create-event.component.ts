@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { MapsAPILoader, MouseEvent } from '@agm/core';
 import { AuthService } from '../services/auth.service'
+import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
+import { HttpClient } from '@angular/common/http'
 
 class UserData {
 	first_name: string
@@ -22,13 +24,23 @@ export class CreateEventComponent implements OnInit {
 	address: string;
 	public showMap: boolean;
 	private geoCoder;
-	public userData: UserData;
+	// public userData: UserData;
+	public foodTypes: any;
+
+	profileForm: FormGroup;
+	eventDescriptionForm: FormGroup;
+	picturesForm: FormGroup;
+	timeAndLocationForm: FormGroup;
 
 	@ViewChild('search', {static: false})
 	public searchElementRef: ElementRef;
 
-	constructor(private mapsAPILoader: MapsAPILoader, private ngZone: NgZone, private authService: AuthService) {
+	constructor(private mapsAPILoader: MapsAPILoader, private ngZone: NgZone,
+				private authService: AuthService, private http: HttpClient,
+				private formBuilder: FormBuilder) {
+
 		this.showMap = true;
+		/*
 		this.userData = new UserData();
 
 		const user = this.authService.currentUserValue;
@@ -45,9 +57,67 @@ export class CreateEventComponent implements OnInit {
 			this.userData.phone = '';
 			this.userData.gender = '';
 		}
+		*/
 	}
 
 	ngOnInit() {
+		this.getFoodTypes();
+		this.loadMapApi();
+
+		this.profileForm = this.formBuilder.group({
+			profile_picture: [''],
+			first_name: ['', Validators.required],
+			last_name: ['', Validators.required],
+			email: ['', Validators.required],
+			gender: ['', Validators.required],
+			phone: ['', [Validators.required, Validators.minLength(9)]],
+			description: ['', Validators.required]
+		});
+
+		this.eventDescriptionForm = this.formBuilder.group({
+			food_type: ['', Validators.required],
+			cuisine_type: ['', Validators.required],
+			min_guests: ['', Validators.required],
+			max_guests: ['', Validators.required],
+			event_title: ['', Validators.required],
+			about_host: ['', Validators.required],
+			menu: [[], Validators.required],
+			price_per_person: ['', Validators.required]
+		});
+
+		// TODO: Check
+		this.picturesForm = this.formBuilder.group({
+			pictures: [[], Validators.required]
+		});
+
+		// TODO: Set model according to 'frequency' or specific dates
+		this.timeAndLocationForm = this.formBuilder.group({
+			start_time: ['', Validators.required],
+			end_time: ['', Validators.required],
+			where: ['', Validators.required],
+			address: ['']
+		});
+
+	}
+
+	getFoodTypes() {
+		this.http.get<any>('https://chefs-test.herokuapp.com/v1/type_food')
+			.subscribe(result => {
+				if (result.success === true) {
+					this.foodTypes = result.data;
+				}
+			});
+	}
+
+	addDishToMenu() {
+
+	}
+
+	locationChange(value) {
+		this.showMap = (value === 'En mi casa')
+	}
+
+	loadMapApi() {
 		this.mapsAPILoader.load().then(() => {
 			this.setCurrentLocation();
 			this.geoCoder = new google.maps.Geocoder;
@@ -72,10 +142,6 @@ export class CreateEventComponent implements OnInit {
 				});
 			});
 		});
-	}
-
-	locationChange(value) {
-		this.showMap = (value === 'En mi casa')
 	}
 
 	private setCurrentLocation() {

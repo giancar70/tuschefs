@@ -1,11 +1,11 @@
 <div class="mt-5 page-header">
 	<div class="mt-5 container">
-		<ngb-tabset type="pills" class="nav nav-pills nav-pills-primary vertical-pills" [orientation]="'vertical'">
+		<ngb-tabset type="pills" class="nav nav-pills nav-pills-primary vertical-pills" [orientation]="'vertical'" style="flex-flow: row nowrap; flex-wrap: nowrap;">
 			<ngb-tab title="Datos de perfil">
 				<ng-template style="width:80%" ngbTabContent class="tab-space">
 					<div class="ml-auto mr-auto">
 
-						<form role="form" id="contact-form" method="post">
+						<form [formGroup]="profileForm" role="form" id="contact-form" method="post">
 							<div class="card card-contact card-raised">
 								<div class="card-header text-center">
 									<h4 class="card-title">Foto de perfil</h4>
@@ -36,7 +36,7 @@
 												<div class="input-group-prepend">
 													<span class="input-group-text"><i class="now-ui-icons users_circle-08"></i></span>
 												</div>
-												<input type="text" class="form-control" placeholder="Nombre..." (focus)="focus=true" (blur)="focus=false" [(ngModel)]="userData.first_name" name="first-name">
+												<input type="text" class="form-control" placeholder="Nombre..." (focus)="focus=true" (blur)="focus=false" name="first_name" formControlName="first_name">
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -46,7 +46,7 @@
 													<div class="input-group-prepend">
 														<span class="input-group-text"><i class="now-ui-icons text_caps-small"></i></span>
 													</div>
-													<input type="text" placeholder="Apellido..." class="form-control" (focus)="focus1=true" (blur)="focus1=false" [(ngModel)]="userData.last_name" name="last-name">
+													<input type="text" placeholder="Apellido..." class="form-control" (focus)="focus1=true" (blur)="focus1=false" name="last_name"formControlName="last_name">
 												</div>
 											</div>
 										</div>
@@ -61,7 +61,7 @@
 													<div class="input-group-prepend">
 														<span class="input-group-text"><i class="now-ui-icons ui-1_email-85"></i></span>
 													</div>
-													<input type="email" placeholder="Correo electrónico..." class="form-control" (focus)="focus2=true" (blur)="focus2=false" [(ngModel)]="userData.email" name="email">
+													<input type="email" placeholder="Correo electrónico..." class="form-control" (focus)="focus2=true" (blur)="focus2=false" name="email" formControlName="email">
 												</div>
 											</div>
 										</div>
@@ -72,7 +72,7 @@
 													<div class="input-group-prepend">
 														<span class="input-group-text"><i class="now-ui-icons users_single-02"></i></span>
 													</div>
-													<select class="form-control" (focus)="focus3 = true" (blur)="focus3 = false" [(ngModel)]="userData.gender" name="gender">
+													<select class="form-control" (focus)="focus3 = true" (blur)="focus3 = false" name="gender" formControlName="gender">
 														<option value="Masculino">Masculino</option>
 														<option value="Femenino">Femenino</option>
 														<option value="Otro">Otro</option>
@@ -89,14 +89,14 @@
 													<div class="input-group-prepend">
 														<span class="input-group-text"><i class="now-ui-icons tech_mobile"></i></span>
 													</div>
-													<input type="text" placeholder="Teléfono" class="form-control" (focus)="focus4=true" (blur)="focus4=false" [(ngModel)]="userData.phone" name="phone">
+													<input type="text" placeholder="Teléfono" class="form-control" (focus)="focus4=true" (blur)="focus4=false" name="phone" formControlName="phone">
 												</div>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Descripción</label>
-												<textarea name="message" class="form-control" id="message" rows="6"></textarea>
+												<textarea name="description" class="form-control" id="description" rows="6" formControlName="description"></textarea>
 											</div>
 										</div>
 									</div>
@@ -111,10 +111,10 @@
 					</div>
 				</ng-template>
 			</ngb-tab>
-			<ngb-tab title="Descripción">
+			<ngb-tab title="Descripción del evento" style="font-size: 10px;">
 				<ng-template style="width:80%" ngbTabContent class="tab-space">
 					<div class="ml-auto mr-auto">
-						<form role="form" id="description-form" method="post">
+						<form [formGroup]="eventDescriptionForm" role="form" id="description-form" method="post">
 							<div class="card card-contact card-raised">
 								<div class="card-header text-center">
 									<h4 class="card-title">Detalles del menú</h4>
@@ -122,64 +122,43 @@
 								<div class="card-body">
 									<h4>
 										<small>
-											¡Hola! Este es el primer paso para crear tu evento culinario. Te toca compartir aquellos detalles de este evento con tus futuros invitados.Te recomendamos mencionar los ingredientes, bebidas y todo lo que ofrecerás durante la experiencia.<br><br>
-											Tu evento será publicado, siempre que hayas completado los 4 pasos.
+											<p style="margin-bottom: 10px;">¡Hola! Este es el primer paso para crear tu evento culinario. Te toca compartir aquellos detalles de este evento con tus futuros invitados. Te recomendamos mencionar los ingredientes, bebidas y todo lo que ofrecerás durante la experiencia.</p>
+											<p>Tu evento será publicado, siempre que hayas completado los 4 pasos.</p>
 										</small>
 									</h4>
 
-									<div class="row">
+									<div class="row select-padding-label" style="padding-bottom: 20px;">
 										<div class="col-md-3">
-											<label>Tipo de comida</label>
-											<div class="input-group" [ngClass]="{'input-group-focus':focus===true}">
-												<div class="select select-large">
-													<select id="typeFood" name="typeOfFood">
-														<option value="Aperitivo">Aperitivo</option>
-														<option value="Desayuno">Desayuno</option>
-														<option value="Brunch">Brunch</option>
-														<option value="Clasesdecocina">Clases de cocina</option>
-														<option value="Cena">Cena</option>
-														<option value="Paseoculinario">Paseo culinario</option>
-														<option value="Almuerzo">Almuerzo</option>
-														<option value="Degustación">Degustación</option>
-														<option value="Horadelte">Hora del té</option>
-														<option value="Picnic">Picnic</option>
-													</select>
-												</div>
+											<div class="form-group">
+												<label>Tipo de comida</label>
+												<select id="typeFood" name="typeOfFood" class="form-control" formControlName="food_type">
+													<option value="Aperitivo">Aperitivo</option>
+													<option value="Desayuno">Desayuno</option>
+													<option value="Brunch">Brunch</option>
+													<option value="Clasesdecocina">Clases de cocina</option>
+													<option value="Cena">Cena</option>
+													<option value="Paseoculinario">Paseo culinario</option>
+													<option value="Almuerzo">Almuerzo</option>
+													<option value="Degustación">Degustación</option>
+													<option value="Horadelte">Hora del té</option>
+													<option value="Picnic">Picnic</option>
+												</select>
 											</div>
 										</div>
 										<div class="col-md-3">
-											<label>Tipo de cocina</label>
-											<div class="input-group" [ngClass]="{'input-group-focus':focus===true}">
-												<div class="select select-large">
-													<select id="typeKitchen" name="typeOfKitchen">
-														<option value="Alemana">Alemana</option>
-														<option value="Africana">Desayuno</option>
-														<option value="Americana">Brunch</option>
-														<option value="Antigua">Clases de cocina</option>
-														<option value="Asiatica">Cena</option>
-														<option value="Barbacoa">Paseo culinario</option>
-														<option value="Belga">Almuerzo</option>
-														<option value="Cajun">Degustación</option>
-														<option value="Catalana">Hora del té</option>
-														<option value="Chilena">Picnic</option>
-														<option value="China">Almuerzo</option>
-														<option value="Criolla">Degustación</option>
-														<option value="Escandinava">Almuerzo</option>
-														<option value="Española">Degustación</option>
-														<option value="Europea">Almuerzo</option>
-														<option value="Filipina">Degustación</option>
-														<option value="Francesa">Almuerzo</option>
-														<option value="Fusión">Degustación</option>
-														<option value="Griega">Almuerzo</option>
-														<option value="Hawaiana">Degustación</option>
-													</select>
-												</div>
+											<div class="form-group">
+												<label>Tipo de cocina</label>
+												<select id="typeKitchen" name="typeKitchen" class="form-control" formControlName="cuisine_type">
+													<option *ngFor="let type of foodTypes" value={{type.name}}>
+														{{type.name}}
+													</option>
+												</select>
 											</div>
 										</div>
 										<div class="col-md-3">
-											<label>Mín. de invitados</label>
-											<div class="select select-large">
-												<select id="minGuests" name="minGuests">
+											<div class="form-group">
+												<label>Mín. de invitados</label>
+												<select id="minGuests" name="minGuests" class="form-control" formControlName="min_guests">
 													<option value="1">1 Persona</option>
 													<option value="2">2 Personas</option>
 													<option value="3">3 Personas</option>
@@ -200,9 +179,9 @@
 											</div>
 										</div>
 										<div class="col-md-3">
-											<label>Máx. de invitados</label>
-											<div class="select select-large">
-												<select id="maxGuests" name="maxGuests">
+											<div class="form-group">
+												<label>Máx. de invitados</label>
+												<select id="maxGuests" name="maxGuests" class="form-control" formControlName="max_guests">
 													<option value="1">1 Persona</option>
 													<option value="2">2 Personas</option>
 													<option value="3">3 Personas</option>
@@ -222,13 +201,57 @@
 												</select>
 											</div>
 										</div>
-
-
 									</div>
+									<div class="row select-padding-label">
+										<div class="col-md-12">
+											<label>Título</label>
+											<div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus === true}">
+												<input type="text" name="title" id="title" value="" class="form-control" (focus)="focus=true" (blur)="focus=false" formControlName="event_title">
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div class="form-group" [ngClass]="{'input-group-focus':focus === true}">
+												<label>Cuéntanos sobre ti y tu experiencia</label>
+												<textarea name="about-menu" id="about-menu" class="form-control" formControlName="about_host"></textarea>
+											</div>
+										</div>
 
+										<div class="col-md-12">
+											<label>Menu</label>
+											<div class="outer-menu-description-editor">
+												<div class="menu-description-editor">
+													<div class="menu-description-editor-title">
+														<textarea class="form-control" name="editor-title" rows="8" cols="40" placeholder="Título de la comida 1"></textarea>
+													</div>	
+													<div class="menu-description-editor-dish">
+														<textarea class="form-control" name="dish-1" rows="8" cols="40" placeholder="Plato 1"></textarea>
+													</div>
+												</div>
+												<div class="menu-description-editor">
+													<div class="menu-description-editor-title">
+														<div class="bullet-separator">
+															<div class="bullet small"></div>
+															<div class="bullet big"></div>
+															<div class="bullet small"></div>
+														</div>
+														<textarea class="form-control" name="editor-title" rows="8" cols="40" placeholder="Título de la comida 2"></textarea>
+													</div>	
+													<div class="menu-description-editor-dish">
+														<textarea class="form-control" name="dish-1" rows="8" cols="40" placeholder="Plato 1"></textarea>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row select-padding-label">
+										<div class="col-md-12">
+											<label>Precio por persona</label>
+											<div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus === true}">
+												<input type="text" name="title" id="title" value="" class="form-control" (focus)="focus=true" (blur)="focus=false" formControlName="price_per_person">
+											</div>
+										</div>
+									</div>
 								</div>
-
-
 							</div>
 							<div class="col-md-12" style="display: flex; justify-content: center;">
 								<button type="submit" class="btn btn-primary btn-round pull-right">Guardar y continuar</button>
@@ -241,7 +264,7 @@
 			<ngb-tab title="Fotos">
 				<ng-template style="width:80%" ngbTabContent class="tab-space">
 					<div class="ml-auto mr-auto">
-						<form role="form" id="description-form" method="post">
+						<form [formGroup]="picturesForm" role="form" id="description-form" method="post">
 							<div class="card card-contact card-raised">
 								<div class="card-header text-center">
 									<h4 class="card-title">Añade fotos a tu experiencia</h4>
@@ -263,7 +286,7 @@
 									<div class="row">
 										<div id="file-uploader">
 											<div class="container">
-												<div class="row">
+												<div class="row" style="display: flex; justify-content: center;">
 													<app-image-upload></app-image-upload>
 												</div>
 											</div>
@@ -281,7 +304,7 @@
 			<ngb-tab title="Lugar y servicios">
 				<ng-template style="width:80%" ngbTabContent class="tab-space">
 					<div class="ml-auto mr-auto">
-						<form role="form" id="description-form" method="post">
+						<form [formGroup]="timeAndLocationForm" role="form" id="description-form" method="post">
 							<div class="card card-contact card-raised">
 								<div class="card-header text-center">
 									<h4 class="card-title">¿A qué hora realizarás el evento?</h4>

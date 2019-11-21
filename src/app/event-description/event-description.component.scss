@@ -1,0 +1,78 @@
+.title {
+	margin-bottom: 20px;
+}
+
+.icons {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+	img {
+		max-width: 30px;
+	}
+	span {
+		padding-left: 8px;
+	}
+}
+
+.card {
+	&.card-background::after {
+		background: #f6f6f6;
+	}
+	.info {
+		padding: 10px;
+		margin: 10px;
+		max-width: 100%;
+		background: #fff;
+	}
+	.form-group {
+		text-align: start;
+		label {
+			padding-left: 10px;
+		}
+	}
+	.price {
+		color: #000;
+		font-size: 22px;
+		font-weight: 600;
+		small {
+			font-size: 12px;
+			color: #666;
+			font-weight: 400;
+		}
+	}
+}
+
+.accordion {
+	a {
+		font-size: 20px;
+	}
+}
+
+.event-includes {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-around;
+	align-items: center;
+	.include-square {
+		border: 1px solid #ccc;
+		padding: 10px;
+		display: flex;
+		flex-flow: column wrap;
+		align-items: flex-start;
+		justify-content: flex-start;
+		margin: 0 5px;
+		img {
+			max-width: 25px;
+		}
+		h3 {
+			margin: 0;
+			font-size: 14px;
+		}
+		p {
+			margin: 0;
+			font-size: 12px;
+		}
+	}
+}

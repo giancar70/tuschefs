@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core'
+import { Injectable, Component, OnInit, Input } from '@angular/core'
 import { AuthService } from '../services/auth.service'
 import { Router } from '@angular/router'
 import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'
+import { RegisterModalInjectable } from '../register-modal/register-modal.component'
 
 @Component({
   selector: 'app-login-modal-content',
@@ -17,10 +18,6 @@ import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-
 				<button type="button" class="btn btn-icon btn-round btn-facebook btn-facebook-continue" (click)="loginFacebook($event)">
 					<span>Continuar con Facebook</span>
 					<i class="fa fa-facebook"> </i>
-				</button>
-				<button type="button" class="btn btn-icon btn-round btn-google btn-google-continue" (click)="loginGoogle($event)">
-					<span>Continuar con Google</span>
-					<i class="fa fa-google"></i>
 				</button>
 			</div>
 			<div class="card-body">
@@ -57,7 +54,8 @@ import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-
 })
 export class LoginModalContentComponent implements OnInit {
 	constructor(public activeModal: NgbActiveModal, private authService: AuthService,
-				private router: Router, private modalService: NgbModal) { }
+				private router: Router, private modalService: NgbModal,
+				private registerModal: RegisterModalInjectable) { }
 
 	ngOnInit() {
 
@@ -114,6 +112,7 @@ export class LoginModalContentComponent implements OnInit {
 
 	private goToRegisterModal() {
 		this.modalService.dismissAll('GoToRegisterModal')
+		this.registerModal.open()
 	}
 
 }
@@ -137,7 +136,38 @@ export class LoginModalComponent {
 			}, (reason) => {
 				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
 				if (reason === 'GoToRegisterModal') {
-					// TODO: open modal
+
+				}
+			});
+	}
+
+	private getDismissReason(reason: any): string {
+		if (reason === ModalDismissReasons.ESC) {
+			return 'by pressing ESC';
+		} else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+			return 'by clicking on a backdrop';
+		} else {
+			return  `with: ${reason}`;
+		}
+	}
+}
+
+@Injectable({ providedIn: 'root' })
+export class LoginModalInjectable {
+	closeResult: string;
+
+	constructor(private authService: AuthService, private router: Router,
+				private modalService: NgbModal) { }
+
+	public open() {
+		this.modalService.open(LoginModalContentComponent,
+							   { size: 'lg', centered: true, windowClass: 'modal-login modal-primary' })
+			.result.then((result) => {
+				this.closeResult = `Closed with: ${result}`;
+			}, (reason) => {
+				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+				if (reason === 'GoToRegisterModal') {
+
 				}
 			});
 	}

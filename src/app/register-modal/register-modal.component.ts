@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Injectable, Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import { NgbModal, NgbActiveModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'
@@ -9,6 +9,8 @@ import { AuthService } from '../services/auth.service';
 import { NgbDatepickerConfig, NgbCalendar, NgbDate,
 		 NgbDateStruct, NgbDateAdapter, NgbDateNativeAdapter
 	   } from '@ng-bootstrap/ng-bootstrap';
+
+import { LoginModalInjectable } from '../login-modal/login-modal.component'
 
 
 @Component({
@@ -22,17 +24,14 @@ import { NgbDatepickerConfig, NgbCalendar, NgbDate,
 					<span>Continuar con Facebook</span>
 					<i class="fa fa-facebook"> </i>
 				</button>
-				<button type="button" class="btn btn-icon btn-round btn-google btn-google-continue">
-					<span>Continuar con Google</span>
-					<i class="fa fa-google"></i>
-				</button>
 				<h5 class="card-description"> o con tu correo</h5>
 			</div>
 			<form [formGroup]="registerForm" (ngSubmit)="onSubmit(registerForm)">
 				<div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus===true}">
 					<div class="input-group-prepend">
-						<span class="input-group-text"> <i
-							  class="now-ui-icons users_circle-08"></i></span>
+						<span class="input-group-text">
+							<i class="now-ui-icons users_circle-08"></i>
+						</span>
 					</div>
 					<input type="text" class="form-control" placeholder="Nombre y apellido"
 															formControlName="first_name"
@@ -70,17 +69,13 @@ import { NgbDatepickerConfig, NgbCalendar, NgbDate,
 					<input type="password" placeholder="Password" class="form-control" (focus)="focus1=true"
 															  formControlName="password" (blur)="focus1=false">
 				</div>
-
-				<!-- If you want to add a checkbox to this form, uncomment this code -->
-				<!--
 				<div class="form-check">
 					<label class="form-check-label">
 						<input class="form-check-input" type="checkbox">
 						<span class="form-check-sign"></span>
-						I agree to the terms and <a href="#something">conditions</a>.
+						Acepto los <a href="#something">Terminos y Condiciones</a>.
 					</label>
 				</div>
-				-->
 				<div class="form-group card-footer text-center">
 					<button [disabled]="loading" type="submit"
 												 class="btn btn-primary btn-round btn-lg">Crear cuenta</button>
@@ -108,6 +103,7 @@ export class RegisterModalContentComponent implements OnInit {
 		private authService: AuthService,
 		private alertService: AlertService,
 		private modalService: NgbModal,
+		private loginModal: LoginModalInjectable,
 		config: NgbDatepickerConfig, calendar: NgbCalendar) {}
 
 	ngOnInit() {
@@ -145,6 +141,7 @@ export class RegisterModalContentComponent implements OnInit {
 
 	public goToLoginModal() {
 		this.modalService.dismissAll('GoToLoginModal');
+		this.loginModal.open()
 	}
 }
 
@@ -188,6 +185,35 @@ export class RegisterModalComponent {
 			if (reason === 'GoToLoginModal') {
 				// TODO: open modal
 			}
+		});
+	}
+
+	private getDismissReason(reason: any): string {
+		if (reason === ModalDismissReasons.ESC) {
+			return 'by pressing ESC';
+		} else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+			return 'by clicking on a backdrop';
+		} else {
+			return  `with: ${reason}`;
+		}
+	}
+}
+
+@Injectable({ providedIn: 'root' })
+export class RegisterModalInjectable {
+	closeResult: string;
+	registerForm: FormGroup;
+	loading = false;
+	submitted = false;
+
+	constructor(private formBuilder: FormBuilder, private modalService: NgbModal) { }
+
+	open() {
+		this.modalService.open(RegisterModalContentComponent, { size: 'lg', centered: true,  windowClass: 'modal-login modal-primary' })
+		.result.then((result) => {
+			this.closeResult = `Closed with: ${result}`;
+		}, (reason) => {
+			this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
 		});
 	}
 

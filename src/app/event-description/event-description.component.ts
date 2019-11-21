@@ -9,6 +9,8 @@ import * as Rellax from 'rellax';
 })
 export class EventDescriptionComponent implements OnInit {
 	data: Date = new Date();
+	reservationDate: Date;
+	numGuests: number;
 
 	dropdownList = [];
 	selectedItems = [];

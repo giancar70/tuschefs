@@ -382,19 +382,12 @@
               Disfruta experiencias culinarias únicas
             </h2>
             <div class="h4 text-contrast space-4">
-              ¿Buscas nuevos planes con tus amigos? <br> <br>Entonces, renta una experiencia de cocina y crea recuerdos
-              que te durarán para siempre.
+              ¿Buscas nuevos planes con tus amigos? <br> <br>
+			  <div class="hide-sm">
+				  Entonces, renta una experiencia de cocina y crea recuerdos
+				  que te durarán para siempre.
+			  </div>
             </div>
-            <div class="show-sm sm-search">
-              <div class="input-addon" id="sm-search-field">
-                <span class="input-stem input-large fake-search-field">
-                  ¿Vas al chef o el chef viene a ti?
-                </span>
-                <i class="input-suffix btn btn-primary icon icon-full icon-search"></i>
-              </div>
-
-            </div>
-
             <a href="#belong-anywhere-container"
               class="btn hide-sm btn-contrast btn-large btn-semi-transparent js-show-how-it-works">
               ¿Cómo funciona?
@@ -692,6 +685,65 @@
 
             </div>
           </noscript>
+          <div class="searchbar-wrapper col-sm-12 show-sm hide-md hide-lg hide-x-lg">
+
+            <div id="searchbar">
+              <div class="searchbar">
+                <form id="searchbar-form" action="/s">
+
+                  <div class="searchbar__input-wrapper">
+
+                    <label class="searchbar__location">
+                      <span class="text-left text-contrast">¿Qué estás buscando?</span>
+
+                      <input id="location" type="text" class="input-large input-contrast" autocomplete="off"
+                        name="location" placeholder="Busca por lugar o anfitrión" />
+                    </label>
+
+                    <label class="searchbar__checkin">
+                      <span class="text-left text-contrast">¿Cuando estás disponible?</span>
+                      <input id="checkin" type="text" class="checkin input-large input-contrast" name="checkin"
+                        placeholder="Cuándo?" />
+                    </label>
+
+                    <label class="searchbar__guests">
+                      <span class="text-left text-contrast">¿Cuantos invitados asistirán?</span>
+                      <div class="select select-large">
+                        <select id="guests" name="guests">
+                          <option value="1">1 Persona</option>
+                          <option value="2">2 Personas</option>
+                          <option value="3">3 Personas</option>
+                          <option value="4">4 Personas</option>
+                          <option value="5">5 Personas</option>
+                          <option value="6">6 Personas</option>
+                          <option value="7">7 Personas</option>
+                          <option value="8">8 Personas</option>
+                          <option value="9">9 Personas</option>
+                          <option value="10">10 Personas</option>
+                          <option value="11">11 Personas</option>
+                          <option value="12">12 Personas</option>
+                          <option value="13">13 Personas</option>
+                          <option value="14">14 Personas</option>
+                          <option value="15">15 Personas</option>
+                          <option value="16">16+ Personas</option>
+                        </select>
+                      </div>
+                    </label>
+
+                  </div>
+				  <div class="searchbutton-wrapper">
+					  <button id="submit_location" type="submit" class="searchbar__submit btn btn-primary btn-large">
+						Buscar
+					  </button>
+				  </div>
+
+                  <input type="hidden" name="source" value="bb">
+
+                </form>
+              </div>
+            </div>
+
+          </div>
           <div class="section-intro text-center row-space-6 row-space-top-8">
             <h2 class="row-space-1">
               <strong>Explora TusChefs</strong>
@@ -700,23 +752,23 @@
           <div class="discovery-tiles">
 			  <div class="container">
 				 <div class="row">
-					<div class="col-sm-6 col-md-4 col-lg-4">
+					<div class="col-sm-12 col-md-4 col-lg-4">
 						<app-experience-tile></app-experience-tile>
 					</div>
-					<div class="col-sm-6 col-md-4 col-lg-4">
+					<div class="col-sm-12 col-md-4 col-lg-4">
 						<app-experience-tile></app-experience-tile>
 					</div>
-					<div class="col-sm-6 col-md-4 col-lg-4">
+					<div class="col-sm-12 col-md-4 col-lg-4">
 						<app-experience-tile></app-experience-tile>
 					</div>
 
-					<div class="col-sm-6 col-md-4 col-lg-4">
+					<div class="col-sm-12 col-md-4 col-lg-4">
 						<app-experience-tile></app-experience-tile>
 					</div>
-					<div class="col-sm-6 col-md-4 col-lg-4">
+					<div class="col-sm-12 col-md-4 col-lg-4">
 						<app-experience-tile></app-experience-tile>
 					</div>
-					<div class="col-sm-6 col-md-4 col-lg-4">
+					<div class="col-sm-12 col-md-4 col-lg-4">
 						<app-experience-tile></app-experience-tile>
 					</div>
 				  </div>
@@ -752,7 +804,7 @@
                     <p>Diviértete , comparte y pasa una de las mejores experiencias culinarias a lado de tus amigos o familiares.</p>
                   </article>
                   <footer>
-                    <a class="actionButton" href="#banner">Haz una reserva</a>
+                    <a class="btn btn-primary btn-round" href="#banner">Haz una reserva</a>
                   </footer>
                 </section>
               </div>

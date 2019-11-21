@@ -59,6 +59,14 @@ form {
 	border: none;
 }
 
+.card-signup .form-check {
+	padding: 0;
+	text-align: center;
+	.form-check-label {
+		margin: 0;
+	}
+}
+
 .card.card-signup .card-body input.form-control,
 .card.card-signup .card-body .input-group-text,
 .card.card-signup .card-body .input-group-text::placeholder {
