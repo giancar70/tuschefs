@@ -24,7 +24,7 @@
 						Eventos
 					</a>
 				</li>
-				<ng-container *ngIf="isAuthenticated(); else notAuthenticatedBlock">
+				<ng-container *ngIf="isAuthenticated() && userData !== undefined; else notAuthenticatedBlock">
 					<li class="nav-item">
 						<a class="btn btn-neutral dropdown-item">
 							<i class="now-ui-icons users_single-02"></i>

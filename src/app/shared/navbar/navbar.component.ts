@@ -25,11 +25,11 @@ export class NavbarComponent implements OnInit {
 
 	constructor(public location: Location, private element: ElementRef, private authService: AuthService) {
 		this.sidebarVisible = false;
-		this.userData = this.authService.getUserData;
 	}
 
 	ngOnInit() {
 		const navbar: HTMLElement = this.element.nativeElement;
+		this.userData = this.authService.getUserData;
 		this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
 	}
 
