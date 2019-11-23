@@ -187,6 +187,12 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 
 	onSubmitTimeAndLocationForm() {
 		const data = this.timeAndLocationForm.value;
+		data.time_start = Object.keys(data.time_start).map(e => data.time_start[e]).join(':')
+		data.time_end = Object.keys(data.time_end).map(e => data.time_end[e]).join(':')
+		data.date_init = Object.keys(data.date_init).map(e => data.date_init[e]).join('-')
+		data.date_end = Object.keys(data.date_end).map(e => data.date_end[e]).join('-')
+		console.log(data)
+
 		this.http.put<any>(`/event/${this.eventId}`, data)
 			.subscribe(response => {
 				if (response.success) {
