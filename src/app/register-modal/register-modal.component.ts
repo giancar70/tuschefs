@@ -119,12 +119,14 @@ export class RegisterModalContentComponent implements OnInit {
 	get f() { return this.registerForm.controls; }
 
 	onSubmit(form: NgForm) {
-		this.authService.register(form.value)
+		const data = form.value
+
+		data.date_birthday = Object.keys(data.date_birthday).map(e => data.date_birthday[e]).join('-')
+		this.authService.register(data)
 			.subscribe(response => {
 				if (response.success) {
 					this.modalService.dismissAll('Login Successful')
-					this.router.navigate([''])
-					this.authService.setLoggedIn(true)
+					this.authService.login(response.email, data.password)
 				} else {
 					console.log(response.message)
 				}
