@@ -21,7 +21,7 @@
 
 
   <meta name="description"
-    content="Rent unique accommodation from local hosts in 190+ countries. Feel at home anywhere you go in the world with Airbnb.">
+    content="Rent unique accommodation from local hosts in 190+ countries. Feel at home anywhere you go in the world with TusChefs.">
 
 
 
@@ -462,82 +462,6 @@
       </div>
     </div>
 
-    <div class="hide show-md show-lg">
-
-      <section class="
-      how-it-works
-      how-it-works--overlay
-      js-how-it-works" aria-hidden="true">
-
-        <a href="#" class="how-it-works__close panel-close js-close-how-it-works">
-          <span class="screen-reader-only">
-            Close How It Works
-          </span>
-          &times;
-        </a>
-
-        <div class="page-container-responsive panel-contrast text-contrast">
-
-          <h2 class="screen-reader-only">
-            How It Works
-          </h2>
-
-          <div class="row space-top-8 text-center">
-
-            <div class="how-it-works__step how-it-works__step-one col-md-4">
-              <div class="panel-body">
-                <div class="how-it-works__image"></div>
-                <h3>
-                  Discover Amazing Places
-                </h3>
-                <p>
-                  Find hosts with extra rooms, entire homes, and unique accommodation like castles and igloos.
-                </p>
-              </div>
-            </div>
-
-            <div class="how-it-works__step how-it-works__step-two col-md-4">
-              <div class="panel-body">
-                <div class="how-it-works__image"></div>
-                <h3>
-                  Book a Stay
-                </h3>
-                <p>
-                  Connect with hosts, confirm travel dates, and pay&mdash;all through Airbnb’s trusted services.
-                </p>
-              </div>
-            </div>
-
-            <div class="how-it-works__step how-it-works__step-three col-md-4">
-              <div class="panel-body">
-                <div class="how-it-works__image"></div>
-                <h3>
-                  Travel
-                </h3>
-                <p>
-                  Feel at home, anywhere you go in the world. <a href='/help/getting-started/how-to-travel'>Learn
-                    more</a> about how to travel on Airbnb.
-                </p>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="row space-top-4 space-4 text-center">
-            <p><a href='/help/getting-started/how-to-host'>Learn more</a> about hosting on Airbnb and show your guests
-              they’re right where they belong.
-            </p>
-          </div>
-
-        </div>
-      </section>
-
-    </div>
-
-
-
-
-
     <div class="js-host-banner panel-dark host-banner hide">
       <div class="page-container-responsive">
         <div class="panel host-banner--panel-no-border space-top-8">
@@ -702,8 +626,7 @@
 
                     <label class="searchbar__checkin">
                       <span class="text-left text-contrast">¿Cuando estás disponible?</span>
-                      <input id="checkin" type="text" class="checkin input-large input-contrast" name="checkin"
-                        placeholder="Cuándo?" />
+                      <input id="checkin" type="text" class="checkin input-large input-contrast" name="checkin" placeholder="Cuándo?" />
                     </label>
 
                     <label class="searchbar__guests">
@@ -752,24 +675,8 @@
           <div class="discovery-tiles">
 			  <div class="container">
 				 <div class="row">
-					<div class="col-sm-12 col-md-4 col-lg-4">
-						<app-experience-tile></app-experience-tile>
-					</div>
-					<div class="col-sm-12 col-md-4 col-lg-4">
-						<app-experience-tile></app-experience-tile>
-					</div>
-					<div class="col-sm-12 col-md-4 col-lg-4">
-						<app-experience-tile></app-experience-tile>
-					</div>
-
-					<div class="col-sm-12 col-md-4 col-lg-4">
-						<app-experience-tile></app-experience-tile>
-					</div>
-					<div class="col-sm-12 col-md-4 col-lg-4">
-						<app-experience-tile></app-experience-tile>
-					</div>
-					<div class="col-sm-12 col-md-4 col-lg-4">
-						<app-experience-tile></app-experience-tile>
+					<div *ngFor="let tile of experienceTiles" class="col-sm-12 col-md-4 col-lg-4">
+						<app-experience-tile [data]="tile"></app-experience-tile>
 					</div>
 				  </div>
 			  </div>

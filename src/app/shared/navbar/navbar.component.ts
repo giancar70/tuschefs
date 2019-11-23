@@ -62,6 +62,10 @@ export class NavbarComponent implements OnInit {
 		return this.authService.isUserAuthenticated;
 	}
 
+	logout() {
+		this.authService.logout();
+	}
+
 	isHome() {
 		const titlee = this.location.prepareExternalUrl(this.location.path());
 		if ( titlee === '/home' ) {

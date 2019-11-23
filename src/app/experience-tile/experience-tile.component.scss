@@ -1,5 +1,9 @@
 .card-img-wrapper {
 	position: relative;
+	.card-img-top {
+		object-fit: cover;
+		max-height: 200px;
+	}
 }
 
 .card-floating-price {

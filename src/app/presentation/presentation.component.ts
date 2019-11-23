@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import * as Rellax from 'rellax';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
 	selector: 'app-presentation',
@@ -14,61 +14,36 @@ export class PresentationComponent implements OnInit, OnDestroy, AfterViewInit {
 		right: false
 	};
 	date: Date = new Date();
+	experienceTiles: object[];
 
-		constructor() { }
+	constructor(private http: HttpClient) { }
 
 	ngOnInit() {
 		const body = document.getElementsByTagName('body')[0];
 		body.classList.add('presentation-page');
 		const navbar = document.getElementsByTagName('nav')[0];
 		navbar.classList.add('navbar-transparent');
+
+		this.getPromoEvents();
 	}
+
+	getPromoEvents() {
+		this.http.get<any>('/events/promo')
+			.subscribe(response => {
+				if (response.success) {
+					this.experienceTiles = response.data.map(tile => {
+						return { image: tile.photos[0].image, title: tile.title,
+								description: tile.description, host: tile.chef.user.first_name,
+								price: tile.price, id: tile.id };
+					})
+				}
+			});
+	}
+
 	ngAfterViewInit() {
-		setTimeout(function() {
-		if (window.innerWidth >= 991) {
-			const rellax = new Rellax('.rellax', {
-				center: true
-			});
-			const rellax1 = new Rellax('.rellax1', {
-				center: true
-			});
-			const rellax5 = new Rellax('.rellax5', {
-				center: true
-			});
-			const rellax6 = new Rellax('.rellax6', {
-				center: true
-			});
-			const rellax7 = new Rellax('.rellax7', {
-				center: true
-			});
-			const rellax8 = new Rellax('.rellax8', {
-				center: true
-			});
-			const rellax9 = new Rellax('.rellax9', {
-				center: true
-			});
-			const rellax10 = new Rellax('.rellax10', {
-				center: true
-			});
-			const rellax11 = new Rellax('.rellax11', {
-				center: true
-			});
-			const rellax12 = new Rellax('.rellax12', {
-				center: true
-			});
-			const rellax13 = new Rellax('.rellax13', {
-				center: true
-			});
-			const rellax14 = new Rellax('.rellax14', {
-				center: true
-			});
-
-			const rellaxHeader = new Rellax('.rellax-header');
-			const rellaxText = new Rellax('.rellax-text');
-		}
-		}, 200);
 
 	}
+
 	ngOnDestroy() {
 		const body = document.getElementsByTagName('body')[0];
 		body.classList.remove('presentation-page');

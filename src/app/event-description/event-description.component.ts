@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import * as Rellax from 'rellax';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http'
 
 
 @Component({
@@ -8,79 +10,44 @@ import * as Rellax from 'rellax';
   styleUrls: ['./event-description.component.scss']
 })
 export class EventDescriptionComponent implements OnInit {
-	data: Date = new Date();
-	reservationDate: Date;
-	numGuests: number;
+	private loading: boolean;
+	private eventId: number;
+	private eventData: any;
 
-	dropdownList = [];
-	selectedItems = [];
-	dropdownSettings = {};
-
-	dropdownList1 = [];
-	selectedItems1 = [];
-	dropdownSettings1 = {};
-
-	constructor() { }
+	constructor(private route: ActivatedRoute, private http: HttpClient,
+				private router: Router) { }
 
 	ngOnInit() {
-		const rellaxHeader = new Rellax('.rellax-header');
+		this.loading = true;
+		this.route.params.subscribe(params => {
+			this.eventId = params['id'];
+			this.loadEventData();
+		})
+	}
 
-		const body = document.getElementsByTagName('body')[0];
-		body.classList.add('product-page');
-		const navbar = document.getElementsByTagName('nav')[0];
-		navbar.classList.add('navbar-transparent');
+	loadEventData() {
+		this.http.get<any>(`/event/${this.eventId}`)
+			.subscribe(response => {
+				if (response.success) {
+					this.eventData = response.data;
+					this.loading = false;
+				}
+			}, err => {
+				this.router.navigate(['/'])
+			})
 
-		this.dropdownList = [
-								{'id': 1, 'itemName': 'Black'},
-								{'id': 2, 'itemName': 'Gray'},
-								{'id': 3, 'itemName': 'White'}
-							];
-		this.selectedItems = [
-			{'id': 1, 'itemName': 'Black'}
-		];
-		this.dropdownSettings = {
-									singleSelection: true,
-									text: 'Select language',
-									selectAllText: 'Select All',
-									unSelectAllText: 'UnSelect All',
-									enableSearchFilter: false,
-									classes: ''
-								};
-		this.dropdownList1 = [
-								{'id': 1, 'itemName': 'Small'},
-								{'id': 2, 'itemName': 'Medium'},
-								{'id': 3, 'itemName': 'Large'}
-							];
-		this.selectedItems1 = [
-			{'id': 1, 'itemName': 'Small'},
-		];
-		this.dropdownSettings1 = {
-									singleSelection: true,
-									text: 'Select currency',
-									selectAllText: 'Select All',
-									unSelectAllText: 'UnSelect All',
-									enableSearchFilter: false,
-									classes: ''
-								};
 	}
-	onItemSelect(item: any) {
-		console.log(item);
-		console.log(this.selectedItems);
+
+	public getFoodTypes() {
+		const foodIds = [1, 2, 3];
+		const menu = this.eventData.menu;
+		const dishes = menu.filter(dish => foodIds.includes(dish.type_menu))
+		return dishes.map(d => d.name).join(', ');
 	}
-	OnItemDeSelect(item: any) {
-		console.log(item);
-		console.log(this.selectedItems);
-	}
-	onSelectAll(items: any) {
-		console.log(items);
-	}
-	onDeSelectAll(items: any) {
-		console.log(items);
-	}
-	ngOnDestroy() {
-		const body = document.getElementsByTagName('body')[0];
-		body.classList.remove('product-page');
-		const navbar = document.getElementsByTagName('nav')[0];
-		navbar.classList.remove('navbar-transparent');
+
+	public getBeverageTypes() {
+		const menu = this.eventData.menu;
+		const beverages = menu.filter(bev => bev.type_menu === 4)
+		return beverages.map(b => b.name).join(', ');
 	}
 }

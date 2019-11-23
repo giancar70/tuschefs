@@ -33,7 +33,8 @@ import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { ExperienceTileComponent } from './experience-tile/experience-tile.component';
 
-import { JwtInterceptor } from './helpers/jwt.interceptor'
+import { JwtInterceptor } from './helpers/jwt.interceptor';
+import { EventListComponent } from './event-list/event-list.component'
 
 const config = new AuthServiceConfig([
   {
@@ -59,6 +60,7 @@ export function provideConfig() {
 		NgbdModalBasicComponent,
 		PresentationComponent,
 		ExperienceTileComponent,
+		EventListComponent,
 	],
 	imports: [
 		BrowserAnimationsModule,
@@ -75,9 +77,9 @@ export function provideConfig() {
 		HttpClientModule,
 		ImageUploadModule,
 		AgmCoreModule.forRoot({
-			apiKey: 'AIzaSyAD_TNm6k3RQOkPz7_XbJci8PFNnqmV6Mg',
+			apiKey: 'AIzaSyBzWxX3F4P4uHwl4B46cCMv9lJCwfeFAR8',
 			libraries: ['places']
-			}),
+		}),
 		SocialLoginModule,
 		LoginModalComponentModule,
 		RegisterModalComponentModule,

@@ -20,7 +20,7 @@
 					</a>
 				</li>
 				<li class="nav-item">
-					<a class="btn btn-neutral dropdown-item" [routerLink]="['/event-description']">
+					<a class="btn btn-neutral dropdown-item" [routerLink]="['/events']">
 						Eventos
 					</a>
 				</li>
@@ -34,6 +34,11 @@
 					<li class="nav-item">
 						<a class="btn btn-neutral dropdown-item">
 							<i class="now-ui-icons ui-1_bell-53"></i>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="btn btn-danger dropdown-item" style="color: #fff;" (click)="logout()">
+							Logout
 						</a>
 					</li>
 				</ng-container>

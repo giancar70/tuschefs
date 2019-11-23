@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, NgZone, AfterViewInit } from '@angular/core';
 import { MapsAPILoader, MouseEvent } from '@agm/core';
-import { AuthService } from '../services/auth.service'
+import { AuthService } from '../services/auth.service';
 import { FormBuilder, FormGroup, Validators, NgForm, FormArray } from '@angular/forms';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 
 class UserData {
 	first_name: string
@@ -17,20 +19,29 @@ class UserData {
 	templateUrl: './create-event.component.html',
 	styleUrls: ['./create-event.component.scss']
 })
-export class CreateEventComponent implements OnInit {
+export class CreateEventComponent implements OnInit, AfterViewInit {
 	latitude: number;
 	longitude: number;
 	zoom: number;
 	address: string;
 	public showMap: boolean;
 	private geoCoder;
-	public foodTypes: any;
+
+	public cuisineTypes: any;
 	public menuTypes: any;
+	public eventTypes = [
+		{ id: 0, name: 'Cena'},
+		{ id: 1, name: 'Almuerzo'},
+		{ id: 2, name: 'Desayuno'},
+	];
+	userData: any;
+	eventId: number;
 
 	menu: FormArray;
 	dishes: FormArray;
 
 	profileForm: FormGroup;
+	profileImageForm: FormGroup;
 	eventDescriptionForm: FormGroup;
 	picturesForm: FormGroup;
 	timeAndLocationForm: FormGroup;
@@ -38,9 +49,21 @@ export class CreateEventComponent implements OnInit {
 	@ViewChild('search', {static: false})
 	public searchElementRef: ElementRef;
 
+	@ViewChild('tabset', {static: false})
+	public tabset;
+
+	@ViewChild('imageUpload', {static: false})
+	public imageUpload;
+
+	@ViewChild('eventImageUpload', {static: false})
+	public eventImageUpload;
+
+	@ViewChild('emailField', {static: false})
+	public emailField: ElementRef;
+
 	constructor(private mapsAPILoader: MapsAPILoader, private ngZone: NgZone,
 				private authService: AuthService, private http: HttpClient,
-				private formBuilder: FormBuilder) {
+				private formBuilder: FormBuilder, private router: Router) {
 
 		this.showMap = true;
 	}
@@ -49,26 +72,30 @@ export class CreateEventComponent implements OnInit {
 		this.getFoodTypes();
 		this.getMenuTypes();
 		this.loadMapApi();
+		this.userData = this.authService.getUserData;
 
 		this.profileForm = this.formBuilder.group({
-			profile_picture: [''],
-			first_name: ['', Validators.required],
-			last_name: ['', Validators.required],
-			email: ['', Validators.required],
-			gender: ['', Validators.required],
-			phone: ['', [Validators.required, Validators.minLength(9)]],
+			name: [this.userData.first_name, Validators.required],
+			last_name: [this.userData.last_name, Validators.required],
+			// email: ['', Validators.required],
+			sex: ['', Validators.required],
+			phone: [this.userData.phone, [Validators.required, Validators.minLength(9)]],
 			description: ['', Validators.required]
 		});
 
+		this.profileImageForm = this.formBuilder.group({
+			img: ''
+		});
+
 		this.eventDescriptionForm = this.formBuilder.group({
-			food_type: ['', Validators.required],
-			cuisine_type: ['', Validators.required],
-			min_guests: ['', Validators.required],
-			max_guests: ['', Validators.required],
-			event_title: ['', Validators.required],
-			about_host: ['', Validators.required],
-			menu: this.formBuilder.array([this.createMenuCourse()]),
-			price_per_person: ['', Validators.required]
+			type_event: ['', Validators.required],
+			type_food: ['', Validators.required],
+			min_people: ['', Validators.required],
+			max_people: ['', Validators.required],
+			title: ['', Validators.required],
+			description: ['', Validators.required],
+			menu: this.formBuilder.array([this.createMenuDish()]),
+			price: ['', Validators.required]
 		});
 
 		// TODO: Check
@@ -78,61 +105,96 @@ export class CreateEventComponent implements OnInit {
 
 		// TODO: Set model according to 'frequency' or specific dates
 		this.timeAndLocationForm = this.formBuilder.group({
-			start_time: ['', Validators.required],
-			end_time: ['', Validators.required],
+			time_start: '',
+			time_end: '',
+			date_init: '',
+			date_end: '',
 			where: ['', Validators.required],
-			address: ['']
+			address: [''],
+			day_of_week: this.formBuilder.control({
+				dayOfWeek: 'Lunes'
+			})
 		});
-
 	}
 
-	private createMenuCourse(): FormGroup {
-		return this.formBuilder.group({
-			title: '',
-			dishes: this.formBuilder.array([this.createMenuDish()])
-		});
+	ngAfterViewInit() {
+		this.emailField.nativeElement.value = this.userData.email;
 	}
 
 	private createMenuDish(): FormGroup {
 		return this.formBuilder.group({
-			name: '',
-			type: ''
+			type_menu: '',
+			name: ''
 		});
 	}
 
-	addMenuCourse() {
+	addMenuDish() {
 		this.menu = this.eventDescriptionForm.get('menu') as FormArray;
-		this.menu.push(this.createMenuCourse());
-	}
-
-	addMenuDish(index: number) {
-		const menu = this.eventDescriptionForm.get('menu') as FormArray;
-		this.dishes = menu.controls[index].get('dishes') as FormArray;
-		this.dishes.push(this.createMenuDish());
+		this.menu.push(this.createMenuDish());
 	}
 
 	// TODO: Move to service
 	getFoodTypes() {
 		this.http.get<any>('/type_food')
-			.subscribe(result => {
-				if (result.success) {
-					this.foodTypes = result.data;
+			.subscribe(response => {
+				if (response.success) {
+					this.cuisineTypes = response.data;
 				}
 			});
 	}
 
 	getMenuTypes() {
 		this.http.get<any>('/type_menu')
-			.subscribe(result => {
-				if (result.success) {
-					this.menuTypes = result.data;
+			.subscribe(response => {
+				if (response.success) {
+					this.menuTypes = response.data;
 				}
 			});
 	}
 
 	// Submits
+	onSubmitProfileForm() {
+		const data = this.profileForm.value;
+		this.imageUpload.handleSubmit();
+
+		this.http.put<any>('/user', data)
+			.subscribe(response => {
+				if (response.success) {
+					this.tabset.select('description');
+				} else {
+					console.log('Something went wrong');
+				}
+			});
+	}
+
 	onSubmitEventDescriptionForm() {
 		const data = this.eventDescriptionForm.value;
+		this.http.post<any>('/event', data)
+			.subscribe(response => {
+				if (response.success) {
+					this.eventId = response.data.id;
+					this.tabset.select('pictures');
+				} else {
+					console.log('Something went wrong');
+				}
+			})
+	}
+
+	onSubmitPicturesForm() {
+		this.eventImageUpload.handleSubmit();
+		this.tabset.select('location')
+	}
+
+	onSubmitTimeAndLocationForm() {
+		const data = this.timeAndLocationForm.value;
+		this.http.put<any>(`/event/${this.eventId}`, data)
+			.subscribe(response => {
+				if (response.success) {
+					this.router.navigate(['/event', this.eventId]);
+				} else {
+					console.log('Something went wrong');
+				}
+			})
 	}
 
 	// Geolocation/Maps
@@ -191,10 +253,10 @@ export class CreateEventComponent implements OnInit {
 					this.zoom = 12;
 					this.address = results[0].formatted_address;
 				} else {
-					window.alert('No results found');
+					console.log('No results found');
 				}
 			} else {
-				window.alert('Geocoder failed due to: ' + status);
+				console.log('Geocoder failed due to: ' + status);
 			}
 
 		});

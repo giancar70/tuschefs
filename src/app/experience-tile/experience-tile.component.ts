@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-experience-tile',
-  templateUrl: './experience-tile.component.html',
-  styleUrls: ['./experience-tile.component.scss']
+	selector: 'app-experience-tile',
+	templateUrl: './experience-tile.component.html',
+	styleUrls: ['./experience-tile.component.scss']
 })
 export class ExperienceTileComponent implements OnInit {
 
-  constructor() { }
+	@Input()
+	data: Object;
 
-  ngOnInit() {
-  }
+	constructor() { }
+
+	ngOnInit() {
+
+	}
 
 }

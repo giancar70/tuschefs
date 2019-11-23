@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
 
-const BASE_API_URL = 'http://ec2-54-210-210-173.compute-1.amazonaws.com/v1';
+const BASE_API_URL = 'https://api-test.tuschefs.com/v1';
 
 
 @Injectable()
@@ -26,7 +26,8 @@ export class JwtInterceptor implements HttpInterceptor {
 		if (currentUser && currentUser.token) {
 			request = request.clone({
 				setHeaders: {
-					Authorization: `Bearer ${currentUser.token}`
+					Authorization: `token ${currentUser.token}`,
+					'Content-Type': 'application/json'
 				}
 			});
 		}

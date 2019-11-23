@@ -1,15 +1,17 @@
 <div class="card">
-	<div class="card-img-wrapper">
-		<img class="card-img-top" src="https://via.placeholder.com/270x180" alt="Placeholder">
-		<div class="card-floating-price">$73.00</div>
-	</div>
-	<div class="card-body">
-		<h4 class="card-title">Card title</h4>
-		<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-		<hr>
-		<div class="card-footer">
-			<div class="circle"> </div>
-			<div class="card-footer-text"><h3>Hosted by</h3> HOST</div>
+	<a [routerLink]="['/event', data.id]">
+		<div class="card-img-wrapper">
+			<img class="card-img-top" [src]="data.image" alt="Placeholder">
+			<div class="card-floating-price">S/. {{data.price}}</div>
 		</div>
-	</div>
+		<div class="card-body">
+			<h4 class="card-title">{{data.title}}</h4>
+			<p class="card-text">{{data.description}}</p>
+			<hr>
+			<div class="card-footer">
+				<div class="circle"> </div>
+				<div class="card-footer-text"><h3>Hosted by</h3> {{data.host}}</div>
+			</div>
+		</div>
+	</a>
 </div>

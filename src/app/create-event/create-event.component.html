@@ -1,11 +1,11 @@
 <div class="mt-5 page-header">
 	<div class="mt-5 container">
-		<ngb-tabset type="pills" class="nav nav-pills nav-pills-primary vertical-pills" [orientation]="'vertical'" style="flex-flow: row nowrap; flex-wrap: nowrap;">
-			<ngb-tab title="Datos de perfil">
+		<ngb-tabset type="pills" class="nav nav-pills nav-pills-primary vertical-pills" [orientation]="'vertical'" style="flex-flow: row nowrap; flex-wrap: nowrap;" #tabset="ngbTabset">
+			<ngb-tab title="Datos de perfil" id="profile">
 				<ng-template style="width:80%" ngbTabContent class="tab-space">
 					<div class="ml-auto mr-auto">
 
-						<form [formGroup]="profileForm" role="form" id="contact-form" method="post">
+						<form [formGroup]="profileImageForm" role="form" id="contact-form">
 							<div class="card card-contact card-raised">
 								<div class="card-header text-center">
 									<h4 class="card-title">Foto de perfil</h4>
@@ -15,13 +15,16 @@
 										<div id="file-uploader">
 											<div class="container">
 												<div class="row">
-													<app-image-upload :isRound = true></app-image-upload>
+													<app-image-upload #imageUpload :isRound=true></app-image-upload>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
+						</form>
+
+						<form [formGroup]="profileForm" role="form" id="contact-form" method="post" (ngSubmit)="onSubmitProfileForm()">
 							<div class="card card-contact card-raised">
 								<div class="card-header text-center">
 									<h4 class="card-title">Información personal</h4>
@@ -36,7 +39,7 @@
 												<div class="input-group-prepend">
 													<span class="input-group-text"><i class="now-ui-icons users_circle-08"></i></span>
 												</div>
-												<input type="text" class="form-control" placeholder="Nombre..." (focus)="focus=true" (blur)="focus=false" name="first_name" formControlName="first_name">
+												<input type="text" class="form-control" placeholder="Nombre..." (focus)="focus=true" (blur)="focus=false" name="name" formControlName="name">
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -61,7 +64,7 @@
 													<div class="input-group-prepend">
 														<span class="input-group-text"><i class="now-ui-icons ui-1_email-85"></i></span>
 													</div>
-													<input type="email" placeholder="Correo electrónico..." class="form-control" (focus)="focus2=true" (blur)="focus2=false" name="email" formControlName="email">
+													<input type="email" placeholder="Correo electrónico..." class="form-control" (focus)="focus2=true" (blur)="focus2=false" name="email" #emailField>
 												</div>
 											</div>
 										</div>
@@ -72,7 +75,7 @@
 													<div class="input-group-prepend">
 														<span class="input-group-text"><i class="now-ui-icons users_single-02"></i></span>
 													</div>
-													<select class="form-control" (focus)="focus3 = true" (blur)="focus3 = false" name="gender" formControlName="gender">
+													<select class="form-control" (focus)="focus3 = true" (blur)="focus3 = false" name="sex" formControlName="sex">
 														<option value="M">Masculino</option>
 														<option value="F">Femenino</option>
 														<option value="O">Otro</option>
@@ -111,7 +114,7 @@
 					</div>
 				</ng-template>
 			</ngb-tab>
-			<ngb-tab title="Descripción del evento" style="font-size: 10px;">
+			<ngb-tab title="Descripción del evento" style="font-size: 10px;" id="description">
 				<ng-template style="width:80%" ngbTabContent class="tab-space">
 					<div class="ml-auto mr-auto">
 						<form [formGroup]="eventDescriptionForm" role="form" id="description-form" (ngSubmit)="onSubmitEventDescriptionForm()" >
@@ -130,26 +133,19 @@
 									<div class="row select-padding-label" style="padding-bottom: 20px;">
 										<div class="col-md-3">
 											<div class="form-group">
-												<label>Tipo de comida</label>
-												<select id="typeFood" name="typeOfFood" class="form-control" formControlName="food_type">
-													<option value="Aperitivo">Aperitivo</option>
-													<option value="Desayuno">Desayuno</option>
-													<option value="Brunch">Brunch</option>
-													<option value="Clasesdecocina">Clases de cocina</option>
-													<option value="Cena">Cena</option>
-													<option value="Paseoculinario">Paseo culinario</option>
-													<option value="Almuerzo">Almuerzo</option>
-													<option value="Degustación">Degustación</option>
-													<option value="Horadelte">Hora del té</option>
-													<option value="Picnic">Picnic</option>
+												<label>Tipo de Evento</label>
+												<select id="typeEvent" name="typeEvent" class="form-control" formControlName="type_event">
+													<option *ngFor="let type of eventTypes" value="{{type.id}}">
+														{{type.name}}
+													</option>
 												</select>
 											</div>
 										</div>
 										<div class="col-md-3">
 											<div class="form-group">
 												<label>Tipo de cocina</label>
-												<select id="typeKitchen" name="typeKitchen" class="form-control" formControlName="cuisine_type">
-													<option *ngFor="let type of foodTypes" value={{type.id}}>
+												<select id="typeFood" name="typeFood" class="form-control" formControlName="type_food">
+													<option *ngFor="let type of cuisineTypes" value={{type.id}}>
 														{{type.name}}
 													</option>
 												</select>
@@ -158,8 +154,8 @@
 										<div class="col-md-3">
 											<div class="form-group">
 												<label>Mín. de invitados</label>
-												<select id="minGuests" name="minGuests" class="form-control" formControlName="min_guests">
-													<option value="1">1 Persona</option>
+												<select id="minPeople" name="minPeople" class="form-control" formControlName="min_people">
+													<option selected value="1">1 Persona</option>
 													<option value="2">2 Personas</option>
 													<option value="3">3 Personas</option>
 													<option value="4">4 Personas</option>
@@ -181,7 +177,7 @@
 										<div class="col-md-3">
 											<div class="form-group">
 												<label>Máx. de invitados</label>
-												<select id="maxGuests" name="maxGuests" class="form-control" formControlName="max_guests">
+												<select id="maxPeople" name="maxPeople" class="form-control" formControlName="max_people">
 													<option value="1">1 Persona</option>
 													<option value="2">2 Personas</option>
 													<option value="3">3 Personas</option>
@@ -206,13 +202,13 @@
 										<div class="col-md-12">
 											<label>Título</label>
 											<div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus === true}">
-												<input type="text" name="title" id="title" value="" class="form-control" (focus)="focus=true" (blur)="focus=false" formControlName="event_title">
+												<input type="text" name="title" id="title" value="" class="form-control" (focus)="focus=true" (blur)="focus=false" formControlName="title">
 											</div>
 										</div>
 										<div class="col-md-12">
 											<div class="form-group" [ngClass]="{'input-group-focus':focus === true}">
 												<label>Cuéntanos sobre ti y tu experiencia</label>
-												<textarea name="about-menu" id="about-menu" class="form-control" formControlName="about_host"></textarea>
+												<textarea name="about-menu" id="about-menu" class="form-control" formControlName="description"></textarea>
 											</div>
 										</div>
 
@@ -221,31 +217,27 @@
 											<div class="outer-menu-description-editor">
 
 												<div class="menu-description-editor" formArrayName="menu" *ngFor="let course of eventDescriptionForm.get('menu').controls; let i = index;">
-													<ng-container [formGroupName]="i">
-														<div class="menu-description-editor-title">
-															<div class="bullet-separator">
-																<div class="bullet small"></div>
-																<div class="bullet big"></div>
-																<div class="bullet small"></div>
-															</div>
-															<textarea formControlName="title" class="form-control" name="editor-title-{{i}}" rows="8" cols="40" placeholder="Título de la comida {{i + 1}}"></textarea>
+													<div class="menu-description-editor-title">
+														<div class="bullet-separator">
+															<div class="bullet small"></div>
+															<div class="bullet big"></div>
+															<div class="bullet small"></div>
 														</div>
+													</div>
+													<ng-container [formGroupName]="i">
 														<div class="menu-description-editor-dish">
-															<ng-container formArrayName="dishes" *ngFor="let dish of course.get('dishes').controls; let j = index;">
-																<div [formGroupName]="j">
-																	<select formControlName="type" class="form-control" name="dish-type-{{i}}-{{j}}">
-																		<option *ngFor="let type of menuTypes" value={{type.id}}>
-																			{{type.name}}
-																		</option>
-																	</select>
-																		<textarea formControlName="name" class="form-control" name="dish-{{i}}-{{j}}" rows="8" cols="40" placeholder="Plato {{j + 1}}"></textarea>
-																</div>
-															</ng-container>
-															<button class="btn btn-primary btn-round" (click)="addMenuDish(i)">Agregar Plato</button>
+															<select formControlName="type_menu" class="form-control" name="dish-type-{{i}}">
+
+																<option [ngValue]="''">Tipo de Plato</option>
+																<option *ngFor="let type of menuTypes" value={{type.id}}>
+																	{{type.name}}
+																</option>
+															</select>
+															<textarea formControlName="name" class="form-control" name="dish-{{i}}-{{j}}" rows="8" cols="40" placeholder="Plato {{i + 1}}"></textarea>
+															<button type="button" class="btn btn-primary btn-round" (click)="addMenuDish(i)">Agregar Plato</button>
 														</div>
 													</ng-container>
 												</div>
-												<button class="btn btn-primary btn-round" (click)="addMenuCourse()" style="display: flex; margin: 20px auto 12px auto;">Agregar Menú</button>
 											</div>
 										</div>
 									</div>
@@ -253,7 +245,7 @@
 										<div class="col-md-12">
 											<label>Precio por persona</label>
 											<div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus === true}">
-												<input type="text" name="title" id="title" value="" class="form-control" (focus)="focus=true" (blur)="focus=false" formControlName="price_per_person">
+												<input type="text" name="title" id="title" value="" class="form-control" (focus)="focus=true" (blur)="focus=false" formControlName="price">
 											</div>
 										</div>
 									</div>
@@ -267,7 +259,7 @@
 					</div>
 				</ng-template>
 			</ngb-tab>
-			<ngb-tab title="Fotos">
+			<ngb-tab title="Fotos" id="pictures">
 				<ng-template style="width:80%" ngbTabContent class="tab-space">
 					<div class="ml-auto mr-auto">
 						<form [formGroup]="picturesForm" role="form" id="description-form" method="post">
@@ -293,7 +285,7 @@
 										<div id="file-uploader">
 											<div class="container">
 												<div class="row" style="display: flex; justify-content: center;">
-													<app-image-upload></app-image-upload>
+													<app-image-upload #eventImageUpload></app-image-upload>
 												</div>
 											</div>
 										</div>
@@ -301,38 +293,76 @@
 								</div>
 							</div>
 							<div class="col-md-12" style="display: flex; justify-content: center;">
-								<button type="submit" class="btn btn-primary btn-round pull-right">Continuar</button>
+								<button type="submit" class="btn btn-primary btn-round pull-right" (click)="onSubmitPicturesForm()">Continuar</button>
 							</div>
 						</form>
 					</div>
 				</ng-template>
 			</ngb-tab>
-			<ngb-tab title="Lugar y servicios">
+			<ngb-tab title="Lugar y servicios" id="location">
 				<ng-template style="width:80%" ngbTabContent class="tab-space">
 					<div class="ml-auto mr-auto">
 						<form [formGroup]="timeAndLocationForm" role="form" id="description-form" method="post">
 							<div class="card card-contact card-raised">
 								<div class="card-header text-center">
-									<h4 class="card-title">¿A qué hora realizarás el evento?</h4>
+									<h4 class="card-title">¿Cuando realizarás el evento?</h4>
 								</div>
-								<div class="card-body">
+								<div class="card-body" style="margin: 0 15px;">
 									<div class="row">
-										<div class="col-md-5">
-											<label>Desde</label>
-											<div class="input-group" [ngClass]="{'input-group-focus':focus===true}">
-												<div class="select select-large">
-													<select id="hourEvent" name="hourEvent">
-													</select>
-												</div>
+										<h3 style="display: block; width: 100%">Una vez por semana</h3>
+										<div class="form-group day-select">
+											<label style="margin: 0 20px;">Día</label>
+											<div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" formControlName="day_of_week">
+												<label ngbButtonLabel class="btn-primary">
+													<input ngbButton type="radio" [value]="Lunes">Lun
+												</label>
+												<label ngbButtonLabel class="btn-primary">
+													<input ngbButton type="radio" value="Martes">Mar
+												</label>
+												<label ngbButtonLabel class="btn-primary">
+													<input ngbButton type="radio" value="Miercoles">Mie
+												</label>
+												<label ngbButtonLabel class="btn-primary">
+													<input ngbButton type="radio" value="Jueves">Jue
+												</label>
+												<label ngbButtonLabel class="btn-primary">
+													<input ngbButton type="radio" value="Viernes">Vie
+												</label>
+												<label ngbButtonLabel class="btn-primary">
+													<input ngbButton type="radio" value="Sábado">Sáb
+												</label>
+												<label ngbButtonLabel class="btn-primary">
+													<input ngbButton type="radio" value="Domingo">Dom
+												</label>
 											</div>
 										</div>
-										<div class="col-md-5">
-											<label>Hasta:</label>
-											<div class="input-group" [ngClass]="{'input-group-focus':focus===true}">
-												<div class="select select-large">
-													<select id="hourFinEvent" name="hourFinEvent">
-													</select>
+									</div>
+									<div class="row">
+										<div class="form-group inline">
+											<div>
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text">Inicio</span>
+													</div>
+													<input class="form-control" placeholder="yyyy-mm-dd" name="dp" formControlName="date_init" ngbDatepicker #d1="ngbDatepicker">
+													<div (click)="d1.toggle()" class="input-group-append">
+
+														<span class="input-group-text"><i class="now-ui-icons ui-1_calendar-60"></i></span>
+													</div>
 												</div>
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text">Fin</span>
+													</div>
+													<input class="form-control" placeholder="yyyy-mm-dd" name="dp" formControlName="date_end" ngbDatepicker #d2="ngbDatepicker">
+													<div (click)="d2.toggle()" class="input-group-append">
+
+														<span class="input-group-text"><i class="now-ui-icons ui-1_calendar-60"></i></span>
+													</div>
+												</div>
+											</div>
+											<div class="input-group">
+												<ngb-timepicker formControlName="time_start"></ngb-timepicker>
 											</div>
 										</div>
 									</div>
@@ -381,7 +411,7 @@
 
 
 							<div class="col-md-12" style="display: flex; justify-content: center;">
-								<button type="submit" class="btn btn-primary btn-round pull-right">Enviar para revisión</button>
+								<button type="submit" class="btn btn-primary btn-round pull-right" (click)="onSubmitTimeAndLocationForm()">Enviar para revisión</button>
 							</div>
 						</form>
 

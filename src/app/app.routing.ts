@@ -10,6 +10,7 @@ import { SectionsComponent } from './sections/sections.component';
 import { NucleoiconsComponent } from './components/nucleoicons/nucleoicons.component';
 
 import { CreateEventComponent } from './create-event/create-event.component';
+import { EventListComponent } from './event-list/event-list.component';
 import { EventDescriptionComponent } from './event-description/event-description.component'
 
 import { AuthGuardService as AuthGuard } from './auth-guard/auth-guard.service'
@@ -23,7 +24,8 @@ const routes: Routes = [
 	{ path: 'nucleoicons', component: NucleoiconsComponent },
 	*/
 	{ path: 'create-event', component: CreateEventComponent, /*canActivate: [AuthGuard]*/ },
-	{ path: 'event-description', component: EventDescriptionComponent }
+	{ path: 'event/:id', component: EventDescriptionComponent },
+	{ path: 'events', component: EventListComponent }
 ];
 
 @NgModule({

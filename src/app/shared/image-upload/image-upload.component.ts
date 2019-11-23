@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { HttpClient } from '@angular/common/http'
 
 @Component({
   selector: 'app-image-upload',
@@ -9,12 +10,14 @@ export class ImageUploadComponent implements OnInit {
 
 	@Input() isRound = false;
 	@Input() image: string;
-	state: any = {}
-	@ViewChild('input', {static: false}) input: ElementRef;
 
-	constructor() {
+	state: any = {}
+
+	@ViewChild('input', {static: false})
+	input: ElementRef;
+
+	constructor(private http: HttpClient) {
 		this.handleImageChange = this.handleImageChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleClick = this.handleClick.bind(this);
 		this.handleRemove = this.handleRemove.bind(this);
 	}
@@ -38,16 +41,17 @@ export class ImageUploadComponent implements OnInit {
 		reader.onloadend = () => {
 			this.state.file = file;
 			this.state.imagePreviewUrl = reader.result;
-			// this.state.imagePreviewUrl1 = reader.result;
 		}
 		reader.readAsDataURL(file);
 	}
 
-	handleSubmit(e) {
-		e.preventDefault();
-		// this.state.file is the file/image uploaded
-		// in this function you can save the image (this.state.file) on form submit
-		// you have to call it yourself
+	public handleSubmit() {
+		const formData: FormData = new FormData();
+		formData.append('img', this.state.file);
+		return this.http.put('/user', formData)
+			.subscribe(response => {
+				console.log(response)
+			})
 	}
 
 	handleClick() {
