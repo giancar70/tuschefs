@@ -127,6 +127,7 @@ export class RegisterModalContentComponent implements OnInit {
 				if (response.success) {
 					this.modalService.dismissAll('Login Successful')
 					this.authService.login(response.email, data.password)
+					this.router.navigate([''])
 				} else {
 					console.log(response.message)
 				}
