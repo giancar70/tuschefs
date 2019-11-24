@@ -112,6 +112,7 @@ export class AuthService {
 	logout() {
 		localStorage.removeItem('currentUser');
 		this.currentUserSubject.next(null);
+		this.setLoggedIn(false);
 	}
 
 	loginFacebook(data: any) {

@@ -15,8 +15,6 @@ import { LoginModalComponent } from '../../login-modal/login-modal.component'
 })
 
 export class NavbarComponent implements OnInit {
-	@ViewChild(LoginModalComponent, {static: false})
-	public loginModal: LoginModalComponent;
 
 	private toggleButton: any;
 	private sidebarVisible: boolean;
@@ -59,6 +57,7 @@ export class NavbarComponent implements OnInit {
 	}
 
 	isAuthenticated() {
+		this.userData = this.authService.getUserData;
 		return this.authService.isUserAuthenticated;
 	}
 
