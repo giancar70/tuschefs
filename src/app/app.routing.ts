@@ -23,7 +23,7 @@ const routes: Routes = [
 	{ path: 'sections', component: SectionsComponent },
 	{ path: 'nucleoicons', component: NucleoiconsComponent },
 	*/
-	{ path: 'create-event', component: CreateEventComponent, /*canActivate: [AuthGuard]*/ },
+	{ path: 'create-event', component: CreateEventComponent, canActivate: [AuthGuard] },
 	{ path: 'event/:id', component: EventDescriptionComponent },
 	{ path: 'events', component: EventListComponent }
 ];

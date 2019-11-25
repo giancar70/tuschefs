@@ -46,18 +46,20 @@ interface MyData {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-	private isAuthenticated = false;
+	private isAuthenticated;
 	private currentUserSubject: BehaviorSubject<User>;
 	public currentUser: Observable<User>;
 	public socialUser: SocialLogin.SocialUser;
 
 	constructor(private http: HttpClient, private socialAuthService: SocialLogin.AuthService) {
-		this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+		this.isAuthenticated = false;
+		const u = JSON.parse(localStorage.getItem('currentUser'));
+		this.currentUserSubject = new BehaviorSubject<User>(u);
 		this.currentUser = this.currentUserSubject.asObservable();
 
 		this.socialAuthService.authState.subscribe(user => {
 			this.socialUser = user;
-			this.setLoggedIn(user !== null || this.currentUser !== null);
+			this.setLoggedIn(user != null || u != null);
 		});
 
 		this.currentUser.subscribe(user => {
@@ -110,9 +112,9 @@ export class AuthService {
 	}
 
 	logout() {
+		this.setLoggedIn(false);
 		localStorage.removeItem('currentUser');
 		this.currentUserSubject.next(null);
-		this.setLoggedIn(false);
 	}
 
 	loginFacebook(data: any) {

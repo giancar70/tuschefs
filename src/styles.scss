@@ -51,6 +51,9 @@
 		flex-flow: column wrap;
 		align-items: center;
 		width: 100%;
+		label.searchbar__checkin {
+			width: 200px;
+		}
 		label.searchbar__location,
 		label.searchbar__checkin,
 		label.searchbar__guests {

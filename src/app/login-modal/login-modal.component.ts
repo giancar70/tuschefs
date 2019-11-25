@@ -43,6 +43,9 @@ import { RegisterModalInjectable } from '../register-modal/register-modal.compon
 			<div class="card-footer text-center">
 				<input type="submit" value="Login" class="btn btn-primary btn-round btn-lg btn-block">
 			</div>
+			<div class="errors-container" *ngIf="errors != null">
+				<p>{{errors}}</p>
+			</div>
 			<div style="display: flex; justify-content: center; align-items: center;">
 				<span style="font-size: 14px; color: #000; padding-right: 15px;">¿Todavía no tienes una cuenta?</span>
 				<button (click)="goToRegisterModal()" class="btn btn-no-fill btn-round btn-sm">Regístrate ahora</button>
@@ -53,12 +56,14 @@ import { RegisterModalInjectable } from '../register-modal/register-modal.compon
 	styleUrls: ['./login-modal.component.scss']
 })
 export class LoginModalContentComponent implements OnInit {
+	errors: string;
+
 	constructor(public activeModal: NgbActiveModal, private authService: AuthService,
 				private router: Router, private modalService: NgbModal,
 				private registerModal: RegisterModalInjectable) { }
 
 	ngOnInit() {
-
+		this.errors = null;
 	}
 
 	loginUser(event) {
@@ -73,11 +78,9 @@ export class LoginModalContentComponent implements OnInit {
 					this.modalService.dismissAll('Login Successful')
 					this.router.navigate([''])
 				} else {
-					console.log(response.message)
+					this.errors = response.message
 				}
 			})
-
-		console.log(email, password)
 	}
 
 	loginFacebook(event) {
@@ -89,7 +92,7 @@ export class LoginModalContentComponent implements OnInit {
 					this.modalService.dismissAll('Login Successful')
 					this.router.navigate([''])
 				} else {
-					console.log(response.message)
+					this.errors = response.message
 				}
 			})
 	}

@@ -43,7 +43,7 @@ import { LoginModalInjectable } from '../login-modal/login-modal.component'
 				<div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus1===true}">
 					<div class="input-group-prepend">
 						<span class="input-group-text">
-							<i class="now-ui-icons text_caps-small"></i>
+							<i class="now-ui-icons ui-1_calendar-60"></i>
 						</span>
 					</div>
 					<input type="date" class="form-control datetimepicker" placeholder="06/07/2000"
@@ -81,6 +81,9 @@ import { LoginModalInjectable } from '../login-modal/login-modal.component'
 												 class="btn btn-primary btn-round btn-lg">Crear cuenta</button>
 				</div>
 			</form>
+			<div class="errors-container" *ngIf="errors != null">
+				<p>{{errors}}</p>
+			</div>
 			<div style="display: flex; justify-content: center; align-items: center;">
 				<span style="font-size: 14px; color: #000; padding-right: 15px;">¿Ya tienes una cuenta?</span>
 				<button (click)="goToLoginModal()" class="btn btn-no-fill btn-round btn-sm">Iniciar Sesión</button>
@@ -95,6 +98,7 @@ export class RegisterModalContentComponent implements OnInit {
 	closeResult: string;
 	loading = false;
 	submitted = false;
+	errors: string;
 
 	constructor(
 		public activeModal: NgbActiveModal,
@@ -113,6 +117,7 @@ export class RegisterModalContentComponent implements OnInit {
 			email: ['', Validators.required],
 			password: ['', [Validators.required, Validators.minLength(6)]]
 		});
+		this.errors = null;
 	}
 
 	// convenience getter for easy access to form fields
@@ -125,11 +130,11 @@ export class RegisterModalContentComponent implements OnInit {
 		this.authService.register(data)
 			.subscribe(response => {
 				if (response.success) {
-					this.modalService.dismissAll('Login Successful')
+					this.modalService.dismissAll('Register Successful')
 					this.authService.login(response.email, data.password)
 					this.router.navigate([''])
 				} else {
-					console.log(response.message)
+					this.errors = response.message
 				}
 			})
 	}
