@@ -1,7 +1,10 @@
 <div class="mt-5 page-header">
 	<div class="mt-5 container">
 		<ngb-tabset type="pills" class="nav nav-pills nav-pills-primary vertical-pills" [orientation]="'vertical'" style="flex-flow: row nowrap; flex-wrap: nowrap;" #tabset="ngbTabset">
-			<ngb-tab title="Datos de perfil" id="profile">
+			<ngb-tab id="profile">
+				<ng-template ngbTabTitle>
+					<span>Datos de Perfil</span>
+				</ng-template>
 				<ng-template style="width:80%" ngbTabContent class="tab-space">
 					<div class="ml-auto mr-auto">
 
@@ -30,8 +33,6 @@
 									<h4 class="card-title">Información personal</h4>
 								</div>
 								<div class="card-body">
-									<h4><small>Para que tus futuros invitados descubrán más cosas sobre ti, cuéntales lo que te gusta :
-											tu plato favorito, el viaje de tus sueños...</small></h4>
 									<div class="row">
 										<div class="col-md-6">
 											<label>Nombre</label>
@@ -96,9 +97,10 @@
 												</div>
 											</div>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-12">
 											<div class="form-group">
 												<label>Descripción</label>
+												<h4><small>Para que tus futuros invitados descubrán más cosas sobre ti, cuéntales lo que te gusta : tu plato favorito, el viaje de tus sueños...</small></h4>
 												<textarea name="description" class="form-control" id="description" rows="6" formControlName="description"></textarea>
 											</div>
 										</div>
@@ -213,7 +215,7 @@
 										</div>
 
 										<div class="col-md-12">
-											<label>Menu</label>
+											<label>Menú</label>
 											<div class="outer-menu-description-editor">
 
 												<div class="menu-description-editor" formArrayName="menu" *ngFor="let course of eventDescriptionForm.get('menu').controls; let i = index;">
@@ -234,9 +236,11 @@
 																</option>
 															</select>
 															<textarea formControlName="name" class="form-control" name="dish-{{i}}-{{j}}" rows="8" cols="40" placeholder="Plato {{i + 1}}"></textarea>
-															<button type="button" class="btn btn-primary btn-round" (click)="addMenuDish(i)">Agregar Plato</button>
 														</div>
 													</ng-container>
+												</div>
+												<div style="margin: 0 auto; text-align: center;">
+													<button type="button" class="btn btn-primary btn-round" (click)="addMenuDish(i)">Agregar Plato</button>
 												</div>
 											</div>
 										</div>
@@ -309,10 +313,10 @@
 								</div>
 								<div class="card-body" style="margin: 0 15px;">
 									<div class="row">
-										<h3 style="display: block; width: 100%">Una vez por semana</h3>
+										<h3 style="font-size: 16px; display: block; width: 100%">Puedes elegir una fecha específica o puedes crear un evento que se repita una vez a la semana</h3>
 										<div class="form-group day-select">
 											<label style="margin: 0 20px;">Día</label>
-											<div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" formControlName="day_of_week">
+											<div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic">
 												<label ngbButtonLabel class="btn-primary">
 													<input ngbButton type="radio" [value]="Lunes">Lun
 												</label>
@@ -361,17 +365,20 @@
 													</div>
 												</div>
 											</div>
-											<div class="input-group">
-												<ngb-timepicker formControlName="time_start"></ngb-timepicker>
+											<div class="input-group" style="">
+												<ngb-timepicker [spinners]="false" formControlName="time_start" style="margin-left: 10px; margin-bottom: 14px;"></ngb-timepicker>
+												<ngb-timepicker [spinners]="false" formControlName="time_end" style="margin-left: 10px;"></ngb-timepicker>
 											</div>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-md-6">
-											<label>Donde realizarás este evento?</label>
+										<div class="col-md-12">
+											<label>¿Donde realizarás este evento?</label>
+											<br>
+											<small style="font-size: 10px; color: #ccc;">Puedes realizar este evento en tu casa o ir a la casa del comensal ¡Solo tienes que elegir una de las opciones!</small>
 											<div class="input-group" [ngClass]="{'input-group-focus':focus===true}">
 												<div class="select select-large">
-													<select id="location" name="location" (change)="locationChange($event.target.value)">
+													<select class="form-control" id="location" name="location" (change)="locationChange($event.target.value)">
 														<option value="En mi casa">En mi casa</option>
 														<option value="A domicilio">A domicilio</option>
 													</select>
@@ -401,8 +408,7 @@
 									</div>
 
 									<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
-										<agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
-																																								 (dragEnd)="markerDragEnd($event)"></agm-marker>
+										<agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)"></agm-marker>
 									</agm-map>
 
 								</div>
@@ -413,6 +419,7 @@
 							<div class="col-md-12" style="display: flex; justify-content: center;">
 								<button type="submit" class="btn btn-primary btn-round pull-right" (click)="onSubmitTimeAndLocationForm()">Enviar para revisión</button>
 							</div>
+							<h5 style="font-size: 14px; color: #000; text-align: center;" *ngIf="showMessage">¡Tu experiencia está de camino a nuestros revisores, este proceso tomará hasta 48 horas!</h5>
 						</form>
 
 					</div>

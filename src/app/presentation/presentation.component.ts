@@ -32,7 +32,7 @@ export class PresentationComponent implements OnInit, OnDestroy, AfterViewInit {
 			.subscribe(response => {
 				if (response.success) {
 					this.experienceTiles = response.data.map(tile => {
-						return { image: tile.photos[0].image, title: tile.title,
+						return { image: tile.photos.length > 0 ? tile.photos[0].image : 'https://via.placeholder.com/300x180', title: tile.title,
 								description: tile.description, host: tile.chef.user.first_name,
 								price: tile.price, id: tile.id };
 					})

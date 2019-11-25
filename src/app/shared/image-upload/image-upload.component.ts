@@ -1,12 +1,12 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 
 @Component({
   selector: 'app-image-upload',
   templateUrl: './image-upload.component.html',
   styleUrls: ['./image-upload.component.scss']
 })
-export class ImageUploadComponent implements OnInit {
+export class ImageUploadComponent implements OnInit, AfterViewInit {
 
 	@Input() isRound = false;
 	@Input() image: string;
@@ -31,24 +31,28 @@ export class ImageUploadComponent implements OnInit {
 	}
 
 	ngAfterViewInit() {
-		this.input.nativeElement.children[2].onchange = this.handleImageChange; ;
+		this.input.nativeElement.children[2].onchange = this.handleImageChange;
 	}
 
 	handleImageChange(e) {
 		e.preventDefault();
 		const reader = new FileReader();
 		const file = e.target.files[0];
-		reader.onloadend = () => {
+		reader.readAsDataURL(file);
+		reader.onload = () => {
 			this.state.file = file;
 			this.state.imagePreviewUrl = reader.result;
 		}
-		reader.readAsDataURL(file);
 	}
 
-	public handleSubmit() {
+	public handleSubmit(uploadUrl: string) {
 		const formData: FormData = new FormData();
 		formData.append('img', this.state.file);
-		return this.http.put('/user', formData)
+
+		const headers = new HttpHeaders();
+		headers.append('Content-Type', 'multipart/form-data')
+
+		return this.http.post<any>(uploadUrl, formData, { headers: headers })
 			.subscribe(response => {
 				console.log(response)
 			})

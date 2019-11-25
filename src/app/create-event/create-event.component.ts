@@ -46,6 +46,8 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 	picturesForm: FormGroup;
 	timeAndLocationForm: FormGroup;
 
+	showMessage = false;
+
 	@ViewChild('search', {static: false})
 	public searchElementRef: ElementRef;
 
@@ -98,22 +100,23 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 			price: ['', Validators.required]
 		});
 
-		// TODO: Check
 		this.picturesForm = this.formBuilder.group({
 			pictures: this.formBuilder.array([])
 		});
 
-		// TODO: Set model according to 'frequency' or specific dates
 		this.timeAndLocationForm = this.formBuilder.group({
 			time_start: '',
 			time_end: '',
 			date_init: '',
 			date_end: '',
-			where: ['', Validators.required],
-			address: [''],
+			// where: ['', Validators.required],
+			// address: [''],
+			/*
 			day_of_week: this.formBuilder.control({
 				dayOfWeek: 'Lunes'
-			})
+			}),
+			*/
+			frecuency: ''
 		});
 	}
 
@@ -155,7 +158,7 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 	// Submits
 	onSubmitProfileForm() {
 		const data = this.profileForm.value;
-		this.imageUpload.handleSubmit();
+		this.imageUpload.handleSubmit('/user');
 
 		this.http.put<any>('/user', data)
 			.subscribe(response => {
@@ -181,7 +184,7 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 	}
 
 	onSubmitPicturesForm() {
-		this.eventImageUpload.handleSubmit();
+		this.eventImageUpload.handleSubmit(`/event/${this.eventId}`);
 		this.tabset.select('location')
 	}
 
@@ -196,7 +199,8 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 		this.http.put<any>(`/event/${this.eventId}`, data)
 			.subscribe(response => {
 				if (response.success) {
-					this.router.navigate(['/event', this.eventId]);
+					// this.router.navigate(['/event', this.eventId]);
+					this.showMessage = true;
 				} else {
 					console.log('Something went wrong');
 				}
@@ -266,6 +270,10 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 			}
 
 		});
+	}
+
+	dummyFunction() {
+		console.log('hi');
 	}
 
 }

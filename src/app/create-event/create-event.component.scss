@@ -113,6 +113,10 @@ agm-map{
 	align-items: center;
 }
 
+.nav-pills .nav-item .nav-link {
+	pointer-events: none;
+}
+
 .nav-item .nav-link.active {
 	background-color: #de606b !important;
 }

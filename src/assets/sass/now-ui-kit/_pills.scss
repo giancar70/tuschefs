@@ -44,6 +44,7 @@
             font-weight: $font-weight-normal;
             color: $light-black;
             background-color: $opacity-gray-3;
+			pointer-events: none;
 
 
             &:hover{
