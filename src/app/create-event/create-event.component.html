@@ -275,6 +275,18 @@
 									<h4>
 										<small>Estas imágenes aparecerán en la parte superior de tu evento culinario y será lo primero que verán tus comensales. ¡Asegúrate de que destaquen y muestren lo increíble que será tu experiencia!</small>
 									</h4>
+									<div class="row" style="display: flex; justify-content: center;">
+										<div id="file-uploader">
+											<div class="container">
+												<div class="row" style="display: flex; flex-flow: row wrap; justify-content: space-around;">
+													<app-image-upload #eventImage1></app-image-upload>
+													<app-image-upload #eventImage2></app-image-upload>
+													<app-image-upload #eventImage3></app-image-upload>
+													<app-image-upload #eventImage4></app-image-upload>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 							<div class="card card-contact card-raised">
@@ -282,13 +294,17 @@
 									<h4 class="card-title">Foto de portada</h4>
 								</div>
 								<div class="card-body">
-									<h4><small>Usa la mejor imagen como foto de portada. Aparecerá en la página de búsqueda y será la
+									<h4>
+										<small>
+											Usa la mejor imagen como foto de portada. Aparecerá en la página de búsqueda y será la
 											primera foto de tu experiencia, por lo que debes asegurarte de que represente correctamente tu
-											evento.</small></h4>
-									<div class="row">
+											evento.
+										</small>
+									</h4>
+									<div class="row" style="display: flex; justify-content: center;">
 										<div id="file-uploader">
 											<div class="container">
-												<div class="row" style="display: flex; justify-content: center;">
+												<div class="row" style="display: flex; flex-flow: row wrap; justify-content: space-around;">
 													<app-image-upload #eventImageUpload></app-image-upload>
 												</div>
 											</div>

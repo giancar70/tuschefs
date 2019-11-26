@@ -57,6 +57,15 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 	@ViewChild('imageUpload', {static: false})
 	public imageUpload;
 
+	@ViewChild('eventImage1', {static: false})
+	public eventImage1;
+	@ViewChild('eventImage2', {static: false})
+	public eventImage2;
+	@ViewChild('eventImage3', {static: false})
+	public eventImage3;
+	@ViewChild('eventImage4', {static: false})
+	public eventImage4;
+
 	@ViewChild('eventImageUpload', {static: false})
 	public eventImageUpload;
 
@@ -184,6 +193,10 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 	}
 
 	onSubmitPicturesForm() {
+		this.eventImage1.handleSubmit(`/event/${this.eventId}`);
+		this.eventImage2.handleSubmit(`/event/${this.eventId}`);
+		this.eventImage3.handleSubmit(`/event/${this.eventId}`);
+		this.eventImage4.handleSubmit(`/event/${this.eventId}`);
 		this.eventImageUpload.handleSubmit(`/event/${this.eventId}`);
 		this.tabset.select('location')
 	}

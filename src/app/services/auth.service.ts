@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { auth } from 'firebase/app';
-import { AngularFireAuth } from '@angular/fire/auth'
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -51,7 +51,7 @@ export class AuthService {
 	public currentUser: Observable<User>;
 	public socialUser: SocialLogin.SocialUser;
 
-	constructor(private http: HttpClient, private socialAuthService: SocialLogin.AuthService) {
+	constructor(private http: HttpClient, private socialAuthService: SocialLogin.AuthService, private router: Router) {
 		this.isAuthenticated = false;
 		const u = JSON.parse(localStorage.getItem('currentUser'));
 		this.currentUserSubject = new BehaviorSubject<User>(u);
@@ -115,6 +115,7 @@ export class AuthService {
 		this.setLoggedIn(false);
 		localStorage.removeItem('currentUser');
 		this.currentUserSubject.next(null);
+		this.router.navigate([''])
 	}
 
 	loginFacebook(data: any) {

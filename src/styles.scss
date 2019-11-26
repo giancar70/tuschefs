@@ -93,3 +93,12 @@
 #belong-anywhere-container article img {
 	max-width: 64px;
 }
+
+@media screen and (max-width: 768px) {
+	.flex-column {
+		display: none;
+	}
+	.nav.nav-pills .tab-content {
+		width: 100%;
+	}
+}

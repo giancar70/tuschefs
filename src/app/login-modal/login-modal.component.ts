@@ -41,7 +41,7 @@ import { RegisterModalInjectable } from '../register-modal/register-modal.compon
 				</div>
 			</div>
 			<div class="card-footer text-center">
-				<input type="submit" value="Login" class="btn btn-primary btn-round btn-lg btn-block">
+				<input type="submit" value="Ingresas" class="btn btn-primary btn-round btn-lg btn-block">
 			</div>
 			<div class="errors-container" *ngIf="errors != null">
 				<p>{{errors}}</p>
