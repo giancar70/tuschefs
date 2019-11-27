@@ -122,3 +122,32 @@ agm-map{
 	background-color: #de606b !important;
 }
 
+
+@media screen and (max-width: 768px) {
+	.outer-menu-description-editor {
+		.menu-description-editor {
+			.menu-description-editor-dish {
+				flex-flow: column wrap;
+				select {
+					width: 100%;
+					margin: 10px 0;
+				}
+				textarea {
+					width: 100%;
+				}
+			}
+		}
+	}
+	.form-group {
+		&.day-select {
+			flex-flow: row wrap;
+			.btn-group {
+				flex-flow: row wrap;
+				justify-content: center;
+			}
+		}
+		&.inline {
+			flex-flow: row wrap;
+		}
+	}
+}
