@@ -1,15 +1,15 @@
 <div class="wrapper">
     <div class="page-header page-header-small">
-        <ngb-carousel *ngIf="eventData !== undefined">
-            <ng-template ngbSlide *ngFor="let image of eventData.photos">
-				<img class="d-block img-raised" src="{{image.image}}" alt="First slide">
+        <ngb-carousel *ngIf="eventData">
+            <ng-template ngbSlide *ngFor="let photo of eventData.photos">
+				<img class="d-block img-raised" src="{{photo.image}}" alt="slide {{photo.position}}">
             </ng-template>
         </ngb-carousel>
     </div>
     <div class="section">
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6" *ngIf="eventData">
 					<h2 class="title">{{eventData.title}}</h2>
                     <div class="icons" *ngIf="!loading">
 						<div>
