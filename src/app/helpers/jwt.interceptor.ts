@@ -4,8 +4,10 @@ import { Observable } from 'rxjs';
 
 import { AuthService } from '../services/auth.service';
 
+import { environment } from '../../environments/environment';
 
-const BASE_API_URL = 'https://api-test.tuschefs.com/v1';
+
+const BASE_API_URL = environment.apiUrl;
 
 
 @Injectable()

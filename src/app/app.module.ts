@@ -34,7 +34,8 @@ import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-logi
 import { ExperienceTileComponent } from './experience-tile/experience-tile.component';
 
 import { JwtInterceptor } from './helpers/jwt.interceptor';
-import { EventListComponent } from './event-list/event-list.component'
+import { EventListComponent } from './event-list/event-list.component';
+import { UserProfileComponent } from './user-profile/user-profile.component'
 
 const config = new AuthServiceConfig([
   {
@@ -61,6 +62,7 @@ export function provideConfig() {
 		PresentationComponent,
 		ExperienceTileComponent,
 		EventListComponent,
+		UserProfileComponent,
 	],
 	imports: [
 		BrowserAnimationsModule,

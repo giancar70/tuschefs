@@ -1,0 +1,48 @@
+<div class="container">
+	<div class="section-intro text-center row-space-6 row-space-top-8" style="padding-top: 110px;">
+		<h2 class="row">
+			<strong style="padding-left: 15px;">Perfil</strong>
+		</h2>
+	</div>
+	<div class="row" *ngIf="userData">
+		<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+			<div class="profile-left">
+				<img src="{{ userData.photo }}" alt="{{ userData.full_name }}" class="rounded-circle">
+				<div class="left-info">
+					<hr>
+					<h4>Verificada</h4>
+					<hr>
+					<h6>{{ userData.first_name }} ha proporcionado </h6>
+					<ul>
+						<li>Documento de identidad oficial</li>
+						<li>Dirección de correo electrónico</li>
+						<li>Número de teléfono</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
+			<div class="profile-right">
+				<h2 class="profile-title">Hola, me llamo {{ userData.first_name }}</h2>	
+				<h5 class="verified">
+					Se registró en el 2015 {{ userData.register_date }} |
+					<button class="btn btn-link" type="button" (click)="editProfile()">Editar perfil</button>
+					<blockquote>
+						Descripción del usuario
+						{{ userData.description }}
+					</blockquote>
+					<div class="extra-info">
+						<h6>
+							<i class="now-ui-icons shopping_shop"></i>
+							Vive en Lima, Perú
+						</h6>
+						<h6>
+							<i class="now-ui-icons shopping_shop"></i>
+							Trabaja en: WORK {{ userData.work }}
+						</h6>
+					</div>
+				</h5>
+			</div>
+		</div>
+	</div>
+</div>

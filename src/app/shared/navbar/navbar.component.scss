@@ -1,0 +1,13 @@
+.navbar-nav {
+	.nav-item {
+		.btn.btn-outline-neutral.dropdown-item {
+			font-size: 14px;
+			background-color: #fff;
+			color: #000;
+			&:hover,
+			&:focus {
+				background-color: #de606b;
+			}
+		}
+	}
+}

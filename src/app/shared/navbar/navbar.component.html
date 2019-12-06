@@ -15,9 +15,14 @@
 		<div class="collapse navbar-collapse">
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item">
-					<a class="btn btn-neutral dropdown-item" [routerLink]="['/create-event']">
-						Sé Anfitrión
-					</a>
+					<div ngbDropdown class="d-inline-block">
+						<button class="btn btn-outline-neutral dropdown-item" id="dropdown-be-host" ngbDropdownToggle>Sé Anfitrión</button>
+						<div ngbDropdownMenu aria-labelledby="dropdown-be-host">
+							<a ngbDropdownItem class="dropdown-item" [routerLink]="['/profile']">Mi perfil</a>
+							<a ngbDropdownItem class="dropdown-item" [routerLink]="['/create-event']"> Mi cuenta </a>
+							<a ngbDropdownItem class="dropdown-item" [routerLink]="['/create-event']">Sé Anfitrión</a>
+						</div>
+					</div>
 				</li>
 				<li class="nav-item">
 					<a class="btn btn-neutral dropdown-item" [routerLink]="['/events']">

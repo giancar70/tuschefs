@@ -35,7 +35,6 @@ export class EventDescriptionComponent implements OnInit {
 			}, err => {
 				this.router.navigate(['/'])
 			})
-
 	}
 
 	public getFoodTypes() {
