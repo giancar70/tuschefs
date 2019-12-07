@@ -59,10 +59,9 @@
 }
 
 blockquote {
-	font-size: 18px;
-	font-style: italic;
+	font-size: 20px;
 	font-family: initial;
-	margin: 30px 0 0 0;
+	margin: 30px 0 15px 0;
 	padding: 30px 0;
 	line-height: 1.45;
 	position: relative;
@@ -76,7 +75,7 @@ blockquote:before {
 	font-size: 100px;
 	position: absolute;
 	font-family: initial;
-	left: -25px;
+	left: -15px;
 	top: -50px;
 	color: #ccc;
 }
