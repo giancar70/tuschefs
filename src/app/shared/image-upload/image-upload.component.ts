@@ -10,6 +10,8 @@ export class ImageUploadComponent implements OnInit, AfterViewInit {
 
 	@Input() isRound = false;
 	@Input() image: string;
+	@Input() text = 'Selecciona una imagen de perfil';
+	@Input() bg = true;
 
 	state: any = {}
 

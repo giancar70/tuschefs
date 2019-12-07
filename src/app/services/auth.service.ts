@@ -50,6 +50,7 @@ export class AuthService {
 	private currentUserSubject: BehaviorSubject<User>;
 	public currentUser: Observable<User>;
 	public socialUser: SocialLogin.SocialUser;
+	public profileData: any;
 
 	constructor(private http: HttpClient, private socialAuthService: SocialLogin.AuthService, private router: Router) {
 		this.isAuthenticated = false;
@@ -65,6 +66,7 @@ export class AuthService {
 		this.currentUser.subscribe(user => {
 			this.setLoggedIn(user !== null);
 		})
+
 	}
 
 	setLoggedIn(value: boolean) {
@@ -83,6 +85,10 @@ export class AuthService {
 		}
 	}
 
+	public get getProfileData(): any {
+		return this.profileData;
+	}
+
 	login(email, password) {
 		return this.http.post<any>('/account/signin/', { email, password })
 			.pipe(map(response => {
@@ -91,6 +97,7 @@ export class AuthService {
 					localStorage.setItem('currentUser', JSON.stringify(data));
 					this.currentUserSubject.next(data);
 					this.setLoggedIn(true);
+					this.loadProfileData();
 				}
 
 				return response;
@@ -105,8 +112,46 @@ export class AuthService {
 					localStorage.setItem('currentUser', JSON.stringify(data));
 					this.currentUserSubject.next(data);
 					this.setLoggedIn(true);
+					this.loadProfileData();
 				}
 
+				return response;
+			}));
+	}
+
+	loadProfileData() {
+		/*
+		return this.http.get<any>(`/user/${this.currentUserSubject.value.id}/info/`)
+			.pipe(map(response => {
+				const { success, data } = response
+				if (success) {
+					// localStorage.setItem('currentUserProfile', JSON.stringify(data));
+					this.profileData = data;
+				}
+			}));
+		*/
+	}
+
+	public loadUserEvents(user_id: any) {
+		return this.http.get<any>(`/user/${user_id}/events/`)
+			.pipe(map(response => {
+				console.log(response)
+				const { success, data } = response
+				if (success) {
+					console.log(data)
+				}
+				return response;
+			}));
+	}
+
+	public loadAttendedEvents(user_id: any) {
+		return this.http.get<any>(`/user/${user_id}/events/attended/`)
+			.pipe(map(response => {
+				console.log(response)
+				const { success, data } = response
+				if (success) {
+					console.log(data)
+				}
 				return response;
 			}));
 	}
@@ -134,6 +179,7 @@ export class AuthService {
 							localStorage.setItem('currentUser', JSON.stringify(data));
 							this.currentUserSubject.next(data);
 							this.setLoggedIn(true);
+							this.loadProfileData();
 						}
 
 						return response;
