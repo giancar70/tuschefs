@@ -15,14 +15,9 @@
 		<div class="collapse navbar-collapse">
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item">
-					<div ngbDropdown class="d-inline-block">
-						<button class="btn btn-outline-neutral dropdown-item" id="dropdown-be-host" ngbDropdownToggle>Sé Anfitrión</button>
-						<div ngbDropdownMenu aria-labelledby="dropdown-be-host">
-							<a ngbDropdownItem class="dropdown-item" [routerLink]="['/profile']">Mi perfil</a>
-							<a ngbDropdownItem class="dropdown-item" [routerLink]="['/create-event']"> Mi cuenta </a>
-							<a ngbDropdownItem class="dropdown-item" [routerLink]="['/create-event']">Sé Anfitrión</a>
-						</div>
-					</div>
+					<a class="btn btn-neutral dropdown-item" [routerLink]="['/events']">
+						Sé Anfitrión
+					</a>
 				</li>
 				<li class="nav-item">
 					<a class="btn btn-neutral dropdown-item" [routerLink]="['/events']">
@@ -31,7 +26,17 @@
 				</li>
 				<ng-container *ngIf="isAuthenticated() && userData; else notAuthenticatedBlock">
 					<li class="nav-item">
-						<a class="btn btn-neutral dropdown-item">
+						<div ngbDropdown class="d-md-inline-block d-none">
+							<button class="btn btn-outline-neutral dropdown-item" id="dropdown-be-host" ngbDropdownToggle>
+								<i class="now-ui-icons users_single-02"></i>
+								{{ userData.first_name }}
+							</button>
+							<div ngbDropdownMenu aria-labelledby="dropdown-be-host">
+								<a ngbDropdownItem class="dropdown-item" [routerLink]="['/profile']">Mi perfil</a>
+								<a ngbDropdownItem class="dropdown-item" [routerLink]="['/profile-account']">Mi cuenta</a>
+							</div>
+						</div>
+						<a class="btn btn-neutral dropdown-item d-block d-md-none" [routerLink]="['/profile']">
 							<i class="now-ui-icons users_single-02"></i>
 							{{ userData.first_name }}
 						</a>
