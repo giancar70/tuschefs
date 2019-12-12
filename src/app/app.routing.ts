@@ -21,8 +21,7 @@ import { SearchPageComponent } from './search-page/search-page.component'
 import { AuthGuardService as AuthGuard } from './auth-guard/auth-guard.service'
 
 const routes: Routes = [
-	{ path: '', redirectTo: 'presentation', pathMatch: 'full' },
-	{ path: 'presentation', component: PresentationComponent },
+	{ path: '', component: PresentationComponent },
 	{ path: 'terms-and-conditions', component: TermsconditionsComponent },
 
 	{ path: 'event/:id', component: EventDescriptionComponent },
@@ -40,7 +39,7 @@ const routes: Routes = [
 		CommonModule,
 		BrowserModule,
 		RouterModule.forRoot(routes, {
-			useHash: true
+			useHash: false
 		})
 	],
 	exports: [
