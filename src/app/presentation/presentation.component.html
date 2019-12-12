@@ -399,18 +399,16 @@
         <div class="hero__content-footer hide-sm">
           <div class="col-sm-12">
 
-
             <div id="searchbar">
               <div class="searchbar">
-                <form id="searchbar-form" action="/s">
+                <form id="searchbar-form" [formGroup]="searchForm" (ngSubmit)="onSubmitSearch(searchForm)">
 
                   <div class="searchbar__input-wrapper">
 
                     <label class="searchbar__location">
                       <span class="text-left text-contrast">¿Qué estás buscando?</span>
 
-                      <input id="location" type="text" class="input-large input-contrast" autocomplete="off"
-                        name="location" placeholder="Busca por lugar o anfitrión" />
+                      <input id="location" type="text" class="input-large input-contrast" autocomplete="off" name="location" placeholder="Busca por lugar o anfitrión" />
                       <div id="searchbar-location-error" class="searchbar__location-error hide">
                         Cuándo
                       </div>
@@ -418,14 +416,13 @@
 
                     <label class="searchbar__checkin" style="width: 200px;">
                       <span class="text-left text-contrast">¿Cuándo estás disponible?</span>
-                      <input id="checkin" type="text" class="checkin input-large input-contrast" name="checkin"
-                        placeholder="Cuándo?" />
+						<input id="checkin" type="date" class="checking input-large input-contrast datetimepicker" placeholder="12/12/2019" formControlName="dateInit" name="checking" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" data-color="white">
                     </label>
 
                     <label class="searchbar__guests">
                       <span class="text-left text-contrast">¿Cuántos invitados asistirán?</span>
                       <div class="select select-large">
-                        <select id="guests" name="guests">
+                        <select id="guests" name="guests" formControlName="numGuests" >
                           <option value="1">1 Persona</option>
                           <option value="2">2 Personas</option>
                           <option value="3">3 Personas</option>
@@ -613,26 +610,25 @@
 
             <div id="searchbar">
               <div class="searchbar">
-                <form id="searchbar-form" action="/s">
+                <form id="searchbar-form" [formGroup]="searchForm" (ngSubmit)="onSubmitSearch(searchForm)">
 
                   <div class="searchbar__input-wrapper">
 
                     <label class="searchbar__location">
                       <span class="text-left text-contrast">¿Qué estás buscando?</span>
 
-                      <input id="location" type="text" class="input-large input-contrast" autocomplete="off"
-                        name="location" placeholder="Busca por lugar o anfitrión" />
+                      <input id="location" type="text" class="input-large input-contrast" autocomplete="off" name="location" placeholder="Busca por lugar o anfitrión" />
                     </label>
 
                     <label class="searchbar__checkin">
                       <span class="text-left text-contrast">¿Cuando estás disponible?</span>
-                      <input id="checkin" type="text" class="checkin input-large input-contrast" name="checkin" placeholder="Cuándo?" />
+						<input id="checkin" type="date" class="checking input-large input-contrast datetimepicker" placeholder="12/12/2019" formControlName="dateInit" name="checking" ngbDatepicker #d1="ngbDatepicker" (click)="d1.toggle()" data-color="white">
                     </label>
 
                     <label class="searchbar__guests">
                       <span class="text-left text-contrast">¿Cuantos invitados asistirán?</span>
                       <div class="select select-large">
-                        <select id="guests" name="guests">
+                        <select id="guests" name="guests" formControlName="numGuests" >
                           <option value="1">1 Persona</option>
                           <option value="2">2 Personas</option>
                           <option value="3">3 Personas</option>

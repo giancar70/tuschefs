@@ -1,0 +1,203 @@
+.searchbar {
+  display: inline-block;
+  vertical-align: middle;
+}
+.searchbar input,
+.searchbar select,
+.searchbar button,
+.searchbar .select {
+  display: block;
+  height: 44px;
+}
+.searchbar input:focus {
+  position: relative;
+  z-index: 1;
+}
+.searchbar__input-wrapper {
+  float: left;
+}
+.searchbar__location,
+.searchbar__checkin,
+.searchbar__checkout,
+.searchbar__dates--new,
+.searchbar__guests,
+.searchbar__submit {
+  float: left;
+  margin: 0 -1px 0 0;
+  padding-bottom: 0;
+  padding-top: 0;
+  vertical-align: middle;
+  width: auto;
+}
+
+.searchbar__submit {
+    margin-top: 18.5px;
+}
+
+.searchbar__location {
+  width: 220px;
+}
+.searchbar__location input {
+  -webkit-border-top-right-radius: 0;
+  -moz-border-radius-topright: 0;
+  border-top-right-radius: 0;
+  -webkit-border-bottom-right-radius: 0;
+  -moz-border-radius-bottomright: 0;
+  border-bottom-right-radius: 0;
+}
+.searchbar__location-error {
+  background: #fff;
+  background: rgba(255, 255, 255, 0.8);
+  -webkit-border-radius: 0 0 3px 3px;
+  -moz-border-radius: 0 0 3px 3px;
+  border-radius: 0 0 3px 3px;
+  left: 0;
+  margin-top: -1px;
+  position: absolute;
+  top: 100%;
+  width: 220px;
+}
+.searchbar__checkin,
+.searchbar__checkout {
+  width: 130px;
+}
+.searchbar__checkin input,
+.searchbar__checkout input {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+.searchbar__guests select {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  border-right: 0;
+}
+.searchbar__submit {
+  -webkit-border-bottom-left-radius: 0;
+  -moz-border-radius-bottomleft: 0;
+  border-bottom-left-radius: 0;
+  -webkit-border-top-left-radius: 0;
+  -moz-border-radius-topleft: 0;
+  border-top-left-radius: 0;
+  display: inline-block;
+}
+@media (min-width: 1100px) {
+  .searchbar__location,
+  .searchbar__location-error {
+    width: 380px;
+  }
+}
+
+.text-contrast {
+  color: #fff;
+}
+.text-left {
+  text-align: left;
+}
+.input-large {
+  font-size: 16px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.input-resize-horiz {
+  resize: horizontal;
+}
+.input-resize-both {
+  resize: both;
+}
+.input-resize-none {
+  resize: none;
+}
+@media (max-width: 767px) {
+  .select-large,
+  .input-large {
+    font-size: 15px;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="date"],
+  input[type="password"],
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+.icon {
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+}
+.icon:before {
+  font-family: Airglyphs, sans-serif;
+}
+.icon:before {
+  line-height: 1;
+}
+.hide {
+  display: none !important;
+}
+select {
+  -webkit-appearance: none;
+  background: white\0 !important;
+}
+select::-ms-expand {
+  display: none;
+}
+.select {
+  position: relative;
+  display: inline-block;
+  vertical-align: bottom;
+}
+.select select {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-right: 2em;
+}
+.select:before {
+  content: "\25bc";
+  position: absolute;
+  pointer-events: none;
+  color: #82888a;
+  top: 0;
+  bottom: 1px;
+  padding-top: 0.7em;
+  line-height: 1;
+  right: 0;
+  width: 2em;
+  text-align: center;
+  transform: scale(0.84, 0.42);
+  -webkit-transform: scale(0.84, 0.42);
+  -moz-transform: scale(0.84, 0.42);
+  -ms-transform: scale(0.84, 0.42);
+  -o-transform: scale(0.84, 0.42);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.84, M12=0, M21=0, M22=0.42, SizingMethod='auto expand')";
+  filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.84, M12=0, M21=0, M22=0.42, SizingMethod='auto expand');
+}
+.select-large {
+  font-size: 16px;
+}
+.select-large select {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+input[name="location"] {
+  height: auto;
+  width: 357px;
+  padding: 19.5px 0 19.5px 48px;
+  border: 0;
+  outline: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+  .airbnb-header .search-form .location {
+    width: 149px;
+  }
+  .search-bar input[name="location"] {
+    width: 220px;
+  }
+}

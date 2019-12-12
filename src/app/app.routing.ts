@@ -16,6 +16,8 @@ import { EventDescriptionComponent } from './event-description/event-description
 import { UserProfileComponent } from './user-profile/user-profile.component'
 import { HostProfileComponent } from './host-profile/host-profile.component'
 
+import { SearchPageComponent } from './search-page/search-page.component'
+
 import { AuthGuardService as AuthGuard } from './auth-guard/auth-guard.service'
 
 const routes: Routes = [
@@ -27,8 +29,10 @@ const routes: Routes = [
 	{ path: 'events', component: EventListComponent },
 	{ path: 'create-event', component: CreateEventComponent, canActivate: [AuthGuard] },
 
-	{ path: 'profile', component: UserProfileComponent , canActivate: [AuthGuard] },
-	{ path: 'profile/:id', component: HostProfileComponent }
+	{ path: 'profile', component: UserProfileComponent, canActivate: [AuthGuard] },
+	{ path: 'profile/:id', component: HostProfileComponent },
+
+	{ path: 'search', component: SearchPageComponent }
 ];
 
 @NgModule({

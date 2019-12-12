@@ -1,0 +1,14 @@
+<div class="section-intro text-center row-space-6 row-space-top-8" style="padding-top: 110px;">
+	<h2 class="row-space-1">
+		<strong>Búsqueda de eventos</strong>
+	</h2>
+</div>
+<div class="discovery-tiles">
+	<div class="container">
+		<div class="row" *ngIf="searchResults">
+			<div *ngFor="let tile of searchResults" class="col-sm-12 col-md-4 col-lg-4">
+				<app-experience-tile [data]="tile"></app-experience-tile>
+			</div>
+		</div>
+	</div>
+</div>

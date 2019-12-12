@@ -37,7 +37,9 @@ import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { EventListComponent } from './event-list/event-list.component';
 import { UserProfileComponent } from './user-profile/user-profile.component'
 import { HostProfileComponent } from './host-profile/host-profile.component';
-import { TermsconditionsComponent } from './termsconditions/termsconditions.component'
+import { TermsconditionsComponent } from './termsconditions/termsconditions.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
+import { SearchPageComponent } from './search-page/search-page.component'
 
 const config = new AuthServiceConfig([
   {
@@ -67,6 +69,8 @@ export function provideConfig() {
 		UserProfileComponent,
 		HostProfileComponent,
 		TermsconditionsComponent,
+		SearchBarComponent,
+		SearchPageComponent,
 	],
 	imports: [
 		BrowserAnimationsModule,
