@@ -16,7 +16,10 @@ export class SearchPageComponent implements OnInit {
 
 	ngOnInit() {
 		this.route.queryParamMap.subscribe(params => {
-			this.searchParams = params.params;
+			// Annoying linter error because ParamMap 'doesnt' have a params method,
+			// so we can't do params.params to access the values. Hence, we split this in two lines.
+			this.searchParams = { ...params };
+			this.searchParams = this.searchParams.params;
 			this.search();
 		});
 	}
