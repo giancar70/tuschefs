@@ -12,8 +12,9 @@ import { FormBuilder, FormGroup, Validators, NgForm, FormArray } from '@angular/
 export class UserProfileComponent implements OnInit {
 
 	public userData: any;
-	public userEvents: any;
+	public userCreatedEvents: any;
 	public attendedEvents: any;
+	public reviews: any;
 	public isEditMode = false;
 
 	profileForm: FormGroup;
@@ -23,10 +24,26 @@ export class UserProfileComponent implements OnInit {
 
 	ngOnInit() {
 		this.userData = this.authService.getUserData;
-		this.userEvents = this.authService.loadUserEvents(this.userData.id);
-		this.attendedEvents = this.authService.loadAttendedEvents(this.userData.id);
-		console.log(this.userEvents);
-		console.log(this.attendedEvents);
+
+		// TODO: Proper errors for user
+		this.authService.loadUserCreatedEvents(this.userData.id)
+			.subscribe(response => {
+				if (response.success) {
+					this.userCreatedEvents = response.data;
+				}
+			});
+		this.authService.loadAttendedEvents(this.userData.id)
+			.subscribe(response => {
+				if (response.success) {
+					this.attendedEvents = response.data;
+				}
+			});
+		this.authService.loadUserReviews(this.userData.id)
+			.subscribe(response => {
+				if (response.success) {
+					this.reviews = response.data;
+				}
+			});
 
 		this.profileForm = this.formBuilder.group({
 			name: [this.userData.first_name, Validators.required],

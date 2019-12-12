@@ -50,7 +50,6 @@ export class AuthService {
 	private currentUserSubject: BehaviorSubject<User>;
 	public currentUser: Observable<User>;
 	public socialUser: SocialLogin.SocialUser;
-	public profileData: any;
 
 	constructor(private http: HttpClient, private socialAuthService: SocialLogin.AuthService, private router: Router) {
 		this.isAuthenticated = false;
@@ -85,10 +84,6 @@ export class AuthService {
 		}
 	}
 
-	public get getProfileData(): any {
-		return this.profileData;
-	}
-
 	login(email, password) {
 		return this.http.post<any>('/account/signin/', { email, password })
 			.pipe(map(response => {
@@ -97,7 +92,6 @@ export class AuthService {
 					localStorage.setItem('currentUser', JSON.stringify(data));
 					this.currentUserSubject.next(data);
 					this.setLoggedIn(true);
-					this.loadProfileData();
 				}
 
 				return response;
@@ -112,30 +106,15 @@ export class AuthService {
 					localStorage.setItem('currentUser', JSON.stringify(data));
 					this.currentUserSubject.next(data);
 					this.setLoggedIn(true);
-					this.loadProfileData();
 				}
 
 				return response;
 			}));
 	}
 
-	loadProfileData() {
-		/*
-		return this.http.get<any>(`/user/${this.currentUserSubject.value.id}/info/`)
-			.pipe(map(response => {
-				const { success, data } = response
-				if (success) {
-					// localStorage.setItem('currentUserProfile', JSON.stringify(data));
-					this.profileData = data;
-				}
-			}));
-		*/
-	}
-
-	public loadUserEvents(user_id: any) {
+	public loadUserCreatedEvents(user_id: any) {
 		return this.http.get<any>(`/user/${user_id}/events/`)
 			.pipe(map(response => {
-				console.log(response)
 				const { success, data } = response
 				if (success) {
 					console.log(data)
@@ -147,7 +126,28 @@ export class AuthService {
 	public loadAttendedEvents(user_id: any) {
 		return this.http.get<any>(`/user/${user_id}/events/attended/`)
 			.pipe(map(response => {
-				console.log(response)
+				const { success, data } = response
+				if (success) {
+					console.log(data)
+				}
+				return response;
+			}));
+	}
+
+	public loadUserReviews(user_id: any) {
+		return this.http.get<any>(`/user/${user_id}/reviews/`)
+			.pipe(map(response => {
+				const { success, data } = response
+				if (success) {
+					console.log(data)
+				}
+				return response;
+			}));
+	}
+
+	public loadUserById(user_id: any) {
+		return this.http.get<any>(`/user/${user_id}/info/`)
+			.pipe(map(response => {
 				const { success, data } = response
 				if (success) {
 					console.log(data)
@@ -179,7 +179,6 @@ export class AuthService {
 							localStorage.setItem('currentUser', JSON.stringify(data));
 							this.currentUserSubject.next(data);
 							this.setLoggedIn(true);
-							this.loadProfileData();
 						}
 
 						return response;

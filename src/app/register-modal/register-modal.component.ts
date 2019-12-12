@@ -73,7 +73,7 @@ import { LoginModalInjectable } from '../login-modal/login-modal.component'
 					<label class="form-check-label">
 						<input class="form-check-input" type="checkbox">
 						<span class="form-check-sign"></span>
-						Acepto los <a href="#something">Terminos y Condiciones</a>.
+						Acepto los <a (click)="redirectToTerms()">Términos y Condiciones</a>.
 					</label>
 				</div>
 				<div class="form-group card-footer text-center">
@@ -118,6 +118,11 @@ export class RegisterModalContentComponent implements OnInit {
 			password: ['', [Validators.required, Validators.minLength(6)]]
 		});
 		this.errors = null;
+	}
+
+	redirectToTerms() {
+		this.modalService.dismissAll('Redirect');
+		this.router.navigate(['/terms-and-conditions']);
 	}
 
 	// convenience getter for easy access to form fields

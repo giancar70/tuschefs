@@ -36,6 +36,8 @@ import { ExperienceTileComponent } from './experience-tile/experience-tile.compo
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { EventListComponent } from './event-list/event-list.component';
 import { UserProfileComponent } from './user-profile/user-profile.component'
+import { HostProfileComponent } from './host-profile/host-profile.component';
+import { TermsconditionsComponent } from './termsconditions/termsconditions.component'
 
 const config = new AuthServiceConfig([
   {
@@ -63,6 +65,8 @@ export function provideConfig() {
 		ExperienceTileComponent,
 		EventListComponent,
 		UserProfileComponent,
+		HostProfileComponent,
+		TermsconditionsComponent,
 	],
 	imports: [
 		BrowserAnimationsModule,

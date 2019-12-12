@@ -1,0 +1,81 @@
+<div class="container">
+	<div class="section-intro text-center row-space-6 row-space-top-8" style="padding-top: 110px;">
+		<h2 class="row">
+			<strong style="padding-left: 15px;">Perfil</strong>
+		</h2>
+	</div>
+	<div class="row" *ngIf="userData">
+		<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+			<div class="profile-left">
+				<div class="image-wrapper">
+					<app-image-upload text="Actualizar Foto" [bg]="false" isRound="true" image="{{ userData.photo }}"></app-image-upload>
+				</div>
+				<div class="left-info">
+					<hr>
+					<h4>Verificada</h4>
+					<hr>
+					<h6>{{ userData.first_name }} ha proporcionado </h6>
+					<ul>
+						<li>Documento de identidad oficial</li>
+						<li>Dirección de correo electrónico</li>
+						<li>Número de teléfono</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
+			<div class="profile-right">
+				<h2 class="profile-title">Hola, me llamo {{ userData.first_name }}</h2>	
+				<div class="verified">
+					Se registró en el 2015 {{ userData.register_date }} |
+					<button class="btn btn-link" type="button" (click)="editProfile()">Editar perfil</button>
+					<div *ngIf="!isEditMode">
+						<blockquote>
+							{{ userData.description }}
+						</blockquote>
+						<div class="extra-info">
+							<h6>
+								<i class="now-ui-icons shopping_shop"></i>
+								Vive en Lima, Perú
+							</h6>
+							<h6>
+								<i class="now-ui-icons shopping_shop"></i>
+								Trabaja en: WORK {{ userData.work }}
+							</h6>
+						</div>
+					</div>
+					<div *ngIf="isEditMode">
+						<form [formGroup]="profileForm" role="form" id="contact-form" method="post" (ngSubmit)="onSubmitProfileForm()">
+
+						<p>Descripción del usuario</p>
+						<textarea placeholder="Cuéntanos sobre ti" class="form-control" cols="30" rows="20" formControlName="description">{{ userData.description }}</textarea>
+						<div class="extra-info">
+							<label for="firstName">Nombre</label>
+							<input class="form-control" type="text" name="firstName" id="firstName" formControlName="name">
+
+							<label for="lastName">Apellido</label>
+							<input class="form-control" type="text" name="lastName" id="lastName" formControlName="last_name">
+
+							<label for="email">Email</label>
+							<input class="form-control" type="text" name="email" id="email" formControlName="email">
+
+							<label for="email">Phone</label>
+							<input class="form-control" type="text" name="phone" id="phone" formControlName="phone">
+
+							<label for="location">Ubicación</label>
+							<input class="form-control" type="text" name="location" value="Lima, Perú" id="location" formControlName="location">
+							<label for="work">Trabajo</label>
+							<input class="form-control" type="text" name="work" value="WORK" id="work" formControlName="work">
+						</div>
+						<button class="btn btn-primary" type="submit">Guardar</button>
+						<button class="btn" type="button" (click)="cancelEditProfile()">Cancelar</button>
+					</form>
+					</div>
+					<hr>
+
+					<p>Reseñas hechas por ti</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
