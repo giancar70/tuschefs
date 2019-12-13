@@ -23,16 +23,24 @@ export class HostProfileComponent implements OnInit {
 		// TODO: Proper errors for user
 		this.route.params.subscribe(params => {
 			this.userId = params['id'];
+
 			this.authService.loadUserById(this.userId)
 				.subscribe(response => {
 					if (response.success) {
 						this.userData = response.data;
 					}
 				});
-			this.authService.loadUserCreatedEvents(this.userData.id)
+
+			this.authService.loadUserCreatedEvents(this.userId)
 				.subscribe(response => {
 					if (response.success) {
 						this.hostCreatedEvents = response.data;
+						this.hostCreatedEvents = this.hostCreatedEvents.sort((a, b) => {
+							// NOTE: Sorting by datetime. Maybe this isn't necessary.
+							const datetime1 = b.date_init + ' ' + b.time_start
+							const datetime2 = a.date_init + ' ' + a.time_start
+							return Date.parse(datetime1) - Date.parse(datetime2);
+						});
 					}
 				});
 		})
