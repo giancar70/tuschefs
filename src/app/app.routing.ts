@@ -3,7 +3,7 @@ import { CommonModule, } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 
-import { PresentationComponent } from './presentation/presentation.component';
+import { PresentationComponent } from './presentation/presentation.component'
 import { TermsconditionsComponent } from './termsconditions/termsconditions.component'
 
 import { ComponentsComponent } from './components/components.component';
