@@ -18,6 +18,7 @@ export class CheckoutComponent implements OnInit {
 	private reservationDate: any;
 	private numGuests: number;
 	private reservationTime: any;
+	private successResponse = '';
 
 	private httpClient: HttpClient;
 	checkoutForm: FormGroup;
@@ -90,6 +91,7 @@ export class CheckoutComponent implements OnInit {
 								.subscribe(response3 => {
 									if (response3.success) {
 										console.log(response3.data);
+										this.successResponse = response3.data;
 									}
 								})
 						}
