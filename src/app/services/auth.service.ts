@@ -116,9 +116,6 @@ export class AuthService {
 		return this.http.get<any>(`/user/${user_id}/events/`)
 			.pipe(map(response => {
 				const { success, data } = response
-				if (success) {
-					console.log(data)
-				}
 				return response;
 			}));
 	}
@@ -127,9 +124,6 @@ export class AuthService {
 		return this.http.get<any>(`/user/${user_id}/events/attended/`)
 			.pipe(map(response => {
 				const { success, data } = response
-				if (success) {
-					console.log(data)
-				}
 				return response;
 			}));
 	}
@@ -138,9 +132,6 @@ export class AuthService {
 		return this.http.get<any>(`/user/${user_id}/reviews/`)
 			.pipe(map(response => {
 				const { success, data } = response
-				if (success) {
-					console.log(data)
-				}
 				return response;
 			}));
 	}
@@ -149,9 +140,6 @@ export class AuthService {
 		return this.http.get<any>(`/user/${user_id}/info/`)
 			.pipe(map(response => {
 				const { success, data } = response
-				if (success) {
-					console.log(data)
-				}
 				return response;
 			}));
 	}

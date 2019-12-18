@@ -7,6 +7,7 @@
 
 .verified {
 	font-weight: 200;
+	width: 100%;
 	margin-top: 0;
 	margin-bottom: 15px;
 }
@@ -16,6 +17,19 @@
 	flex-flow: column wrap;
 	align-items: flex-start;
 	justify-content: flex-start;
+}
+
+.event-wrapper {
+	width: 100%;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: flex-start;
+	align-items: center;
+	.event-tile {
+		p {
+			margin-bottom: 0;
+		}
+	}
 }
 
 .profile-left {

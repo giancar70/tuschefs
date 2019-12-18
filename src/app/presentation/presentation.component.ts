@@ -19,7 +19,6 @@ export class PresentationComponent implements OnInit, OnDestroy, AfterViewInit {
 		middle: false,
 		right: false
 	};
-	date: Date = new Date();
 	experienceTiles: object[];
 	searchForm: FormGroup;
 
@@ -39,6 +38,7 @@ export class PresentationComponent implements OnInit, OnDestroy, AfterViewInit {
 		navbar.classList.add('navbar-transparent');
 
 		this.searchForm = this.formBuilder.group({
+			isHostHome: [0, Validators.required],
 			numGuests: [1, Validators.required],
 			dateInit: ['2019-12-12', Validators.required]
 		});
@@ -53,7 +53,7 @@ export class PresentationComponent implements OnInit, OnDestroy, AfterViewInit {
 		data.dateInit = Object.keys(data.dateInit).map(e => data.dateInit[e]).join('-')
 		const numGuests = data.numGuests;
 		const dateInit = data.dateInit;
-		const isHome = 0;
+		const isHome = data.isHostHome;
 
 		this.router.navigate(['/search'], { queryParams: { guests: numGuests, date_init: dateInit, is_home: isHome } });
 	}

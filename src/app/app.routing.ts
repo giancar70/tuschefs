@@ -17,6 +17,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component'
 import { HostProfileComponent } from './host-profile/host-profile.component'
 
 import { SearchPageComponent } from './search-page/search-page.component'
+import { CheckoutComponent } from './checkout/checkout.component'
 
 import { AuthGuardService as AuthGuard } from './auth-guard/auth-guard.service'
 
@@ -31,7 +32,9 @@ const routes: Routes = [
 	{ path: 'profile', component: UserProfileComponent, canActivate: [AuthGuard] },
 	{ path: 'profile/:id', component: HostProfileComponent },
 
-	{ path: 'search', component: SearchPageComponent }
+	{ path: 'search', component: SearchPageComponent },
+
+	{ path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

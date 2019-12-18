@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -13,6 +13,9 @@ export class EventDescriptionComponent implements OnInit {
 	private loading: boolean;
 	private eventId: number;
 	private eventData: any;
+
+	private reservationDate: any;
+	private numGuests: number;
 
 	constructor(private route: ActivatedRoute, private http: HttpClient,
 				private router: Router) { }
@@ -35,6 +38,17 @@ export class EventDescriptionComponent implements OnInit {
 			}, err => {
 				this.router.navigate(['/'])
 			})
+	}
+
+	makeReservation() {
+		this.saveCheckoutDataToStorage();
+		this.router.navigate(['/checkout'])
+	}
+
+	saveCheckoutDataToStorage() {
+		// TODO: add expiration to 'Cart'
+		const payload = { numGuests: this.numGuests, reservationDate: this.reservationDate, eventData: this.eventData };
+		localStorage.setItem('tuschefs_cart', JSON.stringify(payload));
 	}
 
 	public getFoodTypes() {

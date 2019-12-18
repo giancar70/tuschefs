@@ -39,7 +39,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component'
 import { HostProfileComponent } from './host-profile/host-profile.component';
 import { TermsconditionsComponent } from './termsconditions/termsconditions.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
-import { SearchPageComponent } from './search-page/search-page.component'
+import { SearchPageComponent } from './search-page/search-page.component';
+import { CheckoutComponent } from './checkout/checkout.component'
 
 const config = new AuthServiceConfig([
   {
@@ -71,6 +72,7 @@ export function provideConfig() {
 		TermsconditionsComponent,
 		SearchBarComponent,
 		SearchPageComponent,
+		CheckoutComponent,
 	],
 	imports: [
 		BrowserAnimationsModule,

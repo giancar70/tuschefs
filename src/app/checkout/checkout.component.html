@@ -1,0 +1,138 @@
+<div class="mt-5 page-header">
+	<div class="mt-5 container">
+		<div class="row">
+
+			<div class="col-md-8">
+
+				<form [formGroup]="checkoutForm" role="form" id="checkout-form" method="post" (ngSubmit)="onSubmit(checkoutForm)">
+					<div class="card card-contact">
+						<div class="card-header text-center">
+							<h4 class="card-title">Ya casi estás...</h4>
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Confirmar el número de invitados</label>
+										<div class="input-group" [ngClass]="{'input-group-focus': focus0 === true}">
+											<div class="input-group-prepend">
+												<span class="input-group-text"><i class="now-ui-icons users_single-02"></i></span>
+											</div>
+											<select class="form-control" (focus)="focus0 = true" (blur)="focus0 = false" name="num-guests" formControlName="numGuests">
+												<option value="1">1 Invitado</option>
+												<option value="2">2 Invitados</option>
+												<option value="3">3 Invitados</option>
+												<option value="4">4 Invitados</option>
+												<option value="5">5 Invitados</option>
+												<option value="6">6 Invitados</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Teléfono</label>
+										<div class="input-group" [ngClass]="{'input-group-focus': focus4 === true}">
+											<div class="input-group-prepend">
+												<span class="input-group-text"><i class="now-ui-icons tech_mobile"></i></span>
+											</div>
+											<input type="text" class="form-control" (focus)="focus4=true" (blur)="focus4=false" name="phone" formControlName="phoneNumber">
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<hr>
+
+							<div class="row">
+								<div class="col-md-12">
+									<h3>Datos de pago</h3>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Número de la tarjeta</label>
+										<div class="input-group" [ngClass]="{'input-group-focus': focus5 === true}">
+											<input type="text" class="form-control" (focus)="focus5=true" (blur)="focus5=false" name="card-number" formControlName="cardNumber">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Fecha de expiración</label>
+										<div class="input-group" [ngClass]="{'input-group-focus': focus6 === true}">
+											<input type="text" placeholder="MM/AA" class="form-control" (focus)="focus6=true" (blur)="focus6=false" name="expiration" formControlName="cardExpiration">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Titular de la Tarjeta</label>
+										<div class="input-group" [ngClass]="{'input-group-focus': focus7 === true}">
+											<input type="text" class="form-control" (focus)="focus7=true" (blur)="focus7=false" name="name-card" formControlName="nameOnCard">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>CVV</label>
+										<div class="input-group" [ngClass]="{'input-group-focus': focus8 === true}">
+											<input type="text" class="form-control" (focus)="focus8=true" (blur)="focus8=false" name="cvv" formControlName="cvv">
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12" style="display: flex; justify-content: center;">
+									<button type="submit" class="btn btn-secondary btn-round btn-large pull-right">
+										<i class="now-ui-icons ui-1_lock-circle-open"></i>
+										Reserva
+									</button>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12">
+									<label>Acuérdate</label>
+									<ul>
+										<li>Tu reserva no estará confirmada hasta que el anfitrión acepte tu petición. Una vez aceptada, se realizará el cobro por la reserva.</li>
+
+										<li>Los anfitriones pueden aceptar la solicitud hasta en 72 horas de realizado la reserva.</li>
+									</ul>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<div class="col-md-4">
+				<app-experience-tile *ngIf="eventData" [data]="eventData"></app-experience-tile>
+				<div class="card small-card" style="border-left: 4px solid #3bd57e;">
+					<div class="card-body">
+						<p class="card-text"><i class="now-ui-icons ui-1_calendar-60"></i> {{ reservationDate }}</p>
+						<p class="card-text"><i class="now-ui-icons ui-2_time-alarm"></i> {{ reservationTime }}</p>
+					</div>
+				</div>
+				<div class="card small-card" style="border-left: 4px solid #3bd57e;">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-8">
+								<p class="card-text">{{ numGuests }} invitados <span>x S/. {{ eventData.price }} </span> </p>
+							</div>
+							<div class="col-md-4">
+								<p class="card-text align-right">S/. {{ numGuests * eventData.price }}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p style="font-size: 12x;">
+					<i class="now-ui-icons travel_info" style="color: green;"></i>
+					Cancelación gratuita hasta 2 días antes del evento.
+				</p>
+			</div>
+
+		</div>
+	</div>
+</div>

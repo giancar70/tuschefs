@@ -41,6 +41,12 @@ export class HostProfileComponent implements OnInit {
 							const datetime2 = a.date_init + ' ' + a.time_start
 							return Date.parse(datetime1) - Date.parse(datetime2);
 						});
+
+						this.hostCreatedEvents = this.hostCreatedEvents.map(event => {
+							return { image: event.photos.length > 0 ? event.photos[0].image : 'https://via.placeholder.com/300x180',
+								title: event.title, description: event.description, host: event.chef.user.first_name, host_picture: event.chef.user.photo,
+								price: event.price, id: event.id, user_id: event.chef.user.id };
+						})
 					}
 				});
 		})

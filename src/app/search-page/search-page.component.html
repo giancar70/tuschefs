@@ -1,11 +1,89 @@
-<div class="section-intro text-center row-space-6 row-space-top-8" style="padding-top: 110px;">
-	<h2 class="row-space-1">
+<div class="section-intro text-center row-space-6 row-space-top-8" style="padding-top: 60px;">
+
+	<h2 class="row-space-1" style="margin-bottom: 20px;">
 		<strong>Búsqueda de eventos</strong>
 	</h2>
+
+
+	<div class="col-sm-12" style="margin-bottom: 30px;">
+
+		<div id="searchbar">
+			<div class="searchbar">
+				<form id="searchbar-form" [formGroup]="searchForm" (ngSubmit)="onSubmitSearch(searchForm)">
+
+					<div class="searchbar__input-wrapper">
+
+						<!-- NOTE: Disabled for now. Location/Host based search will be implemented later.
+					    <label class="searchbar__location">
+					    <span class="text-left text-contrast">¿Qué estás buscando?</span>
+
+					    <input id="location" type="text" class="input-large input-contrast" autocomplete="off" name="location" placeholder="Busca por lugar o anfitrión" />
+					    <div id="searchbar-location-error" class="searchbar__location-error hide">
+					    Cuándo
+					    </div>
+					    </label>
+						-->
+						<label class="searchbar__guests">
+							<span class="text-left text-contrast">¿Donde?</span>
+							<div class="select select-large">
+								<select id="at-home" name="at-home" formControlName="isHostHome" >
+									<option value="0">En la casa del Chef</option>
+									<option value="1">En mi casa</option>
+								</select>
+							</div>
+						</label>
+
+						<label class="searchbar__checkin" style="width: 200px;">
+							<span class="text-left text-contrast">¿Cuándo estás disponible?</span>
+							<input id="checkin" type="text" class="checking input-large input-contrast datetimepicker" placeholder="12/12/2019" formControlName="dateInit" name="checking" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" data-color="white">
+						</label>
+
+						<label class="searchbar__guests">
+							<span class="text-left text-contrast">¿Cuántos invitados asistirán?</span>
+							<div class="select select-large">
+								<select id="guests" name="guests" formControlName="numGuests" >
+									<option value="1">1 Persona</option>
+									<option value="2">2 Personas</option>
+									<option value="3">3 Personas</option>
+									<option value="4">4 Personas</option>
+									<option value="5">5 Personas</option>
+									<option value="6">6 Personas</option>
+									<option value="7">7 Personas</option>
+									<option value="8">8 Personas</option>
+									<option value="9">9 Personas</option>
+									<option value="10">10 Personas</option>
+									<option value="11">11 Personas</option>
+									<option value="12">12 Personas</option>
+									<option value="13">13 Personas</option>
+									<option value="14">14 Personas</option>
+									<option value="15">15 Personas</option>
+									<option value="16">16+ Personas</option>
+								</select>
+							</div>
+						</label>
+
+					</div>
+					<button id="submit_location" type="submit" class="searchbar__submit btn btn-primary btn-large">
+						Buscar
+					</button>
+
+					<input type="hidden" name="source" value="bb">
+
+				</form>
+			</div>
+		</div>
+
+	</div>
+
 </div>
+
 <div class="discovery-tiles">
 	<div class="container">
 		<div class="row" *ngIf="searchResults">
+			<h3 *ngIf="searchResults.length === 0" style="text-align: center; width: 100%;">
+				No se encontró ningún evento con estos parámetros
+			</h3>
+
 			<div *ngFor="let tile of searchResults" class="col-sm-12 col-md-4 col-lg-4">
 				<app-experience-tile [data]="tile"></app-experience-tile>
 			</div>

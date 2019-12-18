@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service'
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, NgForm, FormArray } from '@angular/forms';
+import { NgbDatepickerConfig, NgbCalendar, NgbDate,
+		 NgbDateStruct, NgbDateAdapter, NgbDateNativeAdapter
+	   } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -12,8 +15,9 @@ import { FormBuilder, FormGroup, Validators, NgForm, FormArray } from '@angular/
 export class UserProfileComponent implements OnInit {
 
 	public userData: any;
-	public userCreatedEvents: any;
 	public attendedEvents: any;
+	public pastEvents: any;
+	public upcomingEvents: any;
 	public reviews: any;
 	public isEditMode = false;
 
@@ -22,53 +26,86 @@ export class UserProfileComponent implements OnInit {
 	constructor(private authService: AuthService, private http: HttpClient,
 				private formBuilder: FormBuilder) { }
 
+	getDateNow() {
+		const dt = new Date();
+		const date = `${
+			dt.getFullYear().toString().padStart(4, '0')}-${
+			(dt.getMonth() + 1).toString().padStart(2, '0')}-${
+			dt.getDate().toString().padStart(2, '0')}T${
+			dt.getHours().toString().padStart(2, '0')}:${
+			dt.getMinutes().toString().padStart(2, '0')}:${
+			dt.getSeconds().toString().padStart(2, '0')}Z`
+		;
+		return date;
+	}
+
 	ngOnInit() {
 		this.userData = this.authService.getUserData;
 
-		// TODO: Proper errors for user
-		this.authService.loadUserCreatedEvents(this.userData.id)
-			.subscribe(response => {
-				if (response.success) {
-					this.userCreatedEvents = response.data;
-				}
-			});
 		this.authService.loadAttendedEvents(this.userData.id)
 			.subscribe(response => {
 				if (response.success) {
 					this.attendedEvents = response.data;
+					this.attendedEvents = this.attendedEvents.sort((a, b) => {
+						// NOTE: Sorting by datetime. Maybe this isn't necessary.
+						return Date.parse(a.date_event) - Date.parse(b.date_event);
+					});
+
+					this.attendedEvents = this.attendedEvents.map(tmp => {
+						const event = tmp.event;
+						return { image: event.photos.length > 0 ? event.photos[0].image : 'https://via.placeholder.com/300x180',
+							title: event.title, description: event.description, host: event.chef.user.first_name, host_picture: event.chef.user.photo,
+							date_event: tmp.date_event, price: event.price, id: event.id, user_id: event.chef.user.id };
+					})
+
+					const dateNow = this.getDateNow();
+					console.log(dateNow);
+
+					this.pastEvents = this.attendedEvents.filter(a => {
+						console.log(a.date_event, dateNow)
+						return a.date_event < dateNow
+					})
+					this.upcomingEvents = this.attendedEvents.filter(a => {
+						console.log(a.date_event, dateNow)
+						return a.date_event >= dateNow
+					})
+
 				}
 			});
-		this.authService.loadUserReviews(this.userData.id)
+
+			this.authService.loadUserReviews(this.userData.id)
 			.subscribe(response => {
 				if (response.success) {
 					this.reviews = response.data;
 				}
 			});
 
-		this.profileForm = this.formBuilder.group({
-			name: [this.userData.first_name, Validators.required],
-			last_name: [this.userData.last_name, Validators.required],
-			address: [this.userData.address, Validators.required],
-			email: [this.userData.email, Validators.required],
-			phone: [this.userData.phone, [Validators.required, Validators.minLength(9)]],
-			description: [this.userData.description, Validators.required],
-			sex: [this.userData.sex, Validators.required],
-			location: [this.userData.location, Validators.required],
-			work: [this.userData.work, Validators.required],
-		});
+			this.profileForm = this.formBuilder.group({
+				name: [this.userData.first_name, Validators.required],
+				last_name: [this.userData.last_name, Validators.required],
+				address: [this.userData.address, Validators.required],
+				email: [this.userData.email, Validators.required],
+				phone: [this.userData.phone, [Validators.required, Validators.minLength(9)]],
+				description: [this.userData.description, Validators.required],
+				sex: [this.userData.sex, Validators.required],
+				location: [this.userData.location, Validators.required],
+				work: [this.userData.work, Validators.required],
+				date_birthday: [this.userData.birthday, Validators.required],
+				dni: [this.userData.dni, Validators.required],
+			});
 
 	}
 
 	onSubmitProfileForm() {
 		const data = this.profileForm.value;
 		this.http.put<any>('/user', data)
-			.subscribe(response => {
-				if (response.success) {
-					console.log('saved');
-				} else {
-					console.log('Something went wrong');
-				}
-			});
+		.subscribe(response => {
+			if (response.success) {
+				console.log('saved');
+			} else {
+				console.log('Something went wrong');
+			}
+		});
 	}
 
 	public editProfile() {

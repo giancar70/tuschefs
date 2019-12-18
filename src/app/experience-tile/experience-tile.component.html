@@ -2,16 +2,16 @@
 	<div>
 		<a [routerLink]="['/event', data.id]">
 			<div class="card-img-wrapper">
-				<img class="card-img-top" [src]="data.image" alt="Placeholder">
+				<img class="card-img-top" [ngClass]="{ 'small': smallPicture }" [src]="data.image" alt="Placeholder">
 				<div class="card-floating-price">S/. {{data.price}}</div>
 			</div>
 			<div class="card-body">
 				<h4 class="card-title">{{data.title}}</h4>
 				<p class="card-text">{{data.description}}</p>
-				<hr>
+				<hr *ngIf="hostedBy">
 			</div>
 		</a>
-		<a [routerLink]="['/profile', data.user_id]">
+		<a [routerLink]="['/profile', data.user_id]" *ngIf="hostedBy">
 			<div class="card-footer">
 				<div class="circle">
 					<img src="{{data.host_picture}}" alt="profile-{{data.host}}" />

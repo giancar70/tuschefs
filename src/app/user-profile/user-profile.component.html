@@ -51,21 +51,39 @@
 						<textarea placeholder="Cuéntanos sobre ti" class="form-control" cols="30" rows="20" formControlName="description">{{ userData.description }}</textarea>
 						<div class="extra-info">
 							<label for="firstName">Nombre</label>
+							<div class="input-group">
 							<input class="form-control" type="text" name="firstName" id="firstName" formControlName="name">
+							</div>
 
 							<label for="lastName">Apellido</label>
+							<div class="input-group">
 							<input class="form-control" type="text" name="lastName" id="lastName" formControlName="last_name">
+							</div>
 
-							<label for="email">Email</label>
-							<input class="form-control" type="text" name="email" id="email" formControlName="email">
+							<label for="email">DNI</label>
+							<div class="input-group">
+							<input class="form-control" type="text" name="email" id="email" formControlName="dni">
+							</div>
+
+							<label for="email">Cumpleaños</label>
+							<div class="input-group">
+								<input type="date" class="form-control datetimepicker" formControlName="date_birthday" name="date_birthday" ngbDatepicker #d7="ngbDatepicker" (click)="d7.toggle()" data-color="white">
+							</div>
 
 							<label for="email">Phone</label>
+							<div class="input-group">
 							<input class="form-control" type="text" name="phone" id="phone" formControlName="phone">
+							</div>
 
 							<label for="location">Ubicación</label>
+							<div class="input-group">
 							<input class="form-control" type="text" name="location" value="Lima, Perú" id="location" formControlName="location">
+							</div>
+
 							<label for="work">Trabajo</label>
+							<div class="input-group">
 							<input class="form-control" type="text" name="work" value="WORK" id="work" formControlName="work">
+							</div>
 						</div>
 						<button class="btn btn-primary" type="submit">Guardar</button>
 						<button class="btn" type="button" (click)="cancelEditProfile()">Cancelar</button>
@@ -73,7 +91,20 @@
 					</div>
 					<hr>
 
-					<p>Reseñas hechas por ti</p>
+					<p>Eventos Pŕoximos</p>
+					<div class="event-wrapper" *ngIf="attendedEvents">
+						<div *ngFor="let event of upcomingEvents" class="col-sm-12 col-md-4 col-lg-4 event-tile-wrapper">
+							<app-experience-tile [smallPicture]="true" [data]="event"></app-experience-tile>
+						</div>
+					</div>
+
+					<p>Eventos Pasados</p>
+					<div class="event-wrapper" *ngIf="attendedEvents">
+						<div *ngFor="let event of pastEvents" class="col-sm-12 col-md-4 col-lg-4 event-tile-wrapper">
+							<app-experience-tile [smallPicture]="true" [data]="event"></app-experience-tile>
+						</div>
+					</div>
+
 				</div>
 			</div>
 		</div>

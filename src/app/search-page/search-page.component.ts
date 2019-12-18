@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
+import { NgbDatepickerConfig, NgbCalendar, NgbDate,
+		 NgbDateStruct, NgbDateAdapter, NgbDateNativeAdapter
+	   } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
 	selector: 'app-search-page',
@@ -11,8 +16,16 @@ export class SearchPageComponent implements OnInit {
 
 	searchParams: any;
 	searchResults: any;
+	searchForm: FormGroup;
 
-	constructor(private route: ActivatedRoute, private http: HttpClient) { }
+	constructor(private http: HttpClient, private formBuilder: FormBuilder,
+				private router: Router, config: NgbDatepickerConfig,
+				calendar: NgbCalendar, private route: ActivatedRoute) {
+
+		config.minDate = { year: 1900, month: 1, day: 1 };
+		config.maxDate = { year: 3000, month: 12, day: 31 };
+	}
+
 
 	ngOnInit() {
 		this.route.queryParamMap.subscribe(params => {
@@ -22,6 +35,24 @@ export class SearchPageComponent implements OnInit {
 			this.searchParams = this.searchParams.params;
 			this.search();
 		});
+
+		this.searchForm = this.formBuilder.group({
+			isHostHome: [0, Validators.required],
+			numGuests: [1, Validators.required],
+			dateInit: ['2019-12-12', Validators.required]
+		});
+	}
+
+	onSubmitSearch(form: NgForm) {
+		const data = form.value;
+
+		// const location = data.location;
+		data.dateInit = Object.keys(data.dateInit).map(e => data.dateInit[e]).join('-')
+		const numGuests = data.numGuests;
+		const dateInit = data.dateInit;
+		const isHome = data.isHostHome;
+
+		this.router.navigate([], { relativeTo: this.route, queryParams: { guests: numGuests, date_init: dateInit, is_home: isHome } });
 	}
 
 	search() {

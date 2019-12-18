@@ -1,0 +1,16 @@
+.card.small-card {
+	.card-body {
+		padding: 10px;
+		.card-text {
+			margin: 5px 0;
+			line-height: 1;
+			font-size: 15px;
+			&.align-right {
+				text-align: right;
+			}
+			i {
+				margin-right: 5px;
+			}
+		}
+	}
+}

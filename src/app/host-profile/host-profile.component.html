@@ -43,43 +43,11 @@
 							</h6>
 						</div>
 					</div>
-					<div *ngIf="isEditMode">
-						<form [formGroup]="profileForm" role="form" id="contact-form" method="post" (ngSubmit)="onSubmitProfileForm()">
-
-						<p>Descripción del usuario</p>
-						<textarea placeholder="Cuéntanos sobre ti" class="form-control" cols="30" rows="20" formControlName="description">{{ userData.description }}</textarea>
-						<div class="extra-info">
-							<label for="firstName">Nombre</label>
-							<input class="form-control" type="text" name="firstName" id="firstName" formControlName="name">
-
-							<label for="lastName">Apellido</label>
-							<input class="form-control" type="text" name="lastName" id="lastName" formControlName="last_name">
-
-							<label for="email">Email</label>
-							<input class="form-control" type="text" name="email" id="email" formControlName="email">
-
-							<label for="email">Phone</label>
-							<input class="form-control" type="text" name="phone" id="phone" formControlName="phone">
-
-							<label for="location">Ubicación</label>
-							<input class="form-control" type="text" name="location" value="Lima, Perú" id="location" formControlName="location">
-							<label for="work">Trabajo</label>
-							<input class="form-control" type="text" name="work" value="WORK" id="work" formControlName="work">
-						</div>
-						<button class="btn btn-primary" type="submit">Guardar</button>
-						<button class="btn" type="button" (click)="cancelEditProfile()">Cancelar</button>
-					</form>
-					</div>
 					<hr>
 					<h2>Eventos del chef</h2>
 					<div class="event-wrapper" *ngIf="hostCreatedEvents">
-						<div *ngFor="let event of hostCreatedEvents" class="event-tile">
-							<h3 style="margin-bottom: 5px;">{{ event.title }}</h3>
-							<p>{{ event.description }}</p>
-							<p>{{ event.type_event }}</p>
-							<p><b>Dirección:</b> {{ event.address }}</p>
-							<p><b>Precio:</b> S/.{{ event.price }}</p>
-							<p><b>Fechas:</b> {{ event.date_init }} a {{ event.date_end }}</p>
+						<div *ngFor="let event of hostCreatedEvents" class="col-sm-12 col-md-4 col-lg-4 event-tile-wrapper">
+							<app-experience-tile [smallPicture]="true" [hostedBy]="false" [data]="event"></app-experience-tile>
 						</div>
 					</div>
 				</div>

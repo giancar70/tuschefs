@@ -95,9 +95,19 @@ textarea {
 	font-size: 18px;
 }
 
-.event-tile {
-	p {
-		margin-bottom: 0;
+.event-wrapper {
+	width: 100%;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+	align-items: center;
+	.event-tile-wrapper {
+		max-height: 250px;
+	}
+	.event-tile {
+		p {
+			margin-bottom: 0;
+		}
 	}
 }
 

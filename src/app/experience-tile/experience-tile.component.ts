@@ -10,6 +10,12 @@ export class ExperienceTileComponent implements OnInit {
 	@Input()
 	data: Object;
 
+	@Input()
+	hostedBy = true;
+
+	@Input()
+	smallPicture = false;
+
 	constructor() { }
 
 	ngOnInit() {
