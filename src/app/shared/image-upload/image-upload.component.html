@@ -4,7 +4,7 @@
     </div>
     <div>
 		<button class="btn btn-raised btn-round btn-file" (click)="handleClick()" *ngIf="!this.state.file" [ngClass]="{ 'btn-default': bg, 'btn-link': !bg }">{{ text }}</button>
-        <button class="btn btn-raised btn-round btn-default btn-file" (click)="handleClick()" *ngIf="this.state.file">Cambia la imagen de perfil</button>
+        <button class="btn btn-raised btn-round btn-default btn-file" (click)="handleClick()" *ngIf="this.state.file">Cambia imagen</button>
         <button class="btn btn-danger btn-round fileinput-exists" (click)="handleRemove()" *ngIf="this.state.file"><i class="now-ui-icons ui-1_simple-remove"></i> Eliminar</button>
     </div>
     <input type="file" />

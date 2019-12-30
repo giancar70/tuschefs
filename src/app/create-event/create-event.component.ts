@@ -4,7 +4,9 @@ import { AuthService } from '../services/auth.service';
 import { FormBuilder, FormGroup, Validators, NgForm, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerConfig, NgbCalendar, NgbDate,
+		 NgbDateStruct, NgbDateAdapter, NgbDateNativeAdapter
+	   } from '@ng-bootstrap/ng-bootstrap';
 
 class UserData {
 	first_name: string
@@ -47,6 +49,7 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 	timeAndLocationForm: FormGroup;
 
 	showMessage = false;
+	hideProfileTab = false;
 
 	@ViewChild('search', {static: false})
 	public searchElementRef: ElementRef;
@@ -74,7 +77,11 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 
 	constructor(private mapsAPILoader: MapsAPILoader, private ngZone: NgZone,
 				private authService: AuthService, private http: HttpClient,
-				private formBuilder: FormBuilder, private router: Router) {
+				private formBuilder: FormBuilder, private router: Router,
+				config: NgbDatepickerConfig, calendar: NgbCalendar) {
+
+		config.minDate = calendar.getToday();
+		config.maxDate = { year: 2030, month: 12, day: 31 };
 
 		this.showMap = true;
 	}
@@ -84,6 +91,12 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 		this.getMenuTypes();
 		this.loadMapApi();
 		this.userData = this.authService.getUserData;
+		this.hideProfileTab = this.userData.is_complete;
+
+		// NOTE: Skip first tab if the user filled it out previously.
+		if (this.hideProfileTab) {
+			this.tabset.select('description');
+		}
 
 		this.profileForm = this.formBuilder.group({
 			name: [this.userData.first_name, Validators.required],
@@ -162,6 +175,10 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 					this.menuTypes = response.data;
 				}
 			});
+	}
+
+	back(tab: string) {
+		this.tabset.select(tab);
 	}
 
 	// Submits

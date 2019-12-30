@@ -27,8 +27,8 @@
 							<span>{{eventData.min_people}} a {{eventData.max_people}}</span>
 						</div>
 					</div>
-                    <ngb-accordion #acc="ngbAccordion" activeIds="config-panel-one" class="card-plain">
-                        <ngb-panel id="config-panel-one">
+                    <ngb-accordion #acc="ngbAccordion" [activeIds]="activeIds" class="card-plain">
+                        <ngb-panel id="panel-1">
                             <ng-template ngbPanelTitle>
                                 <a class="collapsed">
                                     Descripción del evento
@@ -39,7 +39,7 @@
 								<p>{{eventData.description}}</p>
                             </ng-template>
                         </ngb-panel>
-                        <ngb-panel>
+                        <ngb-panel id="panel-2">
                             <ng-template ngbPanelTitle>
                                 <a class="collapsed">
 									¿Qué incluye?
@@ -58,15 +58,10 @@
 										<h3>Bebidas</h3>
 										<p>{{getBeverageTypes()}}</p>	
 									</div>
-									<div class="include-square">
-										<img src="../../assets/img/school-bus.png" alt="bus-icon" />
-										<h3>Transporte</h3>
-										<p>Nos movilizaremos en el metropolitano</p>	
-									</div>
 								</div>
                             </ng-template>
                         </ngb-panel>
-                        <ngb-panel>
+                        <ngb-panel id="panel-3">
                             <ng-template ngbPanelTitle>
                                 <a class="collapsed">
 									Información del anfitrión
@@ -75,10 +70,12 @@
                             </ng-template>
                             <ng-template ngbPanelContent>
 								<div class="host-picture">
-									<img src="{{eventData.chef.user.photo}}" alt="{{eventData.chef.user.full_name}}">
+									<a [routerLink]="['/profile', eventData.chef.user.id]">
+										<img src="{{eventData.chef.user.photo}}" alt="{{eventData.chef.user.full_name}}">
+									</a>
 								</div>
 								<p><b>Nombre:</b> {{eventData.chef.user.full_name}}</p>
-								<p><b>Experiencia:</b> {{eventData.chef.experience}}</p>
+								<p><b>Descripción del chef:</b> {{eventData.chef.experience}}</p>
 								<p><b>Rating:</b> {{eventData.chef.rating}}</p>
                             </ng-template>
                         </ngb-panel>

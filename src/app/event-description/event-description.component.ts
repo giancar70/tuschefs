@@ -13,6 +13,7 @@ export class EventDescriptionComponent implements OnInit {
 	private loading: boolean;
 	private eventId: number;
 	private eventData: any;
+	private activeIds = [];
 
 	private reservationDate: any;
 	private numGuests: number;
@@ -22,6 +23,7 @@ export class EventDescriptionComponent implements OnInit {
 
 	ngOnInit() {
 		this.loading = true;
+		this.activeIds = ['panel-1', 'panel-2', 'panel-3'];
 		this.route.params.subscribe(params => {
 			this.eventId = params['id'];
 			this.loadEventData();

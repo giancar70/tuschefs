@@ -1,7 +1,7 @@
 <div class="mt-5 page-header">
 	<div class="mt-5 container">
 		<ngb-tabset type="pills" class="nav nav-pills nav-pills-primary vertical-pills" [orientation]="'vertical'" style="flex-flow: row nowrap; flex-wrap: nowrap;" #tabset="ngbTabset">
-			<ngb-tab id="profile">
+			<ngb-tab id="profile" *ngIf="hideProfileTab === false">
 				<ng-template ngbTabTitle>
 					<span>Datos de Perfil</span>
 				</ng-template>
@@ -209,7 +209,7 @@
 										</div>
 										<div class="col-md-12">
 											<div class="form-group" [ngClass]="{'input-group-focus':focus === true}">
-												<label>Cuéntanos sobre ti y tu experiencia</label>
+												<label>Cuéntanos sobre tu experiencia</label>
 												<textarea name="about-menu" id="about-menu" class="form-control" formControlName="description"></textarea>
 											</div>
 										</div>
@@ -247,7 +247,7 @@
 									</div>
 									<div class="row select-padding-label">
 										<div class="col-md-12">
-											<label>Precio por persona</label>
+											<label>Precio por persona en soles <small>(Tuschefs va a cobrar un extra por el uso de la plataforma)</small></label>
 											<div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus === true}">
 												<input type="text" name="title" id="title" value="" class="form-control" (focus)="focus=true" (blur)="focus=false" formControlName="price">
 											</div>
@@ -256,6 +256,7 @@
 								</div>
 							</div>
 							<div class="col-md-12" style="display: flex; justify-content: center;">
+								<button type="button" *ngIf="!hideProfileTab" (click)="back('profile')" class="btn btn-round pull-right">Atrás</button>
 								<button type="submit" class="btn btn-primary btn-round pull-right">Guardar y continuar</button>
 							</div>
 						</form>
@@ -279,10 +280,10 @@
 										<div id="file-uploader">
 											<div class="container">
 												<div class="row" style="display: flex; flex-flow: row wrap; justify-content: space-around;">
-													<app-image-upload #eventImage1></app-image-upload>
-													<app-image-upload #eventImage2></app-image-upload>
-													<app-image-upload #eventImage3></app-image-upload>
-													<app-image-upload #eventImage4></app-image-upload>
+													<app-image-upload text="Seleccionar Imagen" #eventImage1></app-image-upload>
+													<app-image-upload text="Seleccionar Imagen" #eventImage2></app-image-upload>
+													<app-image-upload text="Seleccionar Imagen" #eventImage3></app-image-upload>
+													<app-image-upload text="Seleccionar Imagen" #eventImage4></app-image-upload>
 												</div>
 											</div>
 										</div>
@@ -313,6 +314,7 @@
 								</div>
 							</div>
 							<div class="col-md-12" style="display: flex; justify-content: center;">
+								<button type="button" (click)="back('description')" class="btn btn-round pull-right">Atrás</button>
 								<button type="submit" class="btn btn-primary btn-round pull-right" (click)="onSubmitPicturesForm()">Continuar</button>
 							</div>
 						</form>
@@ -433,6 +435,7 @@
 
 
 							<div class="col-md-12" style="display: flex; justify-content: center;">
+								<button type="button" (click)="back('pictures')" class="btn btn-round pull-right">Atrás</button>
 								<button type="submit" class="btn btn-primary btn-round pull-right" (click)="onSubmitTimeAndLocationForm()">Enviar para revisión</button>
 							</div>
 							<h5 style="font-size: 14px; color: #000; text-align: center;" *ngIf="showMessage">¡Tu experiencia está de camino a nuestros revisores, este proceso tomará hasta 48 horas!</h5>

@@ -67,13 +67,14 @@ agm-map{
 
 		.menu-description-editor-dish {
 			background-color: #fff;
-			padding: 0 25px;
+			padding: 10px 25px;
 			display: flex;
 			flex-flow: row wrap;
 			justify-content: center;
 			align-items: center;
 			select {
-				width: 25%;
+				width: 22%;
+				margin-right: 10px;
 			}
 			textarea {
 				width: 75%;
@@ -150,4 +151,8 @@ agm-map{
 			flex-flow: row wrap;
 		}
 	}
+}
+
+textarea.form-control {
+	background-color: rgba(222, 222, 222, 0.3);
 }

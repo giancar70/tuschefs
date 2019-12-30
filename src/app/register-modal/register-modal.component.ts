@@ -33,11 +33,37 @@ import { LoginModalInjectable } from '../login-modal/login-modal.component'
 							<i class="now-ui-icons users_circle-08"></i>
 						</span>
 					</div>
-					<input type="text" class="form-control" placeholder="Nombre y apellido"
+					<input type="text" class="form-control" placeholder="Nombre"
 															formControlName="first_name"
 															[ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
-					<div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-						<div *ngIf="f.firstName.errors.required">First Name is required</div>
+					<div *ngIf="submitted && f.first_name.errors" class="invalid-feedback">
+						<div *ngIf="f.first_name.errors.required">First Name is required</div>
+					</div>
+				</div>
+				<div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus0===true}">
+					<div class="input-group-prepend">
+						<span class="input-group-text">
+							<i class="now-ui-icons users_circle-08"></i>
+						</span>
+					</div>
+					<input type="text" class="form-control" placeholder="Apellido"
+															formControlName="last_name"
+															[ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
+					<div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">
+						<div *ngIf="f.last_name.errors.required">Last Name is required</div>
+					</div>
+				</div>
+				<div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus3===true}">
+					<div class="input-group-prepend">
+						<span class="input-group-text">
+							<i class="now-ui-icons users_circle-08"></i>
+						</span>
+					</div>
+					<input type="text" class="form-control" placeholder="Dni"
+															formControlName="dni"
+															[ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
+					<div *ngIf="submitted && f.dni.errors" class="invalid-feedback">
+						<div *ngIf="f.dni.errors.required">Dni is required</div>
 					</div>
 				</div>
 				<div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus1===true}">
@@ -66,14 +92,23 @@ import { LoginModalInjectable } from '../login-modal/login-modal.component'
 							<i class="now-ui-icons text_caps-small"></i>
 						</span>
 					</div>
-					<input type="password" placeholder="Password" class="form-control" (focus)="focus1=true"
+					<input type="password" placeholder="Contraseña" class="form-control" (focus)="focus1=true"
 															  formControlName="password" (blur)="focus1=false">
+				</div>
+				<div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus1===true}">
+					<div class="input-group-prepend">
+						<span class="input-group-text">
+							<i class="now-ui-icons text_caps-small"></i>
+						</span>
+					</div>
+					<input type="password" placeholder="Repetir Contraseña" class="form-control" (focus)="focus1=true"
+															  (blur)="focus1=false">
 				</div>
 				<div class="form-check">
 					<label class="form-check-label">
 						<input class="form-check-input" type="checkbox">
 						<span class="form-check-sign"></span>
-						Acepto los <a (click)="redirectToTerms()">Términos y Condiciones</a>.
+						Acepto los <a (click)="redirectToTerms()" style="text-decoration: underline;">Términos y Condiciones</a>.
 					</label>
 				</div>
 				<div class="form-group card-footer text-center">
@@ -113,6 +148,8 @@ export class RegisterModalContentComponent implements OnInit {
 	ngOnInit() {
 		this.registerForm = this.formBuilder.group({
 			first_name: ['', Validators.required],
+			last_name: ['', Validators.required],
+			dni: ['', Validators.required],
 			date_birthday: ['', Validators.required],
 			email: ['', Validators.required],
 			password: ['', [Validators.required, Validators.minLength(6)]]
