@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { NgbDatepickerConfig, NgbCalendar, NgbDate,
 		 NgbDateStruct, NgbDateAdapter, NgbDateNativeAdapter
 	   } from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 class UserData {
 	first_name: string
@@ -51,10 +52,13 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 	showMessage = false;
 	hideProfileTab = false;
 
+	@ViewChild('content', {static: false})
+	public content;
+
 	@ViewChild('search', {static: false})
 	public searchElementRef: ElementRef;
 
-	@ViewChild('tabset', {static: false})
+	@ViewChild('mytabset', {static: false})
 	public tabset;
 
 	@ViewChild('imageUpload', {static: false})
@@ -75,10 +79,13 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 	@ViewChild('emailField', {static: false})
 	public emailField: ElementRef;
 
+	closeResult: string;
+
 	constructor(private mapsAPILoader: MapsAPILoader, private ngZone: NgZone,
 				private authService: AuthService, private http: HttpClient,
 				private formBuilder: FormBuilder, private router: Router,
-				config: NgbDatepickerConfig, calendar: NgbCalendar) {
+				config: NgbDatepickerConfig, calendar: NgbCalendar,
+				private modalService: NgbModal) {
 
 		config.minDate = calendar.getToday();
 		config.maxDate = { year: 2030, month: 12, day: 31 };
@@ -89,14 +96,9 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 	ngOnInit() {
 		this.getFoodTypes();
 		this.getMenuTypes();
-		this.loadMapApi();
+		// this.loadMapApi();
 		this.userData = this.authService.getUserData;
 		this.hideProfileTab = this.userData.is_complete;
-
-		// NOTE: Skip first tab if the user filled it out previously.
-		if (this.hideProfileTab) {
-			this.tabset.select('description');
-		}
 
 		this.profileForm = this.formBuilder.group({
 			name: [this.userData.first_name, Validators.required],
@@ -114,8 +116,8 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 		this.eventDescriptionForm = this.formBuilder.group({
 			type_event: ['', Validators.required],
 			type_food: ['', Validators.required],
-			min_people: ['', Validators.required],
-			max_people: ['', Validators.required],
+			min_people: [1, Validators.required],
+			max_people: [2, Validators.required],
 			title: ['', Validators.required],
 			description: ['', Validators.required],
 			menu: this.formBuilder.array([this.createMenuDish()]),
@@ -131,19 +133,26 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 			time_end: '',
 			date_init: '',
 			date_end: '',
-			// where: ['', Validators.required],
-			// address: [''],
-			/*
-			day_of_week: this.formBuilder.control({
-				dayOfWeek: 'Lunes'
-			}),
-			*/
-			frecuency: ''
+			sunday: false,
+			monday: false,
+			tuesday: false,
+			wednesday: false,
+			thursday: false,
+			friday: false,
+			saturday: false,
 		});
 	}
 
 	ngAfterViewInit() {
-		this.emailField.nativeElement.value = this.userData.email;
+		if (this.emailField !== undefined) {
+			this.emailField.nativeElement.value = this.userData.email;
+		}
+
+		// NOTE: Skip first tab if the user filled it out previously.
+		if (this.hideProfileTab) {
+			this.tabset.select('description');
+		}
+
 	}
 
 	private createMenuDish(): FormGroup {
@@ -179,6 +188,12 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 
 	back(tab: string) {
 		this.tabset.select(tab);
+	}
+
+	getMaxPeopleArray() {
+		const min = parseInt(this.eventDescriptionForm.get('min_people').value, 10);
+		const x = Array(16 - min + 1).fill(0).map((_, idx) => min + idx);
+		return x;
 	}
 
 	// Submits
@@ -224,13 +239,13 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 		data.time_end = Object.keys(data.time_end).map(e => data.time_end[e]).join(':')
 		data.date_init = Object.keys(data.date_init).map(e => data.date_init[e]).join('-')
 		data.date_end = Object.keys(data.date_end).map(e => data.date_end[e]).join('-')
-		console.log(data)
 
-		this.http.put<any>(`/event/${this.eventId}`, data)
+		this.http.put<any>(`/event/${this.eventId}`, { schedule: [data] })
 			.subscribe(response => {
 				if (response.success) {
 					// this.router.navigate(['/event', this.eventId]);
 					this.showMessage = true;
+					this.open();
 				} else {
 					console.log('Something went wrong');
 				}
@@ -302,8 +317,27 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 		});
 	}
 
-	dummyFunction() {
-		console.log('hi');
+	open() {
+		this.modalService.open(this.content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+			this.closeResult = `Closed with: ${result}`;
+		}, (reason) => {
+			this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+		});
+	}
+
+	closeModal() {
+		this.modalService.dismissAll();
+		this.router.navigate([''])
+	}
+
+	private getDismissReason(reason: any): string {
+		if (reason === ModalDismissReasons.ESC) {
+			return 'by pressing ESC';
+		} else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+			return 'by clicking on a backdrop';
+		} else {
+			return  `with: ${reason}`;
+		}
 	}
 
 }

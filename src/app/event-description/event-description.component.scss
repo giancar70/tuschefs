@@ -62,23 +62,31 @@
 	.include-square {
 		border: 1px solid #ccc;
 		padding: 10px;
-		width: 40%;
+		width: 48%;
 		display: flex;
-		min-height: 120px;
+		min-height: 280px;
 		flex-flow: column wrap;
-		align-items: space-around;
-		justify-content: space-around;
+		align-items: flex-start;
+		justify-content: flex-start;
 		margin: 0 5px;
 		img {
 			max-width: 25px;
 		}
 		h3 {
-			margin: 0;
+			margin: 10px 0 20px 0;
 			font-size: 14px;
 		}
 		p {
 			margin: 0;
 			font-size: 12px;
+		}
+		.menu-item {
+			font-size: 18px;
+			font-weight: 400;
+			span {
+				font-weight: 600;
+				font-size: 12px;
+			}
 		}
 	}
 }
@@ -88,6 +96,6 @@
 		border-radius: 50%;
 		width: 80px;
 		height: 80px;
-		padding-bottom: 10px;
+		margin-bottom: 10px;
 	}
 }

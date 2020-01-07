@@ -15,10 +15,10 @@
 					<h4>Verificada</h4>
 					<hr>
 					<h6>{{ userData.first_name }} ha proporcionado </h6>
-					<ul>
-						<li>Documento de identidad oficial</li>
-						<li>Dirección de correo electrónico</li>
-						<li>Número de teléfono</li>
+					<ul class="requirements">
+						<li><img src="assets/check-mark.svg" alt="checkmark"> Documento de identidad oficial</li>
+						<li><img src="assets/check-mark.svg" alt="checkmark"> Dirección de correo electrónico</li>
+						<li><img src="assets/check-mark.svg" alt="checkmark"> Número de teléfono</li>
 					</ul>
 				</div>
 			</div>
@@ -27,16 +27,12 @@
 			<div class="profile-right">
 				<h2 class="profile-title">Hola, me llamo {{ userData.first_name }}</h2>	
 				<div class="verified">
-					Se registró en el 2015 {{ userData.register_date }} |
+					Se registró en el {{ userData.register_date }} |
 					<div *ngIf="!isEditMode">
 						<blockquote>
 							{{ userData.description }}
 						</blockquote>
 						<div class="extra-info">
-							<h6>
-								<i class="now-ui-icons shopping_shop"></i>
-								Vive en Lima, Perú
-							</h6>
 							<h6>
 								<i class="now-ui-icons shopping_shop"></i>
 								Trabaja en: WORK {{ userData.work }}

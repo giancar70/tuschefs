@@ -25,6 +25,7 @@ import { ImageUploadModule } from './shared/image-upload/image-upload.module';
 
 import { AgmCoreModule } from '@agm/core';
 import { LoginModalComponentModule } from './login-modal/login-modal.module';
+import { ContactFormComponentModule } from './contact-form/contact-form.module';
 import { RegisterModalComponentModule } from './register-modal/register-modal.module';
 import { LoginModalComponent } from './login-modal/login-modal.component'
 import { RegisterModalComponent } from './register-modal/register-modal.component'
@@ -40,7 +41,8 @@ import { HostProfileComponent } from './host-profile/host-profile.component';
 import { TermsconditionsComponent } from './termsconditions/termsconditions.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { SearchPageComponent } from './search-page/search-page.component';
-import { CheckoutComponent } from './checkout/checkout.component'
+import { CheckoutComponent } from './checkout/checkout.component';
+import { FaqComponent } from './faq/faq.component';
 
 const config = new AuthServiceConfig([
   {
@@ -73,6 +75,7 @@ export function provideConfig() {
 		SearchBarComponent,
 		SearchPageComponent,
 		CheckoutComponent,
+		FaqComponent,
 	],
 	imports: [
 		BrowserAnimationsModule,
@@ -94,6 +97,7 @@ export function provideConfig() {
 		}),
 		SocialLoginModule,
 		LoginModalComponentModule,
+		ContactFormComponentModule,
 		RegisterModalComponentModule,
 	],
 	providers: [

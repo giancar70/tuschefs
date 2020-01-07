@@ -12,6 +12,7 @@ export class ImageUploadComponent implements OnInit, AfterViewInit {
 	@Input() image: string;
 	@Input() text = 'Selecciona una imagen de perfil';
 	@Input() bg = true;
+	@Input() selfSave = false;
 
 	state: any = {}
 
@@ -62,6 +63,11 @@ export class ImageUploadComponent implements OnInit, AfterViewInit {
 
 	handleClick() {
 		this.input.nativeElement.children[2].click();
+	}
+
+	saveUserProfilePicture() {
+		this.state.file = null;
+		this.handleSubmit('/user');
 	}
 
 	handleRemove() {

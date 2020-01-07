@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { NgbDatepickerConfig, NgbCalendar, NgbDate,
 		 NgbDateStruct, NgbDateAdapter, NgbDateNativeAdapter
 	   } from '@ng-bootstrap/ng-bootstrap';
+import { ContactFormInjectable } from '../contact-form/contact-form.component'
 
 @Component({
 	selector: 'app-presentation',
@@ -25,10 +26,10 @@ export class PresentationComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	constructor(private http: HttpClient, private formBuilder: FormBuilder,
 				private router: Router, config: NgbDatepickerConfig,
-				calendar: NgbCalendar) {
+				calendar: NgbCalendar, public contactModal: ContactFormInjectable) {
 
-		config.minDate = { year: 1900, month: 1, day: 1 };
-		config.maxDate = { year: 3000, month: 12, day: 31 };
+		config.minDate = { year: 2020, month: 1, day: 1 };
+		config.maxDate = { year: 2050, month: 12, day: 31 };
 	}
 
 	ngOnInit() {
@@ -69,6 +70,10 @@ export class PresentationComponent implements OnInit, OnDestroy, AfterViewInit {
 					})
 				}
 			});
+	}
+
+	openContactForm() {
+		this.contactModal.open()
 	}
 
 	ngAfterViewInit() {

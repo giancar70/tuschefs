@@ -8,36 +8,32 @@
 		<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
 			<div class="profile-left">
 				<div class="image-wrapper">
-					<app-image-upload text="Actualizar Foto" [bg]="false" isRound="true" image="{{ userData.photo }}"></app-image-upload>
+					<app-image-upload [selfSave]="true" text="Actualizar Foto" [bg]="false" isRound="true" image="{{ userData.photo }}"></app-image-upload>
 				</div>
 				<div class="left-info">
 					<hr>
 					<h4>Verificada</h4>
 					<hr>
 					<h6>{{ userData.first_name }} ha proporcionado </h6>
-					<ul>
-						<li>Documento de identidad oficial</li>
-						<li>Dirección de correo electrónico</li>
-						<li>Número de teléfono</li>
+					<ul class="requirements">
+						<li><img *ngIf="userData.is_verify_dni" src="assets/check-mark.svg" alt="checkmark"> Documento de identidad oficial</li>
+						<li><img *ngIf="userData.is_verify" src="assets/check-mark.svg" alt="checkmark"> Dirección de correo electrónico</li>
+						<li><img *ngIf="userData.phone !== ''" src="assets/check-mark.svg" alt="checkmark"> Número de teléfono</li>
 					</ul>
 				</div>
 			</div>
 		</div>
 		<div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
 			<div class="profile-right">
-				<h2 class="profile-title">Hola, me llamo {{ userData.first_name }}</h2>	
+				<h2 class="profile-title">{{ userData.full_name }}</h2>	
 				<div class="verified">
-					Se registró en el 2015 {{ userData.register_date }} |
-					<button class="btn btn-link" type="button" (click)="editProfile()">Editar perfil</button>
+					Se registró en el {{ userData.register_date }} |
+					<button class="btn btn-primary btn-link" type="button" (click)="editProfile()">Editar perfil</button>
 					<div *ngIf="!isEditMode">
 						<blockquote>
 							{{ userData.description }}
 						</blockquote>
 						<div class="extra-info">
-							<h6>
-								<i class="now-ui-icons shopping_shop"></i>
-								Vive en Lima, Perú
-							</h6>
 							<h6>
 								<i class="now-ui-icons shopping_shop"></i>
 								Trabaja en: WORK {{ userData.work }}
@@ -47,22 +43,42 @@
 					<div *ngIf="isEditMode">
 						<form [formGroup]="profileForm" role="form" id="contact-form" method="post" (ngSubmit)="onSubmitProfileForm()">
 
-						<p>Descripción del usuario</p>
+						<label>Descripción del usuario</label>
 						<textarea placeholder="Cuéntanos sobre ti" class="form-control" cols="30" rows="20" formControlName="description">{{ userData.description }}</textarea>
 						<div class="extra-info">
 							<label for="firstName">Nombre</label>
 							<div class="input-group">
-							<input class="form-control" type="text" name="firstName" id="firstName" formControlName="name">
+								<input class="form-control" type="text" name="firstName" id="firstName" formControlName="name">
 							</div>
 
 							<label for="lastName">Apellido</label>
 							<div class="input-group">
-							<input class="form-control" type="text" name="lastName" id="lastName" formControlName="last_name">
+								<input class="form-control" type="text" name="lastName" id="lastName" formControlName="last_name">
 							</div>
 
-							<label for="email">DNI</label>
+							<label for="dni">
+								DNI
+								<div style="padding-left: 5px" *ngIf="profileForm.get('dni').errors !== null">
+									<label class="text-danger" *ngIf="profileForm.get('dni').errors.pattern">(Solo números)</label>
+									<label class="text-danger" *ngIf="profileForm.get('dni').errors.minlength">(Debe tener 8 números)</label>
+								</div>
+							</label>
 							<div class="input-group">
-							<input class="form-control" type="text" name="email" id="email" formControlName="dni">
+								<input class="form-control" type="text" name="dni" id="dni" formControlName="dni">
+							</div>
+
+							<label for="address">Dirección</label>
+							<div class="input-group">
+								<input class="form-control" type="text" name="address" id="address" formControlName="address">
+							</div>
+
+							<label for="sex">Sexo</label>
+							<div class="input-group">
+								<select class="form-control" name="sex" id="sex" formControlName="sex">
+									<option value="M">M</option>
+									<option value="F">F</option>
+									<option value="Otro">Otro</option>
+								</select>
 							</div>
 
 							<label for="email">Cumpleaños</label>
@@ -70,9 +86,15 @@
 								<input type="date" class="form-control datetimepicker" formControlName="date_birthday" name="date_birthday" ngbDatepicker #d7="ngbDatepicker" (click)="d7.toggle()" data-color="white">
 							</div>
 
-							<label for="email">Phone</label>
+							<label for="email">
+								Phone
+								<div *ngIf="profileForm.get('phone').errors !== null">
+									<span class="text-danger" *ngIf="profileForm.get('phone').errors.pattern">(Solo números)</span>
+									<span class="text-danger" *ngIf="profileForm.get('phone').errors.minlength">(Debe tener 9 números)</span>
+								</div>
+							</label>
 							<div class="input-group">
-							<input class="form-control" type="text" name="phone" id="phone" formControlName="phone">
+								<input class="form-control" ng-pattern="^[0-9]*$" type="text" name="phone" id="phone" formControlName="phone">
 							</div>
 
 							<label for="location">Ubicación</label>
@@ -85,7 +107,7 @@
 							<input class="form-control" type="text" name="work" value="WORK" id="work" formControlName="work">
 							</div>
 						</div>
-						<button class="btn btn-primary" type="submit">Guardar</button>
+						<button [disabled]="!profileForm.valid" class="btn btn-primary" type="submit">Guardar</button>
 						<button class="btn" type="button" (click)="cancelEditProfile()">Cancelar</button>
 					</form>
 					</div>

@@ -384,7 +384,7 @@
             <div class="h4 text-contrast space-4">
               ¿Buscas nuevos planes con tus amigos? <br> <br>
 			  <div class="hide-sm">
-				  Entonces, renta una experiencia culinarias y crea recuerdos que te durarán para siempre.
+				  Entonces, renta una experiencia culinaria y crea recuerdos que te durarán para siempre.
 			  </div>
             </div>
             <a href="#belong-anywhere-container"
@@ -811,7 +811,7 @@
             <h5></h5>
             <ul class="links-vertical">
               <li>
-                <a href="#pablo" class="text-muted">
+                <a (click)="openContactForm()" class="text-muted">
                   Contacta con nosotros
                 </a>
               </li>
@@ -821,7 +821,7 @@
                 </a>
               </li>
               <li>
-                <a href="#pablo" class="text-muted">
+                <a [routerLink]="['/frequently-asked-questions']" class="text-muted">
                   Preguntas frecuentes
                 </a>
               </li>

@@ -1,6 +1,6 @@
 <div class="mt-5 page-header">
 	<div class="mt-5 container">
-		<ngb-tabset type="pills" class="nav nav-pills nav-pills-primary vertical-pills" [orientation]="'vertical'" style="flex-flow: row nowrap; flex-wrap: nowrap;" #tabset="ngbTabset">
+		<ngb-tabset type="pills" class="nav nav-pills nav-pills-primary vertical-pills" [orientation]="'vertical'" style="flex-flow: row nowrap; flex-wrap: nowrap;" #mytabset="ngbTabset">
 			<ngb-tab id="profile" *ngIf="hideProfileTab === false">
 				<ng-template ngbTabTitle>
 					<span>Datos de Perfil</span>
@@ -157,7 +157,7 @@
 											<div class="form-group">
 												<label>Mín. de invitados</label>
 												<select id="minPeople" name="minPeople" class="form-control" formControlName="min_people">
-													<option selected value="1">1 Persona</option>
+													<option value="1">1 Persona</option>
 													<option value="2">2 Personas</option>
 													<option value="3">3 Personas</option>
 													<option value="4">4 Personas</option>
@@ -180,22 +180,9 @@
 											<div class="form-group">
 												<label>Máx. de invitados</label>
 												<select id="maxPeople" name="maxPeople" class="form-control" formControlName="max_people">
-													<option value="1">1 Persona</option>
-													<option value="2">2 Personas</option>
-													<option value="3">3 Personas</option>
-													<option value="4">4 Personas</option>
-													<option value="5">5 Personas</option>
-													<option value="6">6 Personas</option>
-													<option value="7">7 Personas</option>
-													<option value="8">8 Personas</option>
-													<option value="9">9 Personas</option>
-													<option value="10">10 Personas</option>
-													<option value="11">11 Personas</option>
-													<option value="12">12 Personas</option>
-													<option value="13">13 Personas</option>
-													<option value="14">14 Personas</option>
-													<option value="15">15 Personas</option>
-													<option value="16">16+ Personas</option>
+													<option *ngFor="let i of getMaxPeopleArray()" [value]="i">
+														{{ i }}{{ i == 16 ? '+' : '' }} Persona{{ i > 1 ? 's' : '' }}
+													</option>
 												</select>
 											</div>
 										</div>
@@ -306,7 +293,7 @@
 										<div id="file-uploader">
 											<div class="container">
 												<div class="row" style="display: flex; flex-flow: row wrap; justify-content: space-around;">
-													<app-image-upload #eventImageUpload></app-image-upload>
+													<app-image-upload text="Seleccionar Imagen" #eventImageUpload></app-image-upload>
 												</div>
 											</div>
 										</div>
@@ -334,27 +321,27 @@
 										<h3 style="font-size: 16px; display: block; width: 100%">Puedes elegir una fecha específica o puedes crear un evento que se repita una vez a la semana</h3>
 										<div class="form-group day-select">
 											<label style="margin: 0 20px;">Día</label>
-											<div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic">
+											<div class="btn-group btn-group-toggle" name="radioBasic">
 												<label ngbButtonLabel class="btn-primary">
-													<input ngbButton type="radio" [value]="Lunes">Lun
+													<input type="checkbox" formControlName="monday" ngbButton>Lun
 												</label>
 												<label ngbButtonLabel class="btn-primary">
-													<input ngbButton type="radio" value="Martes">Mar
+													<input type="checkbox" formControlName="tuesday" ngbButton>Mar
 												</label>
 												<label ngbButtonLabel class="btn-primary">
-													<input ngbButton type="radio" value="Miercoles">Mie
+													<input type="checkbox" formControlName="wednesday" ngbButton>Mie
 												</label>
 												<label ngbButtonLabel class="btn-primary">
-													<input ngbButton type="radio" value="Jueves">Jue
+													<input type="checkbox" formControlName="thursday" ngbButton>Jue
 												</label>
 												<label ngbButtonLabel class="btn-primary">
-													<input ngbButton type="radio" value="Viernes">Vie
+													<input type="checkbox" formControlName="friday" ngbButton>Vie
 												</label>
 												<label ngbButtonLabel class="btn-primary">
-													<input ngbButton type="radio" value="Sábado">Sáb
+													<input type="checkbox" formControlName="saturday" ngbButton>Sáb
 												</label>
 												<label ngbButtonLabel class="btn-primary">
-													<input ngbButton type="radio" value="Domingo">Dom
+													<input type="checkbox" formControlName="sunday" ngbButton>Dom
 												</label>
 											</div>
 										</div>
@@ -383,7 +370,8 @@
 													</div>
 												</div>
 											</div>
-											<div class="input-group" style="">
+											<h3>Hora del Evento: <small>(formato 24 horas)</small></h3>
+											<div class="input-group">
 												<ngb-timepicker [spinners]="false" formControlName="time_start" style="margin-left: 10px; margin-bottom: 14px;"></ngb-timepicker>
 												<ngb-timepicker [spinners]="false" formControlName="time_end" style="margin-left: 10px;"></ngb-timepicker>
 											</div>
@@ -438,9 +426,24 @@
 								<button type="button" (click)="back('pictures')" class="btn btn-round pull-right">Atrás</button>
 								<button type="submit" class="btn btn-primary btn-round pull-right" (click)="onSubmitTimeAndLocationForm()">Enviar para revisión</button>
 							</div>
-							<h5 style="font-size: 14px; color: #000; text-align: center;" *ngIf="showMessage">¡Tu experiencia está de camino a nuestros revisores, este proceso tomará hasta 48 horas!</h5>
-						</form>
 
+							<!-- TODO: Add Party Logo -->
+							<ng-template #content let-modal>
+								<div class="modal-header">
+									<h4 class="modal-title" id="modal-basic-title">Confirmación</h4>
+									<button type="button" class="close" aria-label="Close" (click)="closeModal()">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<h4>Nuestros moderadores van a revisar el evento y nos contactaremos contigo lo antes posible.</h4>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" (click)="closeModal()">OK</button>
+								</div>
+							</ng-template>
+
+						</form>
 					</div>
 				</ng-template>
 			</ngb-tab>

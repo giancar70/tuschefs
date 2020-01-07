@@ -84,14 +84,14 @@ export class UserProfileComponent implements OnInit {
 				name: [this.userData.first_name, Validators.required],
 				last_name: [this.userData.last_name, Validators.required],
 				address: [this.userData.address, Validators.required],
-				email: [this.userData.email, Validators.required],
-				phone: [this.userData.phone, [Validators.required, Validators.minLength(9)]],
+				email: this.userData.email,
+				phone: [this.userData.phone, [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(9)]],
 				description: [this.userData.description, Validators.required],
-				sex: [this.userData.sex, Validators.required],
-				location: [this.userData.location, Validators.required],
-				work: [this.userData.work, Validators.required],
+				sex: this.userData.sex,
+				location: this.userData.location,
+				work: this.userData.work,
 				date_birthday: [this.userData.birthday, Validators.required],
-				dni: [this.userData.dni, Validators.required],
+				dni: [this.userData.dni, [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(8), Validators.maxLength(8)]],
 			});
 
 	}
@@ -102,6 +102,7 @@ export class UserProfileComponent implements OnInit {
 		.subscribe(response => {
 			if (response.success) {
 				console.log('saved');
+				this.editMode = false;
 			} else {
 				console.log('Something went wrong');
 			}

@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { PresentationComponent } from './presentation/presentation.component'
 import { TermsconditionsComponent } from './termsconditions/termsconditions.component'
+import { FaqComponent } from './faq/faq.component'
 
 import { ComponentsComponent } from './components/components.component';
 import { SectionsComponent } from './sections/sections.component';
@@ -24,6 +25,7 @@ import { AuthGuardService as AuthGuard } from './auth-guard/auth-guard.service'
 const routes: Routes = [
 	{ path: '', component: PresentationComponent },
 	{ path: 'terms-and-conditions', component: TermsconditionsComponent },
+	{ path: 'frequently-asked-questions', component: FaqComponent },
 
 	{ path: 'event/:id', component: EventDescriptionComponent },
 	{ path: 'events', component: EventListComponent },
