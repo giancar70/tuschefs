@@ -1,4 +1,10 @@
 # Change Log
+## [2.0] 2020-01-07
+### Changes
+- update to Angular 9
+- code overhaul
+- Ready for pre-release
+
 ## [1.1.1] 2019-03-11
 ### Changes
 - update to Angular 7
