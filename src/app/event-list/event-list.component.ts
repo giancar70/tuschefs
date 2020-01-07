@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-event-list',
@@ -11,7 +12,7 @@ export class EventListComponent implements OnInit {
 	experienceTiles: object[];
 	searchForm: FormGroup;
 
-	constructor(private http: HttpClient, private formBuilder: FormBuilder) { }
+	constructor(private http: HttpClient, private formBuilder: FormBuilder, private router: Router) { }
 
 	ngOnInit() {
 		this.getPromoEvents();
