@@ -102,7 +102,7 @@ export class UserProfileComponent implements OnInit {
 		.subscribe(response => {
 			if (response.success) {
 				console.log('saved');
-				this.editMode = false;
+				this.isEditMode = false;
 			} else {
 				console.log('Something went wrong');
 			}
