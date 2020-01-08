@@ -88,15 +88,28 @@
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
+												<label>Número de Cuenta Bancaria</label>
+												<div class="input-group" [ngClass]="{'input-group-focus': focus7 === true}">
+													<div class="input-group-prepend">
+														<span class="input-group-text"><i class="now-ui-icons business_bank"></i></span>
+													</div>
+													<input type="text" placeholder="Número de Cuenta Bancaria (solo números)" class="form-control" (focus)="focus7=true" (blur)="focus7=false" name="number_account_bank" formControlName="number_account_bank">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
 												<label>Número de Cuenta Interbancario</label>
 												<div class="input-group" [ngClass]="{'input-group-focus': focus6 === true}">
 													<div class="input-group-prepend">
 														<span class="input-group-text"><i class="now-ui-icons business_bank"></i></span>
 													</div>
-													<input type="text" placeholder="Número de Cuenta (solo números)" class="form-control" (focus)="focus6=true" (blur)="focus6=false" name="account_number" formControlName="account_number">
+													<input type="text" placeholder="Número de Cuenta (solo números)" class="form-control" (focus)="focus6=true" (blur)="focus6=false" name="cci_number" formControlName="cci_number">
 												</div>
 											</div>
 										</div>
+									</div>
+									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Teléfono</label>
@@ -438,9 +451,9 @@
 								<button type="submit" class="btn btn-primary btn-round pull-right" (click)="onSubmitTimeAndLocationForm()">Enviar para revisión</button>
 							</div>
 
-							<!-- TODO: Add Party Logo -->
 							<ng-template #modal-content let-modal>
 								<div class="modal-header">
+									<img src="assets/birthday.svg" alt="birthday" />
 									<h4 class="modal-title" id="modal-basic-title">Confirmación</h4>
 									<button type="button" class="close" aria-label="Close" (click)="closeModal()">
 										<span aria-hidden="true">&times;</span>

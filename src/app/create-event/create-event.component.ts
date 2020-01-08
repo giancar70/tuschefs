@@ -104,7 +104,8 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 			name: [this.userData.first_name, Validators.required],
 			last_name: [this.userData.last_name, Validators.required],
 			// email: ['', Validators.required],
-			account_number: ['', Validators.required],
+			number_account_bank: ['', Validators.required],
+			cci_number: ['', Validators.required],
 			sex: ['', Validators.required],
 			phone: [this.userData.phone, [Validators.required, Validators.minLength(9)]],
 			description: ['', Validators.required]
