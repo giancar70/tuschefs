@@ -88,6 +88,30 @@
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
+												<label>Experiencia</label>
+												<div class="input-group" [ngClass]="{'input-group-focus': focus8 === true}">
+													<div class="input-group-prepend">
+														<span class="input-group-text"><i class="now-ui-icons files_paper"></i></span>
+													</div>
+													<input type="text" placeholder="Experiencia" class="form-control" (focus)="focus8=true" (blur)="focus8=false" name="experience" formControlName="experience">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Banco</label>
+												<div class="input-group" [ngClass]="{'input-group-focus': focus9 === true}">
+													<div class="input-group-prepend">
+														<span class="input-group-text"><i class="now-ui-icons business_bank"></i></span>
+													</div>
+													<input type="text" placeholder="BCP, Scotiabank, Interbank, etc" class="form-control" (focus)="focus9=true" (blur)="focus9=false" name="name_bank" formControlName="name_bank">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
 												<label>Número de Cuenta Bancaria</label>
 												<div class="input-group" [ngClass]="{'input-group-focus': focus7 === true}">
 													<div class="input-group-prepend">
