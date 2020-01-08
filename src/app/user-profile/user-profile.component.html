@@ -27,7 +27,7 @@
 			<div class="profile-right">
 				<h2 class="profile-title">{{ userData.full_name }}</h2>	
 				<div class="verified">
-					Se registró en el {{ userData.register_date }} |
+					Se registró en {{ userData.created | date: 'dd-MM-yyyy' }} |
 					<button class="btn btn-primary btn-link" type="button" (click)="editProfile()">Editar perfil</button>
 					<div *ngIf="!isEditMode">
 						<blockquote>

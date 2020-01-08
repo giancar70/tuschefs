@@ -27,7 +27,7 @@
 			<div class="profile-right">
 				<h2 class="profile-title">Hola, me llamo {{ userData.first_name }}</h2>	
 				<div class="verified">
-					Se registró en el {{ userData.register_date }} |
+					Se registró en {{ userData.created | date: 'dd-MM-yyyy' }}
 					<div *ngIf="!isEditMode">
 						<blockquote>
 							{{ userData.description }}

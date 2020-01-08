@@ -16,13 +16,14 @@ export class CheckoutComponent implements OnInit {
 	private userData: any;
 	private eventData: any;
 
-	@ViewChild('modal-content', {static: false})
+	@ViewChild('modalcontent', {static: false})
 	public content;
 
 	private reservationDate: any;
 	private numGuests: number;
 	private reservationTime: any;
 	private successResponse = '';
+	private closeResult: any;
 
 	private httpClient: HttpClient;
 	checkoutForm: FormGroup;
@@ -96,7 +97,7 @@ export class CheckoutComponent implements OnInit {
 									if (response3.success) {
 										console.log(response3.data);
 										this.successResponse = response3.data;
-										showReservationSummary();
+										this.showReservationSummary();
 									}
 								})
 						}
@@ -108,7 +109,7 @@ export class CheckoutComponent implements OnInit {
 		this.modalService.open(this.content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
 			this.closeResult = `Closed with: ${result}`;
 		}, (reason) => {
-			this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+			this.closeResult = 'Dismissed';
 		});
 	}
 

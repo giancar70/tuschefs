@@ -59,14 +59,11 @@ export class UserProfileComponent implements OnInit {
 					})
 
 					const dateNow = this.getDateNow();
-					console.log(dateNow);
 
 					this.pastEvents = this.attendedEvents.filter(a => {
-						console.log(a.date_event, dateNow)
 						return a.date_event < dateNow
 					})
 					this.upcomingEvents = this.attendedEvents.filter(a => {
-						console.log(a.date_event, dateNow)
 						return a.date_event >= dateNow
 					})
 

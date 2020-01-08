@@ -52,7 +52,7 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 	showMessage = false;
 	hideProfileTab = false;
 
-	@ViewChild('modal-content', {static: false})
+	@ViewChild('modalcontent', {static: false})
 	public content;
 
 	@ViewChild('search', {static: false})
