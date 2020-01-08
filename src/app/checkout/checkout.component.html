@@ -25,6 +25,16 @@
 												<option value="4">4 Invitados</option>
 												<option value="5">5 Invitados</option>
 												<option value="6">6 Invitados</option>
+												<option value="7">7 Invitados</option>
+												<option value="8">8 Invitados</option>
+												<option value="9">9 Invitados</option>
+												<option value="10">10 Invitados</option>
+												<option value="11">11 Invitados</option>
+												<option value="12">12 Invitados</option>
+												<option value="13">13 Invitados</option>
+												<option value="14">14 Invitados</option>
+												<option value="15">15 Invitados</option>
+												<option value="16">16+ Invitados</option>
 											</select>
 										</div>
 									</div>
@@ -88,9 +98,23 @@
 										<i class="now-ui-icons ui-1_lock-circle-open"></i>
 										Reserva
 									</button>
-									<h3>{{ successResponse }}</h3>
 								</div>
 							</div>
+
+							<ng-template #modal-content let-modal>
+								<div class="modal-header">
+									<h4 class="modal-title" id="modal-basic-title">Confirmación</h4>
+									<button type="button" class="close" aria-label="Close" (click)="closeModal()">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<h4>Nuestros moderadores van a revisar el evento y nos contactaremos contigo lo antes posible.</h4>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" (click)="closeModal()">OK</button>
+								</div>
+							</ng-template>
 
 							<div class="row">
 								<div class="col-md-12">

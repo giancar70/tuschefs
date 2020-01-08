@@ -88,6 +88,17 @@
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
+												<label>Número de Cuenta Interbancario</label>
+												<div class="input-group" [ngClass]="{'input-group-focus': focus6 === true}">
+													<div class="input-group-prepend">
+														<span class="input-group-text"><i class="now-ui-icons business_bank"></i></span>
+													</div>
+													<input type="text" placeholder="Número de Cuenta (solo números)" class="form-control" (focus)="focus6=true" (blur)="focus6=false" name="account_number" formControlName="account_number">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
 												<label>Teléfono</label>
 												<div class="input-group" [ngClass]="{'input-group-focus': focus4 === true}">
 													<div class="input-group-prepend">
@@ -428,7 +439,7 @@
 							</div>
 
 							<!-- TODO: Add Party Logo -->
-							<ng-template #content let-modal>
+							<ng-template #modal-content let-modal>
 								<div class="modal-header">
 									<h4 class="modal-title" id="modal-basic-title">Confirmación</h4>
 									<button type="button" class="close" aria-label="Close" (click)="closeModal()">

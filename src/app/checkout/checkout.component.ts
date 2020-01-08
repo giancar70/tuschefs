@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpBackend } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 
 import { AuthService } from '../services/auth.service'
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
 	selector: 'app-checkout',
@@ -15,6 +16,9 @@ export class CheckoutComponent implements OnInit {
 	private userData: any;
 	private eventData: any;
 
+	@ViewChild('modal-content', {static: false})
+	public content;
+
 	private reservationDate: any;
 	private numGuests: number;
 	private reservationTime: any;
@@ -25,7 +29,7 @@ export class CheckoutComponent implements OnInit {
 
 	constructor(private route: ActivatedRoute, private http: HttpClient,
 				private router: Router, private formBuilder: FormBuilder,
-				private authService: AuthService, private handler: HttpBackend) {
+				private authService: AuthService, private handler: HttpBackend, private modalService: NgbModal) {
 
 		this.httpClient = new HttpClient(handler);
 	}
@@ -92,11 +96,25 @@ export class CheckoutComponent implements OnInit {
 									if (response3.success) {
 										console.log(response3.data);
 										this.successResponse = response3.data;
+										showReservationSummary();
 									}
 								})
 						}
 					})
 			})
+	}
+
+	showReservationSummary() {
+		this.modalService.open(this.content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+			this.closeResult = `Closed with: ${result}`;
+		}, (reason) => {
+			this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+		});
+	}
+
+	closeModal() {
+		this.modalService.dismissAll();
+		this.router.navigate([''])
 	}
 
 }

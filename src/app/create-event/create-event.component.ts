@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { NgbDatepickerConfig, NgbCalendar, NgbDate,
 		 NgbDateStruct, NgbDateAdapter, NgbDateNativeAdapter
 	   } from '@ng-bootstrap/ng-bootstrap';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 class UserData {
 	first_name: string
@@ -52,7 +52,7 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 	showMessage = false;
 	hideProfileTab = false;
 
-	@ViewChild('content', {static: false})
+	@ViewChild('modal-content', {static: false})
 	public content;
 
 	@ViewChild('search', {static: false})
@@ -104,6 +104,7 @@ export class CreateEventComponent implements OnInit, AfterViewInit {
 			name: [this.userData.first_name, Validators.required],
 			last_name: [this.userData.last_name, Validators.required],
 			// email: ['', Validators.required],
+			account_number: ['', Validators.required],
 			sex: ['', Validators.required],
 			phone: [this.userData.phone, [Validators.required, Validators.minLength(9)]],
 			description: ['', Validators.required]
